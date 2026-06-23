@@ -1,4 +1,3 @@
- /company/index.php
 <?php
 require_once __DIR__ . "/config/database.php";
 include __DIR__ . "/includes/company/header.php";
@@ -494,7 +493,7 @@ HTML
         <!-- IMAGE -->
         <div class="highlight-image">
           <img
-            src="../uploads/highlight/<?= htmlspecialchars($h['image']); ?>"
+            src="uploads/highlight/<?= htmlspecialchars($h['image']); ?>"
             alt="<?= htmlspecialchars($h['title']); ?>">
         </div>
 
@@ -534,7 +533,7 @@ HTML
               <div class="berita-image">
                 <?php if (!empty($n['thumbnail'])): ?>
                   <img
-                    src="../uploads/news/<?= htmlspecialchars($n['thumbnail']); ?>"
+                    src="uploads/news/<?= htmlspecialchars($n['thumbnail']); ?>"
                     alt="<?= htmlspecialchars($n['title']); ?>">
                 <?php endif; ?>
               </div>
@@ -670,7 +669,7 @@ HTML
           <?php if (!empty($popup['image'])): ?>
             <a href="ppdb.html">
               <img
-                src="../uploads/popup/<?= htmlspecialchars($popup['image']); ?>"
+                src="uploads/popup/<?= htmlspecialchars($popup['image']); ?>"
                 alt="<?= htmlspecialchars($popup['title']); ?>">
             </a>
           <?php endif; ?>
