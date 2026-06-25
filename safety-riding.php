@@ -1,6 +1,6 @@
 <?php include __DIR__ . "/includes/company/header.php"; ?>
 
-<link rel="stylesheet" href="/assets/css/safety.css">
+<link rel="stylesheet" href="assets/css/safety.css">
 
 <section class="safety-section">
   <div class="container">

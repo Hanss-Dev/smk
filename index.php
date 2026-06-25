@@ -62,15 +62,10 @@ $news = mysqli_query($conn, "
     </div>
   </section>
 
- <!-- =========================
-HTML
-========================= -->
-
 <section class="smi-heroLite">
 
   <div class="smi-heroLite__wrap">
 
-    <!-- LEFT CONTENT -->
     <div class="smi-heroLite__left">
 
       <span class="smi-badge">
@@ -92,10 +87,8 @@ HTML
 
     </div>
 
-    <!-- RIGHT SLIDER -->
     <div class="smi-liteSlider">
 
-      <!-- PREV -->
       <button class="smi-liteBtn prev" aria-label="Sebelumnya">
 
         <svg viewBox="0 0 24 24">
@@ -104,13 +97,10 @@ HTML
 
       </button>
 
-      <!-- VIEWPORT -->
       <div class="smi-liteViewport">
 
-        <!-- TRACK -->
         <div class="smi-liteTrack">
 
-          <!-- SLIDE -->
           <article class="smi-liteSlide">
             <img
               src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800"
@@ -120,7 +110,6 @@ HTML
             <h3>Diprakarsai Praktisi HRD Industri</h3>
           </article>
 
-          <!-- SLIDE -->
           <article class="smi-liteSlide">
             <img
               src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800"
@@ -130,7 +119,6 @@ HTML
             <h3>Kawasan Industri MM2100</h3>
           </article>
 
-          <!-- SLIDE -->
           <article class="smi-liteSlide">
             <img
               src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800"
@@ -140,7 +128,6 @@ HTML
             <h3>Sistem Terpadu Link & Match</h3>
           </article>
 
-          <!-- SLIDE -->
           <article class="smi-liteSlide">
             <img
               src="https://images.unsplash.com/photo-1521791136064-7986c2920216?w=800"
@@ -150,7 +137,6 @@ HTML
             <h3>Menerapkan Budaya Industri</h3>
           </article>
 
-          <!-- SLIDE -->
           <article class="smi-liteSlide">
             <img
               src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800"
@@ -163,7 +149,6 @@ HTML
         </div>
       </div>
 
-      <!-- NEXT -->
       <button class="smi-liteBtn next" aria-label="Berikutnya">
 
         <svg viewBox="0 0 24 24">
@@ -172,7 +157,6 @@ HTML
 
       </button>
 
-      <!-- DOTS -->
       <div class="smi-liteDots"></div>
 
     </div>
@@ -353,7 +337,6 @@ HTML
           </div>
         </article>
 
-        <!-- Item: Afiliasi -->
         <article class="network-card" data-type="afiliasi">
           <div class="card-header">
             <div class="logo-affiliasi">
@@ -373,7 +356,6 @@ HTML
           </div>
         </article>
 
-        <!-- Item: Afiliasi -->
         <article class="network-card" data-type="afiliasi">
           <div class="card-header">
             <div class="logo-affiliasi">
@@ -612,42 +594,42 @@ HTML
         <div class="yuko-content-item active">
           <h2>Teknik Instalasi Tenaga Listrik</h2>
           <p>Kompetensi instalasi listrik bangunan dan industri.</p>
-          <a href="jurusan/titl.html" class="yuko-button">Selengkapnya</a>
+          <a href="titl.php" class="yuko-button">Selengkapnya</a>
         </div>
         <div class="yuko-content-item">
           <h2>Teknik Elektronika Industri</h2>
           <p>PLC, sensor industri, dan otomasi mesin.</p>
-          <a href="jurusan/tei.html" class="yuko-button">Selengkapnya</a>
+          <a href="tei.php" class="yuko-button">Selengkapnya</a>
         </div>
         <div class="yuko-content-item">
           <h2>Teknik Mesin</h2>
           <p>Manufaktur, CNC, dan teknik pengelasan.</p>
-          <a href="jurusan/tm.html" class="yuko-button">Selengkapnya</a>
+          <a href="tm.php" class="yuko-button">Selengkapnya</a>
         </div>
         <div class="yuko-content-item">
           <h2>TKR</h2>
           <p>Perawatan dan perbaikan kendaraan ringan.</p>
-          <a href="jurusan/tkro.html" class="yuko-button">Selengkapnya</a>
+          <a href="tkro.php" class="yuko-button">Selengkapnya</a>
         </div>
         <div class="yuko-content-item">
           <h2>TSM</h2>
           <p>Servis sepeda motor dan manajemen bengkel.</p>
-          <a href="jurusan/tbsm.html" class="yuko-button">Selengkapnya</a>
+          <a href="tsm.php" class="yuko-button">Selengkapnya</a>
         </div>
         <div class="yuko-content-item">
           <h2>Teknik Kimia Industri</h2>
           <p>Proses produksi dan pengendalian mutu.</p>
-          <a href="jurusan/tki.html" class="yuko-button">Selengkapnya</a>
+          <a href="tki.php" class="yuko-button">Selengkapnya</a>
         </div>
         <div class="yuko-content-item">
           <h2>Akuntansi</h2>
           <p>Pembukuan dan laporan keuangan.</p>
-          <a href="jurusan/ak.html" class="yuko-button">Selengkapnya</a>
+          <a href="akuntansi.php" class="yuko-button">Selengkapnya</a>
         </div>
         <div class="yuko-content-item">
           <h2>Perhotelan</h2>
           <p>Front office, housekeeping, dan layanan hotel.</p>
-          <a href="#" class="yuko-button">Selengkapnya</a>
+          <a href="perhotelan.php" class="yuko-button">Selengkapnya</a>
         </div>
       </div>
 

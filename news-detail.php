@@ -22,7 +22,6 @@ if (mysqli_num_rows($query) == 0) {
 
 $data = mysqli_fetch_assoc($query);
 
-// baru include header
 include __DIR__ . "/includes/company/header.php";
 ?>
 
@@ -33,12 +32,10 @@ include __DIR__ . "/includes/company/header.php";
   <title><?= htmlspecialchars($data['title']); ?></title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- FONT -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
   <style>
 
-  /* ===== ROOT STYLE ===== */
   body.nx-body {
     font-family: 'Poppins', sans-serif;
     background: #f4f7fb;
@@ -46,14 +43,12 @@ include __DIR__ . "/includes/company/header.php";
     color: #1a1a1a;
   }
 
-  /* ===== CONTAINER ===== */
   .nx-container {
     max-width: 900px;
     margin: 60px auto;
     padding: 20px;
   }
 
-  /* ===== CARD ===== */
   .nx-card {
     background: #fff;
     border-radius: 16px;
@@ -99,7 +94,6 @@ include __DIR__ . "/includes/company/header.php";
     margin-bottom: 16px;
   }
 
-  /* ===== TAG ===== */
   .nx-tags {
     margin-top: 25px;
   }
@@ -115,7 +109,6 @@ include __DIR__ . "/includes/company/header.php";
     text-decoration: none;
   }
 
-  /* ===== BACK BUTTON ===== */
   .nx-back {
     display: inline-block;
     margin-top: 30px;
@@ -131,7 +124,6 @@ include __DIR__ . "/includes/company/header.php";
     background: #0a2c7d;
   }
 
-  /* ===== RESPONSIVE ===== */
   @media (max-width: 600px) {
     .nx-title {
       font-size: 22px;
@@ -150,14 +142,13 @@ include __DIR__ . "/includes/company/header.php";
 <div class="nx-container">
   <div class="nx-card">
 
-    <!-- IMAGE -->
     <?php if (!empty($data['thumbnail'])): ?>
       <div class="nx-image">
-        <img src="../uploads/news/<?= htmlspecialchars($data['thumbnail']); ?>" alt="">
+        <img src="uploads/news/<?= htmlspecialchars($data['thumbnail']); ?>" alt="">
       </div>
     <?php endif; ?>
 
-    <!-- CONTENT -->
+
     <div class="nx-content">
 
       <h1 class="nx-title">

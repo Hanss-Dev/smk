@@ -15,7 +15,6 @@ if (!$n) {
 
 <div class="content-wrapper">
 
-  <!-- HEADER -->
   <section class="content-header">
     <div class="container-fluid">
       <div class="row mb-2">
@@ -33,7 +32,6 @@ if (!$n) {
     </div>
   </section>
 
-  <!-- CONTENT -->
   <section class="content">
     <div class="container-fluid">
       <div class="row justify-content-center">
@@ -52,7 +50,6 @@ if (!$n) {
 
               <div class="card-body">
 
-                <!-- JUDUL -->
                 <div class="form-group">
                   <label>Judul Berita</label>
                   <input
@@ -64,7 +61,6 @@ if (!$n) {
                   >
                 </div>
 
-                <!-- THUMBNAIL -->
                 <div class="form-group">
                   <label>Thumbnail</label>
 

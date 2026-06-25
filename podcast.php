@@ -1,6 +1,6 @@
 <?php include __DIR__ . "/includes/company/header.php"; ?>
 
-<link rel="stylesheet" href="/assets/css/podcast.css">
+<link rel="stylesheet" href="assets/css/podcast.css">
 
 <section class="podcast-section">
   <div class="container">

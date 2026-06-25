@@ -15,9 +15,7 @@
   </section>
 <section id="profil" class="profil-section">
   <div class="container">
-    <!-- Grid -->
     <div class="profil-grid">
-      <!-- Sejarah Singkat -->
       <div class="profil-text">
         <h3 class="profil-subtitle">Sejarah Singkat</h3>
         <p class="profil-paragraph">

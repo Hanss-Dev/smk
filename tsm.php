@@ -1,5 +1,4 @@
 <?php include __DIR__ . "/includes/company/header.php";?>
-<!-- Kontenany disini -->
 
   <article class="jurusan-article">
     <header class="article-header hero-tbsm">
@@ -39,30 +38,27 @@
   </div>
 
   <div class="jurusan-gallery__grid">
-    <!-- FOTO UTAMA -->
     <figure class="gallery-item gallery-item--main">
-      <img src="../assets/img/TSM.jpg" alt="Praktik Servis & Perawatan Sepeda Motor">
+      <img src="assets/img/TSM/TSM.jpg" alt="Praktik Servis & Perawatan Sepeda Motor">
       <figcaption>Praktik Servis & Perawatan Sepeda Motor</figcaption>
     </figure>
 
-    <!-- FOTO PENDUKUNG (PAKAI FOTO SAMA DULU, AMAN) -->
     <figure class="gallery-item">
-      <img src="../assets/img/TSM.jpg" alt="Suasana Bengkel TBSM">
+      <img src="assets/img/TSM/TSM.jpg" alt="Suasana Bengkel TBSM">
       <figcaption>Suasana Bengkel TBSM</figcaption>
     </figure>
 
     <figure class="gallery-item">
-      <img src="../assets/img/TSM.jpg" alt="Pembelajaran Teknik & Bisnis Bengkel">
+      <img src="assets/img/TSM/TSM.jpg" alt="Pembelajaran Teknik & Bisnis Bengkel">
       <figcaption>Pembelajaran Teknik & Bisnis Bengkel</figcaption>
     </figure>
 
     <figure class="gallery-item">
-      <img src="../assets/img/TSM.jpg" alt="Praktik Kerja & Persiapan Industri">
+      <img src="assets/img/TSM/TSM.jpg" alt="Praktik Kerja & Persiapan Industri">
       <figcaption>Praktik Kerja & Persiapan Industri</figcaption>
     </figure>
   </div>
 </section>
 
   </article>
-<!-- End konten -->
 <?php include __DIR__ . "/includes/company/footer.php"; ?>

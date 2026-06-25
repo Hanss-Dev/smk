@@ -1,18 +1,16 @@
 <?php
 session_start();
 
-// 🔐 PROTEKSI LOGIN
 if (!isset($_SESSION['admin']) || $_SESSION['admin'] !== true) {
   header("Location: /sekolah/admin/login.php");
   exit;
 }
 
-include __DIR__ . "/layout/header.php";
-include __DIR__ . "/layout/sidebar.php";
+include __DIR__ . "../layout/header.php";
+include __DIR__ . "../layout/sidebar.php";
 
 require __DIR__ . "/../config/database.php";
 
-// HITUNG DATA
 $totalNews      = mysqli_fetch_row(mysqli_query($conn,"SELECT COUNT(*) FROM news"))[0];
 $publishNews    = mysqli_fetch_row(mysqli_query($conn,"SELECT COUNT(*) FROM news WHERE status='publish'"))[0];
 $draftNews      = mysqli_fetch_row(mysqli_query($conn,"SELECT COUNT(*) FROM news WHERE status='draft'"))[0];
@@ -21,11 +19,8 @@ $totalPopup     = mysqli_fetch_row(mysqli_query($conn,"SELECT COUNT(*) FROM popu
 
 ?>
 
-<!-- CONTENT -->
-<!-- CONTENT -->
 <div class="content-wrapper">
 
-  <!-- HEADER -->
   <section class="content-header">
     <div class="container-fluid">
       <h1>Dashboard</h1>
@@ -35,7 +30,6 @@ $totalPopup     = mysqli_fetch_row(mysqli_query($conn,"SELECT COUNT(*) FROM popu
   <section class="content">
     <div class="container-fluid">
 
-      <!-- INFO BOX -->
       <div class="row">
 
         <div class="col-lg-3 col-6">
@@ -80,10 +74,8 @@ $totalPopup     = mysqli_fetch_row(mysqli_query($conn,"SELECT COUNT(*) FROM popu
 
       </div>
 
-      <!-- CHART -->
       <div class="row">
 
-        <!-- BAR CHART -->
         <div class="col-md-8">
           <div class="card card-primary card-outline">
             <div class="card-header">
@@ -95,7 +87,6 @@ $totalPopup     = mysqli_fetch_row(mysqli_query($conn,"SELECT COUNT(*) FROM popu
           </div>
         </div>
 
-        <!-- DOUGHNUT -->
         <div class="col-md-4">
           <div class="card card-success card-outline">
             <div class="card-header">
@@ -116,7 +107,6 @@ $totalPopup     = mysqli_fetch_row(mysqli_query($conn,"SELECT COUNT(*) FROM popu
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-/* BAR CHART */
 new Chart(document.getElementById('contentChart'), {
   type: 'bar',
   data: {
@@ -136,7 +126,6 @@ new Chart(document.getElementById('contentChart'), {
   }
 });
 
-/* DOUGHNUT */
 new Chart(document.getElementById('newsChart'), {
   type: 'doughnut',
   data: {

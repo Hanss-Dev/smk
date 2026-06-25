@@ -48,7 +48,6 @@ $pesan = mysqli_query($conn, "SELECT * FROM pesan ORDER BY tanggal DESC");
                   <td><?= htmlspecialchars($p['email']) ?></td>
                   <td><?= htmlspecialchars($p['telepon']) ?></td>
 
-                  <!-- potong pesan -->
                   <td>
                     <?php
                       $text = htmlspecialchars($p['pesan']);
@@ -68,13 +67,11 @@ $pesan = mysqli_query($conn, "SELECT * FROM pesan ORDER BY tanggal DESC");
 
                   <td class="text-center">
                     
-                    <!-- READ + DETAIL -->
                     <a href="read.php?id=<?= $p['id'] ?>" 
                        class="btn btn-info btn-sm" title="Baca Pesan">
                       <i class="fas fa-eye"></i>
                     </a>
 
-                    <!-- DELETE -->
                     <a href="delete.php?id=<?= $p['id'] ?>"
                        onclick="return confirm('Hapus pesan ini?')"
                        class="btn btn-danger btn-sm" title="Hapus">

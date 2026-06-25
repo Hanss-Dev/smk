@@ -4,7 +4,7 @@
   <strong>Admin Panel</strong> © <?= date('Y'); ?>
 </footer>
 
-</div> <!-- /.wrapper -->
+</div>
 
 <script src="/assets/adminlte/plugins/jquery/jquery.min.js"></script>
 <script src="/assets/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
