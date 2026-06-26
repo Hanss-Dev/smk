@@ -1,0 +1,86 @@
+@extends('layouts.admin')
+
+@section('title', 'Tambah Popup')
+
+@section('content')
+<div class="content-wrapper">
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6"><h1>Tambah Popup</h1></div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('admin.popup.index') }}">Popup</a></li>
+            <li class="breadcrumb-item active">Tambah</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <div class="col-md-10">
+          <div class="card card-primary shadow-sm">
+            <div class="card-header">
+              <h3 class="card-title"><i class="fas fa-bullhorn mr-1"></i> Form Tambah Popup</h3>
+            </div>
+
+            <form action="{{ route('admin.popup.store') }}" method="POST" enctype="multipart/form-data">
+              @csrf
+              <div class="card-body">
+
+                @if($errors->any())
+                  <div class="alert alert-danger">
+                    <ul class="mb-0">@foreach($errors->all() as $e)<li>{{ $e }}</li>@endforeach</ul>
+                  </div>
+                @endif
+
+                <div class="form-group">
+                  <label>Judul Popup</label>
+                  <input type="text" name="title" class="form-control" value="{{ old('title') }}" required>
+                </div>
+
+                <div class="form-group">
+                  <label>Gambar Popup</label>
+                  <div id="dropzone" class="border rounded p-4 text-center" style="cursor:pointer; border-style:dashed !important;">
+                    <i class="fas fa-cloud-upload-alt fa-2x text-muted"></i>
+                    <p class="text-muted mt-2">Klik atau seret gambar ke sini</p>
+                    <input type="file" id="fileInput" name="image" accept="image/*" class="d-none" required>
+                  </div>
+                  <img id="previewImage" class="img-fluid rounded mt-2 d-none" style="max-height:200px;">
+                </div>
+
+                <div class="form-group">
+                  <label>Konten / Teks Keterangan</label>
+                  <textarea name="content" rows="6" class="form-control" required>{{ old('content') }}</textarea>
+                </div>
+
+                <div class="form-group">
+                  <label>Status</label>
+                  <select name="is_active" class="form-control">
+                    <option value="1" {{ old('is_active', '1') == '1' ? 'selected' : '' }}>Aktif (Tampilkan)</option>
+                    <option value="0" {{ old('is_active') == '0' ? 'selected' : '' }}>Nonaktif (Sembunyikan)</option>
+                  </select>
+                </div>
+
+              </div>
+
+              <div class="card-footer d-flex justify-content-between">
+                <a href="{{ route('admin.popup.index') }}" class="btn btn-secondary">
+                  <i class="fas fa-arrow-left"></i> Kembali
+                </a>
+                <button type="submit" class="btn btn-primary">
+                  <i class="fas fa-save"></i> Simpan Popup
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+@endsection
