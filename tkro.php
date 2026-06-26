@@ -43,12 +43,12 @@
 
     <div class="jurusan-gallery__grid">
       <figure class="gallery-item gallery-item--main">
-        <img src="../assets/img/TKR/tkr2.jpg" alt="Praktik Servis & Tune Up Kendaraan">
+        <img src="assets/img/TKR/tkr2.jpg" alt="Praktik Servis & Tune Up Kendaraan">
         <figcaption>Praktik Servis & Tune Up Kendaraan</figcaption>
       </figure>
 
       <figure class="gallery-item">
-        <img src="../assets/img/TKR/TKR.jpg" alt="Sistem Kelistrikan Kendaraan">
+        <img src="assets/img/TKR/TKR.jpg" alt="Sistem Kelistrikan Kendaraan">
         <figcaption>Sistem Kelistrikan Kendaraan</figcaption>
       </figure>
 

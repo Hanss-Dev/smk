@@ -16,23 +16,23 @@
       <div class="footer-column">
         <h3>Kompetensi Keahlian</h3>
         <ul class="footer-links">
-          <li><a href="jurusan/titl.html">Teknik Instalasi Tenaga Listrik</a></li>
-          <li><a href="jurusan/tei.html">Teknik Elektronika Industri</a></li>
-          <li><a href="jurusan/tm.html">Teknik Mesin</a></li>
-          <li><a href="jurusan/tkro.html">Teknik Kendaraan Ringan Otomotif</a></li>
-          <li><a href="jurusan/tbsm.html">Teknik Bisnis Sepeda Motor</a></li>
-          <li><a href="jurusan/tki.html">Teknik Kimia Industri</a></li>
-          <li><a href="jurusan/ak.html">Akuntansi</a></li>
-          <li><a href="jurusan/perhotelan.html">Perhotelan</a></li>
+          <li><a href="titl.php">Teknik Instalasi Tenaga Listrik</a></li>
+          <li><a href="tei.php">Teknik Elektronika Industri</a></li>
+          <li><a href="tm.php">Teknik Mesin</a></li>
+          <li><a href="tkro.php">Teknik Kendaraan Ringan Otomotif</a></li>
+          <li><a href="tbsm.php">Teknik Bisnis Sepeda Motor</a></li>
+          <li><a href="tki.php">Teknik Kimia Industri</a></li>
+          <li><a href="ak.php">Akuntansi</a></li>
+          <li><a href="perhotelan.php">Perhotelan</a></li>
         </ul>
       </div>
 
       <div class="footer-column">
         <h3>Link Penting</h3>
         <ul class="footer-links">
-          <li><a href="PPDB.html">PPDB Online</a></li>
+          <li><a href="PPDB.php">PPDB Online</a></li>
           <li><a href="#">Portal Siswa</a></li>
-          <li><a href="berita.html">Artikel &amp; Berita</a></li>
+          <li><a href="berita.php">Artikel &amp; Berita</a></li>
         </ul>
       </div>
 

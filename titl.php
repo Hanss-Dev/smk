@@ -36,7 +36,7 @@
 
     <div class="jurusan-gallery__grid">
       <figure class="gallery-item gallery-item--main">
-        <img src="../assets/img/ELIND/ELIND-IC.jpg" alt="Praktik Instalasi & Panel Listrik">
+        <img src="assets/img/ELIND/ELIND-IC.jpg" alt="Praktik Instalasi & Panel Listrik">
         <figcaption>Praktik Instalasi & Panel Listrik</figcaption>
       </figure>
 

@@ -43,12 +43,12 @@
 
     <div class="jurusan-gallery__grid">
       <figure class="gallery-item gallery-item--main">
-        <img src="../assets/img/MESIN/MESIN-NGIKIR.JPG" alt="Praktik Pemesinan & Produksi">
+        <img src="assets/img/MESIN/MESIN-NGIKIR.JPG" alt="Praktik Pemesinan & Produksi">
         <figcaption>Praktik Pemesinan & Produksi</figcaption>
       </figure>
 
       <figure class="gallery-item">
-        <img src="../assets/img/MESIN/MESIN.jpg" alt="Pengoperasian Mesin CNC">
+        <img src="assets/img/MESIN/MESIN.jpg" alt="Pengoperasian Mesin CNC">
         <figcaption>Pengoperasian Mesin CNC</figcaption>
       </figure>
 

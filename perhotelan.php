@@ -43,12 +43,12 @@
 
     <div class="jurusan-gallery__grid">
       <figure class="gallery-item gallery-item--main">
-        <img src="../assets/img/HOTEL/HOTEL.jpg" alt="Praktik Pelayanan Hotel & Hospitality">
+        <img src="assets/img/HOTEL/HOTEL.jpg" alt="Praktik Pelayanan Hotel & Hospitality">
         <figcaption>Praktik Pelayanan Hotel & Hospitality</figcaption>
       </figure>
 
       <figure class="gallery-item">
-        <img src="../assets/img/HOTEL/hotel2.jpg" alt="Housekeeping & Room Service">
+        <img src="assets/img/HOTEL/hotel2.jpg" alt="Housekeeping & Room Service">
         <figcaption>Housekeeping & Room Service</figcaption>
       </figure>
 

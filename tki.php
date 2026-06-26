@@ -43,7 +43,7 @@
 
     <div class="jurusan-gallery__grid">
       <figure class="gallery-item gallery-item--main">
-        <img src="../assets/img/TKI/TKI-NYEMPROT.JPG" alt="Praktik Laboratorium Teknik Kimia Industri">
+        <img src="assets/img/TKI/TKI-NYEMPROT.JPG" alt="Praktik Laboratorium Teknik Kimia Industri">
         <figcaption>Praktik Laboratorium Teknik Kimia Industri</figcaption>
       </figure>
 

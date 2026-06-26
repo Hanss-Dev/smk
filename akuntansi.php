@@ -39,25 +39,24 @@
   </div>
 
   <div class="jurusan-gallery__grid">
-    <!-- FOTO UTAMA -->
+
     <figure class="gallery-item gallery-item--main">
-      <img src="../assets/img/AKUNTANSI.jpg" alt="Praktik Akuntansi & Administrasi Keuangan">
+      <img src="assets/img/AKUNTANSI/AKUNTANSI.jpg" alt="Praktik Akuntansi & Administrasi Keuangan">
       <figcaption>Praktik Akuntansi & Administrasi Keuangan</figcaption>
     </figure>
 
-    <!-- FOTO PENDUKUNG -->
     <figure class="gallery-item">
-      <img src="../assets/img/AKUNTANSI.jpg" alt=">Kegiatan Siswa Akuntansi">
+      <img src="assets/img/AKUNTANSI/AKUNTANSI.jpg" alt="Kegiatan Siswa Akuntansi">
       <figcaption>Kegiatan Siswa Akuntansi</figcaption>
     </figure>
 
     <figure class="gallery-item">
-      <img src="../assets/img/AKUNTANSI.jpg" alt="Suasana Pembelajaran">
+      <img src="assets/img/AKUNTANSI/AKUNTANSI.jpg" alt="Suasana Pembelajaran">
       <figcaption>Suasana Pembelajaran</figcaption>
     </figure>
 
     <figure class="gallery-item">
-      <img src="../assets/img/AKUNTANSI.jpg" alt="Praktik Software Akuntansi">
+      <img src="assets/img/AKUNTANSI/AKUNTANSI.jpg" alt="Praktik Software Akuntansi">
       <figcaption>Praktik Software Akuntansi</figcaption>
     </figure>
   </div>

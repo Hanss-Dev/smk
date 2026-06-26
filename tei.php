@@ -43,17 +43,17 @@
 
     <div class="jurusan-gallery__grid">
       <figure class="gallery-item gallery-item--main">
-        <img src="../assets/img/ELIND/ELIND-IC.jpg" alt="Praktik Panel Kontrol & Sistem Elektronika Industri">
+        <img src="assets/img/ELIND/ELIND-IC.jpg" alt="Praktik Panel Kontrol & Sistem Elektronika Industri">
         <figcaption>Praktik Panel Kontrol & Sistem Elektronika Industri</figcaption>
       </figure>
 
       <figure class="gallery-item">
-        <img src="../assets/img/ELIND/ELIND-ROBOTIK.jpg" alt="Praktik PLC & Otomasi Industri">
+        <img src="assets/img/ELIND/ELIND-ROBOTIK.jpg" alt="Praktik PLC & Otomasi Industri">
         <figcaption>Praktik PLC & Otomasi Industri</figcaption>
       </figure>
 
       <figure class="gallery-item">
-        <img src="../assets/img/ELIND/ELIND-IOT.JPG" alt="Sistem Kontrol & Instrumentasi">
+        <img src="assets/img/ELIND/ELIND-IOT.JPG" alt="Sistem Kontrol & Instrumentasi">
         <figcaption>Sistem Kontrol & Instrumentasi</figcaption>
       </figure>
 
