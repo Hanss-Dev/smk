@@ -126,8 +126,16 @@
 <script>
 $(document).ready(function() {
   // Dropzone click trigger
-  $(document).on('click', '#dropzone', function() {
-    $('#fileInput').click();
+  $(document).on('click', '#dropzone', function(e) {
+    // Only trigger if the click wasn't on the file input itself
+    if (e.target.id !== 'fileInput') {
+      $('#fileInput').click();
+    }
+  });
+
+  // Prevent file input click from bubbling to dropzone (infinite loop fix)
+  $(document).on('click', '#fileInput', function(e) {
+    e.stopPropagation();
   });
 
   // Dropzone drag and drop
@@ -167,6 +175,10 @@ $(document).ready(function() {
   });
 });
 </script>
+
+@if(request()->is('admin/pesan*'))
+  @include('admin.pesan.reply-modal')
+@endif
 
 @yield('scripts')
 </body>

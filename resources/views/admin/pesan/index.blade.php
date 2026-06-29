@@ -62,13 +62,22 @@
                   </td>
                   <td class="text-center">{{ $p->tanggal }}</td>
                   <td class="text-center">
-                    <a href="{{ route('admin.pesan.show', $p->id) }}" class="btn btn-info btn-sm" title="Detail / Baca">
+                    <a href="{{ route('admin.pesan.show', $p->id) }}" class="btn btn-info btn-sm shadow-sm" title="Detail / Baca">
                       <i class="fas fa-envelope-open-text"></i> Baca
                     </a>
+                    <button type="button" class="btn btn-primary btn-sm btn-balas shadow-sm" 
+                            data-id="{{ $p->id }}" 
+                            data-nama="{{ $p->nama }}" 
+                            data-email="{{ $p->email }}" 
+                            data-telepon="{{ $p->telepon }}"
+                            data-pesan="{{ $p->pesan }}"
+                            title="Balas">
+                      <i class="fas fa-reply"></i> Balas
+                    </button>
                     <form action="{{ route('admin.pesan.destroy', $p->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Hapus pesan ini?')">
                       @csrf
                       @method('DELETE')
-                      <button class="btn btn-danger btn-sm" title="Hapus"><i class="fas fa-trash"></i></button>
+                      <button class="btn btn-danger btn-sm shadow-sm" title="Hapus"><i class="fas fa-trash"></i></button>
                     </form>
                   </td>
                 </tr>

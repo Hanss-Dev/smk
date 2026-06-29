@@ -65,11 +65,21 @@
               <a href="{{ route('admin.pesan.index') }}" class="btn btn-secondary">
                 <i class="fas fa-arrow-left"></i> Kembali ke Daftar Pesan
               </a>
-              <form action="{{ route('admin.pesan.destroy', $pesan->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Hapus pesan ini?')">
-                @csrf
-                @method('DELETE')
-                <button class="btn btn-danger"><i class="fas fa-trash"></i> Hapus Pesan</button>
-              </form>
+              <div>
+                <button type="button" class="btn btn-primary btn-balas mr-2 shadow-sm"
+                        data-id="{{ $pesan->id }}"
+                        data-nama="{{ $pesan->nama }}"
+                        data-email="{{ $pesan->email }}"
+                        data-telepon="{{ $pesan->telepon }}"
+                        data-pesan="{{ $pesan->pesan }}">
+                  <i class="fas fa-reply mr-1"></i> Balas Pesan
+                </button>
+                <form action="{{ route('admin.pesan.destroy', $pesan->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Hapus pesan ini?')">
+                  @csrf
+                  @method('DELETE')
+                  <button class="btn btn-danger shadow-sm"><i class="fas fa-trash"></i> Hapus Pesan</button>
+                </form>
+              </div>
             </div>
           </div>
         </div>
