@@ -643,6 +643,8 @@ document.addEventListener("DOMContentLoaded", () => {
 const textarea = document.getElementById("msg");
 const counter = document.getElementById("counter");
 
-textarea.addEventListener("input", () => {
-  counter.textContent = textarea.value.length + " / 500";
-});
+if (textarea && counter) {
+  textarea.addEventListener("input", () => {
+    counter.textContent = textarea.value.length + " / 500";
+  });
+}

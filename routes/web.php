@@ -60,5 +60,7 @@ Route::middleware(['admin.auth','no.cache'])->prefix('admin')->name('admin.')->g
     // Messages management
     Route::get('/pesan', [PesanController::class, 'index'])->name('pesan.index');
     Route::get('/pesan/{id}', [PesanController::class, 'show'])->name('pesan.show');
+    Route::post('/pesan/{id}/reply-email', [PesanController::class, 'replyEmail'])->name('pesan.replyEmail');
+    Route::post('/pesan/{id}/mark-read', [PesanController::class, 'markRead'])->name('pesan.markRead');
     Route::delete('/pesan/{id}', [PesanController::class, 'destroy'])->name('pesan.destroy');
 });
