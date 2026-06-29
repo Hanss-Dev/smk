@@ -47,6 +47,8 @@ class PesanController extends Controller
                 $pesan->update(['status' => 'read']);
             }
 
+            session()->flash('success', 'Email balasan berhasil dikirim ke ' . $request->email . '.');
+
             return response()->json([
                 'success' => true,
                 'message' => 'Email telah dimasukkan ke antrean pengiriman ke ' . $request->email
@@ -65,11 +67,9 @@ class PesanController extends Controller
         
         if ($pesan->status === 'unread') {
             $pesan->update(['status' => 'read']);
-            return response()->json([
-                'success' => true,
-                'message' => 'Pesan berhasil ditandai sebagai dibaca'
-            ]);
         }
+
+        session()->flash('success', 'Balasan WhatsApp berhasil dikirim ke ' . $pesan->nama . '.');
 
         return response()->json([
             'success' => true,
