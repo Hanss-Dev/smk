@@ -10,9 +10,22 @@ use App\Mail\ReplyMessageMail;
 
 class PesanController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $pesanList = Pesan::orderBy('tanggal', 'desc')->get();
+        $search = $request->input('search');
+        
+        $pesanList = Pesan::query()
+            ->when($search, function ($query, $search) {
+                return $query->where(function ($q) use ($search) {
+                    $q->where('nama', 'like', "%{$search}%")
+                      ->orWhere('email', 'like', "%{$search}%")
+                      ->orWhere('telepon', 'like', "%{$search}%")
+                      ->orWhere('pesan', 'like', "%{$search}%");
+                });
+            })
+            ->orderBy('tanggal', 'desc')
+            ->paginate(10);
+
         return view('admin.pesan.index', compact('pesanList'));
     }
 

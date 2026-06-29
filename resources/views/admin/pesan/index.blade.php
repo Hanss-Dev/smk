@@ -29,8 +29,25 @@
       @endif
 
       <div class="card">
-        <div class="card-header">
-          <h3 class="card-title">Daftar Pesan Hubungi Kami</h3>
+        <div class="card-header d-flex flex-wrap justify-content-between align-items-center">
+          <h3 class="card-title my-1">Daftar Pesan Hubungi Kami</h3>
+          <div class="card-tools my-1">
+            <form action="{{ route('admin.pesan.index') }}" method="GET" class="form-inline">
+              <div class="input-group input-group-sm" style="width: 250px;">
+                <input type="text" name="search" class="form-control float-right" placeholder="Cari pesan..." value="{{ request('search') }}">
+                <div class="input-group-append">
+                  <button type="submit" class="btn btn-default">
+                    <i class="fas fa-search"></i>
+                  </button>
+                  @if(request('search'))
+                    <a href="{{ route('admin.pesan.index') }}" class="btn btn-default" title="Reset Pencarian">
+                      <i class="fas fa-times"></i>
+                    </a>
+                  @endif
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
 
         <div class="card-body table-responsive">
@@ -50,7 +67,7 @@
             <tbody>
               @forelse($pesanList as $i => $p)
                 <tr class="{{ $p->status === 'unread' ? 'font-weight-bold table-warning' : '' }}">
-                  <td class="text-center">{{ $i + 1 }}</td>
+                  <td class="text-center">{{ ($pesanList->currentPage() - 1) * $pesanList->perPage() + $i + 1 }}</td>
                   <td>{{ $p->nama }}</td>
                   <td>{{ $p->email }}</td>
                   <td>{{ $p->telepon }}</td>
@@ -86,6 +103,11 @@
               @endforelse
             </tbody>
           </table>
+        </div>
+        <div class="card-footer clearfix">
+          <div class="float-right">
+            {{ $pesanList->appends(['search' => request('search')])->links() }}
+          </div>
         </div>
       </div>
 

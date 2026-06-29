@@ -9,9 +9,20 @@ use Illuminate\Support\Facades\File;
 
 class PopupController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $popups = Popup::orderBy('id', 'desc')->get();
+        $search = $request->input('search');
+
+        $popups = Popup::query()
+            ->when($search, function ($query, $search) {
+                return $query->where(function ($q) use ($search) {
+                    $q->where('title', 'like', "%{$search}%")
+                      ->orWhere('content', 'like', "%{$search}%");
+                });
+            })
+            ->orderBy('id', 'desc')
+            ->paginate(10);
+
         return view('admin.popup.index', compact('popups'));
     }
 

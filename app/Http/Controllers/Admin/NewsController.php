@@ -10,9 +10,20 @@ use Illuminate\Support\Facades\File;
 
 class NewsController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $newsList = News::orderBy('id', 'desc')->get();
+        $search = $request->input('search');
+
+        $newsList = News::query()
+            ->when($search, function ($query, $search) {
+                return $query->where(function ($q) use ($search) {
+                    $q->where('title', 'like', "%{$search}%")
+                      ->orWhere('content', 'like', "%{$search}%");
+                });
+            })
+            ->orderBy('id', 'desc')
+            ->paginate(10);
+
         return view('admin.news.index', compact('newsList'));
     }
 
