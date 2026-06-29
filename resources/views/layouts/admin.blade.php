@@ -89,6 +89,12 @@
                   <p>Alumni</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="{{ route('admin.content-jurusan.index') }}" class="nav-link {{ request()->is('admin/content-jurusan*') ? 'active' : '' }}">
+                  <i class="nav-icon fas fa-graduation-cap text-white"></i>
+                  <p>Content Jurusan</p>
+                </a>
+              </li>
             </ul>
           </li>
 
