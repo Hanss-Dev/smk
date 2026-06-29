@@ -2,29 +2,41 @@
 <html lang="id">
 <head>
   <meta charset="utf-8">
-  <title>Login Admin | SMK Mitra Industri</title>
+  <title>Login | Cisat Learning Apps – SMK CIBITUNG 1</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <style>
-    body { background: linear-gradient(135deg, #2563eb, #1e40af); }
-    .login-box { width: 380px; }
-    .login-logo b { color: #2563eb; }
-    .flash-success { background: #d4edda; border: 1px solid #c3e6cb; color: #155724; padding: 10px 15px; border-radius: 5px; margin-bottom: 10px; }
-    .flash-error   { background: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; padding: 10px 15px; border-radius: 5px; margin-bottom: 10px; }
-  </style>
+  {{-- Favicon (optional, place in public/) --}}
+  {{-- <link rel="icon" href="{{ asset('favicon.ico') }}"> --}}
+
+  {{-- AdminLTE (kept for any shared layout that needs it) --}}
+  <link rel="stylesheet" href="{{ asset('assets/css/login-admin-style.css') }}">
 </head>
 
-<body class="hold-transition login-page">
+<body>
 
-<div class="login-box">
-  <div class="login-logo">
-    <b>Admin</b>Panel
+<div class="login-wrapper">
+
+  {{-- ===== LEFT PANEL ===== --}}
+  <div class="login-left">
+    <div class="logo-wrapper">
+      {{-- Replace src with your actual logo path --}}
+      <img src="{{ asset('assets/img/logo-mt.png') }}" alt="Logo SMK Cibitung 1">
+    </div>
+    <div class="app-title">
+      <h1>ADMIN LOGIN</h1>
+      {{-- dari env --}}
+      <p>{{ env('APP_NAME') }}</p>
+    </div>
   </div>
 
-  <div class="card shadow">
-    <div class="card-body login-card-body">
-      <p class="login-box-msg">Masuk untuk mengelola website</p>
+  {{-- ===== RIGHT PANEL ===== --}}
+  <div class="login-right">
+    <div class="login-form-container">
+
+      <div class="login-greeting">
+        <h2>
+          Silahkan Login Sesuai Akun Anda
+        </h2>
+      </div>
 
       {{-- Flash Messages --}}
       @if(session('success'))
@@ -36,39 +48,83 @@
 
       <form method="post" action="{{ route('admin.login.post') }}">
         @csrf
-        <div class="input-group mb-3">
-          <input type="text" name="username" class="form-control" placeholder="Username" value="{{ old('username') }}" required>
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-user"></span>
-            </div>
+
+        {{-- Username --}}
+        <div class="login-form-group">
+          <label for="username">Username</label>
+          <div class="login-input-wrapper">
+            <svg class="login-input-icon" xmlns="http://www.w3.org/2000/svg" fill="none"
+                 viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/>
+            </svg>
+            <input type="text" id="username" name="username"
+                   placeholder="Masukkan username"
+                   value="{{ old('username') }}" required>
           </div>
         </div>
 
-        <div class="input-group mb-3">
-          <input type="password" name="password" class="form-control" placeholder="Password" required>
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-lock"></span>
-            </div>
+        {{-- Password --}}
+        <div class="login-form-group">
+          <label for="password">Password</label>
+          <div class="login-input-wrapper">
+            <svg class="login-input-icon" xmlns="http://www.w3.org/2000/svg" fill="none"
+                 viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"/>
+            </svg>
+            <input type="password" id="password" name="password"
+                   placeholder="Masukkan password" required>
+            <span class="login-eye-toggle" onclick="togglePass()" title="Tampilkan / Sembunyikan">
+              <svg id="eye-icon" xmlns="http://www.w3.org/2000/svg" fill="none"
+                   viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+              </svg>
+            </span>
           </div>
         </div>
 
-        <div class="row">
-          <div class="col-12">
-            <button type="submit" class="btn btn-primary btn-block">
-              <i class="fas fa-sign-in-alt"></i> Login
-            </button>
-          </div>
-        </div>
+        {{-- Submit --}}
+        <button type="submit" class="btn-login">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+               viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"/>
+          </svg>
+          Masuk
+        </button>
+
       </form>
+
+      <p class="login-date" id="today-date"></p>
 
     </div>
   </div>
+
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+{{-- Scripts --}}
+<script>
+  // Toggle password visibility
+  function togglePass() {
+    const input = document.getElementById('password');
+    const icon  = document.getElementById('eye-icon');
+    if (input.type === 'password') {
+      input.type = 'text';
+      icon.style.color = '#4f46e5';
+    } else {
+      input.type = 'password';
+      icon.style.color = '';
+    }
+  }
+
+  (function() {
+    const opts = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+    const date = new Date().toLocaleDateString('en-GB', opts);
+    document.getElementById('today-date').textContent = date;
+  })();
+</script>
 </body>
 </html>
