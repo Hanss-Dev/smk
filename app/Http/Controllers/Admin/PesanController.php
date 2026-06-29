@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Pesan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\ReplyMessageMail; 
 
 class PesanController extends Controller
 {
@@ -37,25 +38,23 @@ class PesanController extends Controller
         $pesan = Pesan::findOrFail($id);
 
         try {
-            Mail::send([], [], function ($message) use ($request) {
-                $message->to($request->email)
-                        ->subject($request->subject)
-                        ->html(nl2br(e($request->message)));
-            });
+            Mail::to($request->email)->queue(
+                new ReplyMessageMail($request->subject, $request->message)
+            );
 
-            // Mark as read when replied
+            // Tandai sebagai dibaca jika sebelumnya unread
             if ($pesan->status === 'unread') {
                 $pesan->update(['status' => 'read']);
             }
 
             return response()->json([
                 'success' => true,
-                'message' => 'Email berhasil dikirim ke ' . $request->email
+                'message' => 'Email telah dimasukkan ke antrean pengiriman ke ' . $request->email
             ]);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Gagal mengirim email: ' . $e->getMessage()
+                'message' => 'Gagal memproses email: ' . $e->getMessage()
             ], 500);
         }
     }
