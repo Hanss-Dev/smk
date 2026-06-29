@@ -12,6 +12,58 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="icon" href="{{ asset('assets/img/logo-mt.png') }}" type="image/png">
+
+  <style>
+    /* ── Sidebar scrollable layout ───────────────────────────── */
+    .main-sidebar {
+      display: flex !important;
+      flex-direction: column !important;
+      overflow: hidden !important;
+    }
+
+    /* Logo — sticky di atas, tidak ikut scroll */
+    .ega-sidebar-logo {
+      flex-shrink: 0;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+
+    /* Wrapper tengah: mengisi sisa ruang, bisa scroll */
+    .sidebar {
+      flex: 1 1 0 !important;
+      overflow-y: auto !important;
+      overflow-x: hidden !important;
+      /* sembunyikan scrollbar tapi tetap scrollable */
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255,255,255,.15) transparent;
+    }
+    .sidebar::-webkit-scrollbar { width: 4px; }
+    .sidebar::-webkit-scrollbar-track { background: transparent; }
+    .sidebar::-webkit-scrollbar-thumb {
+      background: rgba(255,255,255,.15);
+      border-radius: 2px;
+    }
+
+    /* Logout — sticky di bawah, tidak ikut scroll */
+    .ega-sidebar-logout {
+      flex-shrink: 0;
+      border-top: 1px solid rgba(255,255,255,.08);
+      padding: 8px 0;
+    }
+    .ega-sidebar-logout .nav-link {
+      color: #fc8181 !important;
+      display: flex;
+      align-items: center;
+      padding: .5rem 1rem;
+    }
+    .ega-sidebar-logout .nav-link:hover {
+      background: rgba(255,255,255,.07);
+    }
+    .ega-sidebar-logout .nav-icon {
+      margin-right: .5rem;
+      font-size: 1.1rem;
+    }
+  </style>
+
   @yield('styles')
 </head>
 
@@ -31,6 +83,8 @@
 
     <!-- Sidebar -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
+
+      <!-- STICKY: Logo -->
       <div class="ega-sidebar-logo text-center py-3">
         <img src="{{ asset('assets/img/logo-mt.png') }}" class="ega-logo-img mb-2" alt="Logo Sekolah"
           style="width: 90px;">
@@ -39,6 +93,7 @@
         </div>
       </div>
 
+      <!-- SCROLLABLE: Menu -->
       <div class="sidebar">
         <nav class="mt-2">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
@@ -52,7 +107,7 @@
             </li>
 
             @php
-              $isKonten = request()->is('admin/news*') || request()->is('admin/highlight*') || request()->is('admin/popup*');
+              $isKonten = request()->is('admin/news*') || request()->is('admin/highlight*') || request()->is('admin/popup*') || request()->is('admin/alumni*') || request()->is('admin/content-jurusan*');
             @endphp
 
             <li class="nav-item has-treeview {{ $isKonten ? 'menu-open' : '' }}">
@@ -101,6 +156,44 @@
                 </li>
               </ul>
             </li>
+
+            @php
+              $isHalaman = request()->is('admin/podcast*') || request()->is('admin/lab*') || request()->is('admin/safety-riding*');
+            @endphp
+
+            <li class="nav-item has-treeview {{ $isHalaman ? 'menu-open' : '' }}">
+              <a href="#" class="nav-link {{ $isHalaman ? 'active' : '' }}">
+                <i class="nav-icon fas fa-file-alt"></i>
+                <p>
+                  Kelola Halaman
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="{{ route('admin.podcast.index') }}"
+                    class="nav-link {{ request()->is('admin/podcast*') ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-podcast text-info"></i>
+                    <p>Podcast</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{ route('admin.lab.index') }}"
+                    class="nav-link {{ request()->is('admin/lab*') ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-laptop text-success"></i>
+                    <p>Lab Komputer</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{ route('admin.safety-riding.index') }}"
+                    class="nav-link {{ request()->is('admin/safety-riding*') ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-motorcycle text-warning"></i>
+                    <p>Safety Riding</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+
             <li class="nav-item">
               <a href="{{ route('admin.pesan.index') }}"
                 class="nav-link {{ request()->is('admin/pesan*') ? 'active' : '' }}">
@@ -109,16 +202,19 @@
               </a>
             </li>
 
-            <li class="nav-item mt-3">
-              <a href="{{ route('admin.logout') }}" class="nav-link text-danger">
-                <i class="nav-icon fas fa-sign-out-alt"></i>
-                <p>Logout</p>
-              </a>
-            </li>
-
           </ul>
         </nav>
       </div>
+      {{-- /SCROLLABLE --}}
+
+      <!-- STICKY: Logout -->
+      <div class="ega-sidebar-logout">
+        <a href="{{ route('admin.logout') }}" class="nav-link">
+          <i class="nav-icon fas fa-sign-out-alt"></i>
+          <p>Logout</p>
+        </a>
+      </div>
+
     </aside>
 
     <!-- Content Wrapper -->
@@ -142,20 +238,16 @@
 
   <script>
     $(document).ready(function () {
-      // Dropzone click trigger
       $(document).on('click', '#dropzone', function (e) {
-        // Only trigger if the click wasn't on the file input itself
         if (e.target.id !== 'fileInput') {
           $('#fileInput').click();
         }
       });
 
-      // Prevent file input click from bubbling to dropzone (infinite loop fix)
       $(document).on('click', '#fileInput', function (e) {
         e.stopPropagation();
       });
 
-      // Dropzone drag and drop
       $(document).on('dragover', '#dropzone', function (e) {
         e.preventDefault();
         $(this).addClass('bg-light');
@@ -178,7 +270,6 @@
         }
       });
 
-      // File input change / preview
       $(document).on('change', '#fileInput', function () {
         const file = this.files[0];
         if (file) {
@@ -197,6 +288,7 @@
     @include('admin.pesan.reply-modal')
   @endif
 
+  @stack('scripts')
   @yield('scripts')
 </body>
 

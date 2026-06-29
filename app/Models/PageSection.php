@@ -1,0 +1,45 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class PageSection extends Model
+{
+    protected $table = 'page_sections';
+
+    protected $fillable = [
+        'page_key',
+        'page_title',
+        'content',
+    ];
+
+    protected $casts = [
+        'content' => 'array',
+    ];
+
+    // ── Konstanta page_key ──────────────────────────────────────────────────
+    const KEY_PODCAST       = 'podcast';
+    const KEY_LAB           = 'lab-komputer';
+    const KEY_SAFETY_RIDING = 'safety-riding';
+
+    // ── Helper: ambil atau buat row untuk satu halaman ──────────────────────
+    public static function forPage(string $key): self
+    {
+        return static::firstOrCreate(
+            ['page_key' => $key],
+            ['page_title' => ucfirst(str_replace('-', ' ', $key)), 'content' => []]
+        );
+    }
+
+    // ── Helper: path folder uploads berdasarkan page_key ───────────────────
+    public static function uploadFolder(string $key): string
+    {
+        $map = [
+            self::KEY_PODCAST       => 'podcast',
+            self::KEY_LAB           => 'lab-komputer',
+            self::KEY_SAFETY_RIDING => 'safety-riding',
+        ];
+        return 'uploads/' . ($map[$key] ?? $key);
+    }
+}

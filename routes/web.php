@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\PopupController;
 use App\Http\Controllers\Admin\PesanController;
 use App\Http\Controllers\Admin\AlumniController;
 use App\Http\Controllers\Admin\ContentJurusanController;
+use App\Http\Controllers\Admin\PageSectionController;
 
 // Public Pages
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -67,5 +68,38 @@ Route::middleware(['admin.auth','no.cache'])->prefix('admin')->name('admin.')->g
     Route::post('/pesan/{id}/reply-email', [PesanController::class, 'replyEmail'])->name('pesan.replyEmail');
     Route::post('/pesan/{id}/mark-read', [PesanController::class, 'markRead'])->name('pesan.markRead');
     Route::delete('/pesan/{id}', [PesanController::class, 'destroy'])->name('pesan.destroy');
+
+    // ── Podcast ────────────────────────────────────────────────────────────────
+Route::get('/podcast',        [PageSectionController::class, 'indexPodcast'])->name('podcast.index');
+Route::get('/podcast/create', [PageSectionController::class, 'createPodcast'])->name('podcast.create');
+Route::post('/podcast',       [PageSectionController::class, 'storePodcast'])->name('podcast.store');
+Route::get('/podcast/edit',   [PageSectionController::class, 'editPodcast'])->name('podcast.edit');
+Route::put('/podcast',        [PageSectionController::class, 'updatePodcast'])->name('podcast.update');
+
+// ── Lab Komputer ───────────────────────────────────────────────────────────
+Route::get('/lab',        [PageSectionController::class, 'indexLab'])->name('lab.index');
+Route::get('/lab/create', [PageSectionController::class, 'createLab'])->name('lab.create');
+Route::post('/lab',       [PageSectionController::class, 'storeLab'])->name('lab.store');
+Route::get('/lab/edit',   [PageSectionController::class, 'editLab'])->name('lab.edit');
+Route::put('/lab',        [PageSectionController::class, 'updateLab'])->name('lab.update');
+
+// ── Safety Riding ──────────────────────────────────────────────────────────
+Route::get('/safety-riding',        [PageSectionController::class, 'indexSafetyRiding'])->name('safety-riding.index');
+Route::get('/safety-riding/create', [PageSectionController::class, 'createSafetyRiding'])->name('safety-riding.create');
+Route::post('/safety-riding',       [PageSectionController::class, 'storeSafetyRiding'])->name('safety-riding.store');
+Route::get('/safety-riding/edit',   [PageSectionController::class, 'editSafetyRiding'])->name('safety-riding.edit');
+Route::put('/safety-riding',        [PageSectionController::class, 'updateSafetyRiding'])->name('safety-riding.update');
+
+// ── Shared: Delete element & delete section (semua page_key) ──────────────
+Route::delete(
+    '/page-section/{key}/section/{sIdx}/element/{eIdx}',
+    [PageSectionController::class, 'deleteElement']
+)->name('pagesection.deleteElement');
+
+Route::delete(
+    '/page-section/{key}/section/{sIdx}',
+    [PageSectionController::class, 'deleteSection']
+)->name('pagesection.deleteSection');
+
 
 });
