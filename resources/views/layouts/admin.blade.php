@@ -83,6 +83,12 @@
                   <p>Popup</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="{{ route('admin.alumni.index') }}" class="nav-link {{ request()->is('admin/alumni*') ? 'active' : '' }}">
+                  <i class="nav-icon fas fa-users-cog text-primary"></i>
+                  <p>Alumni</p>
+                </a>
+              </li>
             </ul>
           </li>
 

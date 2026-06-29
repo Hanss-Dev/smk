@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\HighlightController;
 use App\Http\Controllers\Admin\NewsController;
 use App\Http\Controllers\Admin\PopupController;
 use App\Http\Controllers\Admin\PesanController;
+use App\Http\Controllers\Admin\AlumniController;
 
 // Public Pages
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -56,6 +57,7 @@ Route::middleware(['admin.auth','no.cache'])->prefix('admin')->name('admin.')->g
     Route::resource('highlight', HighlightController::class);
     Route::resource('news', NewsController::class);
     Route::resource('popup', PopupController::class);
+    Route::resource('alumni', AlumniController::class);
     
     // Messages management
     Route::get('/pesan', [PesanController::class, 'index'])->name('pesan.index');
@@ -63,4 +65,5 @@ Route::middleware(['admin.auth','no.cache'])->prefix('admin')->name('admin.')->g
     Route::post('/pesan/{id}/reply-email', [PesanController::class, 'replyEmail'])->name('pesan.replyEmail');
     Route::post('/pesan/{id}/mark-read', [PesanController::class, 'markRead'])->name('pesan.markRead');
     Route::delete('/pesan/{id}', [PesanController::class, 'destroy'])->name('pesan.destroy');
+
 });
