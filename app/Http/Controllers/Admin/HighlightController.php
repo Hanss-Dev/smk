@@ -9,9 +9,20 @@ use Illuminate\Support\Facades\File;
 
 class HighlightController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $highlights = Highlight::orderBy('id', 'desc')->get();
+        $search = $request->input('search');
+
+        $highlights = Highlight::query()
+            ->when($search, function ($query, $search) {
+                return $query->where(function ($q) use ($search) {
+                    $q->where('title', 'like', "%{$search}%")
+                      ->orWhere('description', 'like', "%{$search}%");
+                });
+            })
+            ->orderBy('id', 'desc')
+            ->paginate(10);
+
         return view('admin.highlight.index', compact('highlights'));
     }
 

@@ -29,11 +29,28 @@
       @endif
 
       <div class="card">
-        <div class="card-header d-flex justify-content-between align-items-center">
-          <h3 class="card-title">Daftar Highlight</h3>
-          <a href="{{ route('admin.highlight.create') }}" class="btn btn-primary btn-sm">
-            <i class="fas fa-plus"></i> Tambah Highlight
-          </a>
+        <div class="card-header d-flex flex-wrap justify-content-between align-items-center">
+          <h3 class="card-title my-1">Daftar Highlight</h3>
+          <div class="d-flex align-items-center flex-wrap" style="gap: 10px;">
+            <form action="{{ route('admin.highlight.index') }}" method="GET" class="form-inline my-1">
+              <div class="input-group input-group-sm" style="width: 250px;">
+                <input type="text" name="search" class="form-control float-right" placeholder="Cari highlight..." value="{{ request('search') }}">
+                <div class="input-group-append">
+                  <button type="submit" class="btn btn-default">
+                    <i class="fas fa-search"></i>
+                  </button>
+                  @if(request('search'))
+                    <a href="{{ route('admin.highlight.index') }}" class="btn btn-default" title="Reset Pencarian">
+                      <i class="fas fa-times"></i>
+                    </a>
+                  @endif
+                </div>
+              </div>
+            </form>
+            <a href="{{ route('admin.highlight.create') }}" class="btn btn-primary btn-sm my-1">
+              <i class="fas fa-plus"></i> Tambah Highlight
+            </a>
+          </div>
         </div>
 
         <div class="card-body table-responsive">
@@ -51,7 +68,7 @@
             <tbody>
               @forelse($highlights as $i => $h)
                 <tr>
-                  <td class="text-center">{{ $i + 1 }}</td>
+                  <td class="text-center">{{ ($highlights->currentPage() - 1) * $highlights->perPage() + $i + 1 }}</td>
                   <td>
                     @if($h->image)
                       <img src="{{ asset('uploads/highlight/' . $h->image) }}" style="height:50px; object-fit:cover; border-radius:4px;">
@@ -82,6 +99,11 @@
               @endforelse
             </tbody>
           </table>
+        </div>
+        <div class="card-footer clearfix">
+          <div class="float-right">
+            {{ $highlights->appends(['search' => request('search')])->links() }}
+          </div>
         </div>
       </div>
 
