@@ -49,7 +49,7 @@ Route::post('/admin/login', [AuthController::class, 'login'])->name('admin.login
 Route::get('/admin/logout', [AuthController::class, 'logout'])->name('admin.logout');
 
 // Admin Panel (Protected)
-Route::middleware(['admin.auth'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['admin.auth','no.cache'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     
     // Resource routes for highlight, news, popup

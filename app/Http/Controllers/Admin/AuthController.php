@@ -39,9 +39,13 @@ class AuthController extends Controller
         return redirect()->back()->with('error', 'Username atau password salah')->withInput();
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
         session()->forget(['admin', 'admin_id', 'admin_username']);
+        
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
         return redirect()->route('admin.login')->with('success', 'Berhasil logout');
     }
 }
