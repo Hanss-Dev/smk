@@ -5,7 +5,7 @@
   <title>Login | Cisat Learning Apps – SMK CIBITUNG 1</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   {{-- Favicon (optional, place in public/) --}}
-  {{-- <link rel="icon" href="{{ asset('favicon.ico') }}"> --}}
+  <link rel="icon" href="{{ asset('assets/img/logo-mt.png') }}" type="image/png">
 
   {{-- AdminLTE (kept for any shared layout that needs it) --}}
   <link rel="stylesheet" href="{{ asset('assets/css/login-admin-style.css') }}">
