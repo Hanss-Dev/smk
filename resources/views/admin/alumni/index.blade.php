@@ -37,6 +37,7 @@
         </div>
 
         <div class="card-body table-responsive">
+          @include('admin.components.pagination-controls')
           <table class="table table-bordered table-hover">
             <thead class="bg-light">
               <tr>
@@ -53,7 +54,7 @@
             <tbody>
               @forelse($alumnilist as $i => $n)
                 <tr>
-                  <td class="text-center">{{ $i + 1 }}</td>
+                  <td class="text-center">{{ ($alumnilist->currentPage() - 1) * $alumnilist->perPage() + $i + 1 }}</td>
                     <td>
                     @if($n->image)
                       <img src="{{ asset('uploads/alumni/' . $n->image) }}" style="height:40px; object-fit:cover; border-radius:4px;">
@@ -82,6 +83,11 @@
               @endforelse
             </tbody>
           </table>
+        </div>
+        <div class="card-footer clearfix">
+          <div class="float-right">
+            {{ $alumnilist->appends(['per_page' => request('per_page')])->links() }}
+          </div>
         </div>
       </div>
 

@@ -23,9 +23,12 @@ class ContentJurusanController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $contents = ContentJurusan::orderBy('jurusan')->get();
+        $perPage = request('per_page', 20);
+        $perPage = $perPage === 'all' ? 999999 : (int) $perPage;
+
+        $contents = ContentJurusan::orderBy('jurusan')->paginate($perPage);
         return view('admin.content-jurusan.index', compact('contents'));
     }
 

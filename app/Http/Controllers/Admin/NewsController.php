@@ -14,6 +14,9 @@ class NewsController extends Controller
     {
         $search = $request->input('search');
 
+        $perPage = request('per_page', 20);
+        $perPage = $perPage === 'all' ? 999999 : (int) $perPage;
+
         $newsList = News::query()
             ->when($search, function ($query, $search) {
                 return $query->where(function ($q) use ($search) {
@@ -22,7 +25,7 @@ class NewsController extends Controller
                 });
             })
             ->orderBy('id', 'desc')
-            ->paginate(10);
+            ->paginate($perPage);
 
         return view('admin.news.index', compact('newsList'));
     }

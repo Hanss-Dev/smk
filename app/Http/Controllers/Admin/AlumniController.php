@@ -10,9 +10,12 @@ use Illuminate\Support\Facades\File;
 
 class AlumniController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $alumnilist = Alumni::orderBy('id', 'desc')->get();
+        $perPage = request('per_page', 20);
+        $perPage = $perPage === 'all' ? 999999 : (int) $perPage;
+
+        $alumnilist = Alumni::orderBy('id', 'desc')->paginate($perPage);
         return view('admin.alumni.index', compact('alumnilist'));
     }
 

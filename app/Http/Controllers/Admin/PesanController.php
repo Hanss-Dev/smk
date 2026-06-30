@@ -14,6 +14,9 @@ class PesanController extends Controller
     {
         $search = $request->input('search');
         
+        $perPage = request('per_page', 20);
+        $perPage = $perPage === 'all' ? 999999 : (int) $perPage;
+
         $pesanList = Pesan::query()
             ->when($search, function ($query, $search) {
                 return $query->where(function ($q) use ($search) {
@@ -24,7 +27,7 @@ class PesanController extends Controller
                 });
             })
             ->orderBy('tanggal', 'desc')
-            ->paginate(10);
+            ->paginate($perPage);
 
         return view('admin.pesan.index', compact('pesanList'));
     }
