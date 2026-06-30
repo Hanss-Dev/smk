@@ -73,7 +73,7 @@
                   <td class="text-center">{{ ($newsList->currentPage() - 1) * $newsList->perPage() + $i + 1 }}</td>
                   <td>
                     @if($n->thumbnail)
-                      <img src="{{ asset('uploads/news/' . $n->thumbnail) }}" style="height:40px; object-fit:cover; border-radius:4px;">
+                      <img class="preview-image" src="{{ asset('uploads/news/' . $n->thumbnail) }}" style="height:40px; object-fit:cover; border-radius:4px;">
                     @else
                       <span class="text-muted">-</span>
                     @endif

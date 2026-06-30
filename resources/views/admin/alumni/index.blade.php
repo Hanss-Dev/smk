@@ -57,7 +57,7 @@
                   <td class="text-center">{{ ($alumnilist->currentPage() - 1) * $alumnilist->perPage() + $i + 1 }}</td>
                     <td>
                     @if($n->image)
-                      <img src="{{ asset('uploads/alumni/' . $n->image) }}" style="height:40px; object-fit:cover; border-radius:4px;">
+                      <img class="preview-image" src="{{ asset('uploads/alumni/' . $n->image) }}" style="height:40px; object-fit:cover; border-radius:4px;">
                     @else
                       <span class="text-muted">-</span>
                     @endif

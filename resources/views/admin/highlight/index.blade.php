@@ -72,7 +72,7 @@
                   <td class="text-center">{{ ($highlights->currentPage() - 1) * $highlights->perPage() + $i + 1 }}</td>
                   <td>
                     @if($h->image)
-                      <img src="{{ asset('uploads/highlight/' . $h->image) }}" style="height:50px; object-fit:cover; border-radius:4px;">
+                      <img class="preview-image" src="{{ asset('uploads/highlight/' . $h->image) }}" style="height:50px; object-fit:cover; border-radius:4px;">
                     @else
                       <span class="text-muted">-</span>
                     @endif
