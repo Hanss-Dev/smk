@@ -52,7 +52,7 @@ Sebelum memulai, pastikan sistem kamu sudah terinstall:
 ### 1. Clone Repository
 
 ```bash
-git clone <URL_REPOSITORY> smk
+git clone https://github.com/Hanss-Dev/smk.git
 cd smk
 ```
 
