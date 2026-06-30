@@ -54,6 +54,7 @@
       border-top: 1px solid rgba(255,255,255,.08);
       padding: 8px 0;
     }
+    
     .ega-sidebar-logout .nav-link {
       color: #fc8181 !important;
       display: flex;
@@ -110,6 +111,55 @@
     }
 
     /* ── Sidebar COLLAPSED state (desktop, not hovered) ─────── */
+    @media (min-width: 992px) {
+      /* Paksa lebar sidebar benar-benar mengecil saat collapse, lalu
+         melebar lagi saat di-hover. !important dipakai karena .main-sidebar
+         di atas sudah di-override jadi flex custom. */
+      .sidebar-mini.sidebar-collapse .main-sidebar {
+        width: 4.6rem !important;
+        transition: width 0.3s ease !important;
+      }
+      .sidebar-mini.sidebar-collapse .main-sidebar:hover {
+        width: 250px !important;
+      }
+
+      /* Sembunyikan SEMUA label teks menu (induk maupun anak grup) */
+      .sidebar-mini.sidebar-collapse .main-sidebar:not(:hover) .nav-sidebar .nav-link > p {
+        display: none !important;
+      }
+
+      /* Sembunyikan link INDUK grup (Kelola Konten / Kelola Halaman) —
+         anaknya akan langsung ditampilkan flat tanpa grup */
+      .sidebar-mini.sidebar-collapse .main-sidebar:not(:hover) .nav-sidebar > .nav-item.has-treeview > .nav-link {
+        display: none !important;
+      }
+
+      /* Paksa submenu selalu tampil (flatten) & hilangkan indentasi/bg grup */
+      .sidebar-mini.sidebar-collapse .main-sidebar:not(:hover) .nav-sidebar .nav-treeview {
+        display: block !important;
+        padding-left: 0 !important;
+        margin: 0 !important;
+        background: transparent !important;
+      }
+
+      /* Samakan tampilan semua ikon (level atas & anak grup) jadi rapi & center */
+      .sidebar-mini.sidebar-collapse .main-sidebar:not(:hover) .nav-sidebar > .nav-item > .nav-link,
+      .sidebar-mini.sidebar-collapse .main-sidebar:not(:hover) .nav-sidebar .nav-treeview > .nav-item > .nav-link {
+        display: flex !important;
+        justify-content: center;
+        align-items: center;
+        padding: .65rem 0 !important;
+        margin: 2px 8px !important;
+        width: calc(100% - 16px) !important;
+        border-radius: .35rem !important;
+      }
+      .sidebar-mini.sidebar-collapse .main-sidebar:not(:hover) .nav-sidebar .nav-icon {
+        margin-right: 0 !important;
+        font-size: 1.15rem;
+        width: auto;
+      }
+    }
+
     .sidebar-mini.sidebar-collapse .main-sidebar:not(:hover) .ega-logo-img {
       width: 38px !important;
     }
@@ -128,13 +178,20 @@
     .sidebar-mini.sidebar-collapse .main-sidebar:not(:hover) .ega-sidebar-logout .logout-text {
       display: none !important;
     }
-    .sidebar-mini.sidebar-collapse .main-sidebar:not(:hover) .ega-sidebar-logout .nav-icon {
-      margin-right: 0 !important;
-      font-size: 1.2rem;
+    .sidebar-mini.sidebar-collapse .main-sidebar:not(:hover)
+    .ega-sidebar-logout .nav-icon{
+        margin:0 !important;
+        width:auto !important;
+        font-size:1.2rem;
     }
-    .sidebar-mini.sidebar-collapse .main-sidebar:not(:hover) .ega-sidebar-logout .nav-link {
-      justify-content: center !important;
-      padding: .6rem 0 !important;
+    .sidebar-mini.sidebar-collapse .main-sidebar:not(:hover) .ega-sidebar-logout .nav-link{
+        display:flex !important;
+        align-items:center !important;
+        justify-content:center !important;
+
+        width:calc(100% - 16px);
+        margin:2px 8px;
+        padding:.65rem 0 !important;
     }
   </style>
 
