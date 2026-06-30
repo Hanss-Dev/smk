@@ -72,7 +72,7 @@
                   <td class="text-center">{{ ($popups->currentPage() - 1) * $popups->perPage() + $i + 1 }}</td>
                   <td>
                     @if($p->image)
-                      <img src="{{ asset('uploads/popup/' . $p->image) }}" style="height:50px; object-fit:cover; border-radius:4px;">
+                      <img class="preview-image" src="{{ asset('uploads/popup/' . $p->image) }}" style="height:50px; object-fit:cover; border-radius:4px;">
                     @else
                       <span class="text-muted">-</span>
                     @endif
