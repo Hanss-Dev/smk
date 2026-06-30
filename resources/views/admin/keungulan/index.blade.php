@@ -106,7 +106,7 @@
                     </a>
                     <form action="{{ route('admin.keungulan.destroy', $item->id) }}" method="POST"
                           style="display:inline;"
-                          onsubmit="return confirm('Hapus keunggulan ini?')">
+                          class="form-delete" data-confirm-message="Hapus keunggulan ini?">
                       @csrf
                       @method('DELETE')
                       <button class="btn btn-danger btn-sm" title="Hapus">

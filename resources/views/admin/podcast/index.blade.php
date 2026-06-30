@@ -115,7 +115,7 @@
                               <td class="text-center">
                                 <form action="{{ route('admin.pagesection.deleteElement', ['key' => 'podcast', 'sIdx' => $sIdx, 'eIdx' => $eIdx]) }}"
                                       method="POST" style="display:inline;"
-                                      onsubmit="return confirm('Hapus elemen ini?{{ $el['type'] === 'image' ? ' Gambar juga akan dihapus dari server.' : '' }}')">
+                                      class="form-delete" data-confirm-message="Hapus elemen ini?{{ $el['type'] === 'image' ? ' Gambar juga akan dihapus dari server.' : '' }}">
                                   @csrf @method('DELETE')
                                   <button class="btn btn-danger btn-xs" title="Hapus elemen">
                                     <i class="fas fa-times"></i>

@@ -71,7 +71,7 @@
                     <a href="{{ route('admin.alumni.edit', $n->id) }}" class="btn btn-warning btn-sm" title="Edit">
                       <i class="fas fa-edit"></i>
                     </a>
-                    <form action="{{ route('admin.alumni.destroy', $n->id) }}" method="POST" style="display:inline;" class="form-delete" data-confirm-message="Hapus berita ini?">
+                    <form action="{{ route('admin.alumni.destroy', $n->id) }}" method="POST" style="display:inline;" class="form-delete" data-confirm-message="Hapus alumni ini?">
                       @csrf
                       @method('DELETE')
                       <button class="btn btn-danger btn-sm" title="Hapus"><i class="fas fa-trash"></i></button>
