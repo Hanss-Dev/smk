@@ -183,9 +183,9 @@
       alert('Minimal harus ada 1 gambar!');
       return;
     }
-    if (confirm('Hapus baris ini?')) {
+    confirmAction('Hapus baris ini?', function() {
       btn.closest('.image-upload-row').remove();
-    }
+    });
   }
 
   /* ============================================================

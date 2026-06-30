@@ -88,7 +88,7 @@
                     <a href="{{ route('admin.highlight.edit', $h->id) }}" class="btn btn-warning btn-sm" title="Edit">
                       <i class="fas fa-edit"></i>
                     </a>
-                    <form action="{{ route('admin.highlight.destroy', $h->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Hapus highlight ini?')">
+                    <form action="{{ route('admin.highlight.destroy', $h->id) }}" method="POST" style="display:inline;" class="form-delete" data-confirm-message="Hapus highlight ini?">
                       @csrf
                       @method('DELETE')
                       <button class="btn btn-danger btn-sm" title="Hapus"><i class="fas fa-trash"></i></button>

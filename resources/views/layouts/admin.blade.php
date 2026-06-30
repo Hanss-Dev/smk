@@ -225,6 +225,8 @@
     @include('admin.pesan.reply-modal')
   @endif
 
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="{{ asset('assets/js/admin-alerts.js') }}"></script>
   @stack('scripts')
   @yield('scripts')
 </body>

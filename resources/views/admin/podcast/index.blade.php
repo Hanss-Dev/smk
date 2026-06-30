@@ -69,7 +69,7 @@
                       </a>
                       <form action="{{ route('admin.pagesection.deleteSection', ['key' => 'podcast', 'sIdx' => $sIdx]) }}"
                             method="POST" style="display:inline;"
-                            onsubmit="return confirm('Hapus bagian ini beserta semua elemennya?')">
+                            class="form-delete" data-confirm-message="Hapus bagian ini beserta semua elemennya?">
                         @csrf @method('DELETE')
                         <button class="btn btn-danger btn-sm" title="Hapus bagian">
                           <i class="fas fa-trash"></i>

@@ -181,27 +181,25 @@
        dan menghapusnya dari disk
   ============================================================ */
   function deleteExistingImage(btn, imageName) {
-    if (!confirm('Hapus gambar ini?\nGambar akan dihapus permanen dari server setelah kamu menyimpan perubahan.')) {
-      return;
-    }
+    confirmAction('Hapus gambar ini?\\nGambar akan dihapus permanen dari server setelah kamu menyimpan perubahan.', function() {
+      btn.closest('.existing-image-card').remove();
 
-    btn.closest('.existing-image-card').remove();
-
-    // Tampilkan pesan jika tidak ada gambar tersisa
-    const remaining = document.querySelectorAll('#existingImagesContainer .existing-image-card');
-    if (remaining.length === 0) {
-      const container = document.getElementById('existingImagesContainer');
-      if (container) {
-        container.innerHTML = `
-          <div class="col-12">
-            <div class="alert alert-warning">
-              <i class="fas fa-exclamation-triangle mr-1"></i>
-              Semua gambar dihapus. Pastikan menambahkan setidaknya 1 gambar baru sebelum menyimpan.
+      // Tampilkan pesan jika tidak ada gambar tersisa
+      const remaining = document.querySelectorAll('#existingImagesContainer .existing-image-card');
+      if (remaining.length === 0) {
+        const container = document.getElementById('existingImagesContainer');
+        if (container) {
+          container.innerHTML = `
+            <div class="col-12">
+              <div class="alert alert-warning">
+                <i class="fas fa-exclamation-triangle mr-1"></i>
+                Semua gambar dihapus. Pastikan menambahkan setidaknya 1 gambar baru sebelum menyimpan.
+              </div>
             </div>
-          </div>
-        `;
+          `;
+        }
       }
-    }
+    });
   }
 
   /* ============================================================
@@ -272,9 +270,9 @@
   }
 
   function removeNewRow(btn) {
-    if (confirm('Hapus baris ini?')) {
+    confirmAction('Hapus baris ini?', function() {
       btn.closest('.image-upload-row').remove();
-    }
+    });
   }
 
   /* ============================================================

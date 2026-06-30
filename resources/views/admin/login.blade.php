@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="utf-8">
-  <title>Login | Cisat Learning Apps – SMK CIBITUNG 1</title>
+  <title>Login Admin | SMK MITRA INDUSTRI</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   {{-- Favicon (optional, place in public/) --}}
   <link rel="icon" href="{{ asset('assets/img/logo-mt.png') }}" type="image/png">

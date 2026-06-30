@@ -73,7 +73,7 @@
                     <form action="{{ route('admin.content-jurusan.destroy', $c->id) }}"
                           method="POST"
                           style="display:inline;"
-                          onsubmit="return confirm('Hapus content jurusan ini beserta semua gambarnya?')">
+                          class="form-delete" data-confirm-message="Hapus content jurusan ini beserta semua gambarnya?">
                       @csrf
                       @method('DELETE')
                       <button class="btn btn-danger btn-sm" title="Hapus">

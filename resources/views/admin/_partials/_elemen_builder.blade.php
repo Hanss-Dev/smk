@@ -145,9 +145,10 @@
   document.addEventListener('click', function (e) {
     const btn = e.target.closest('.remove-elemen');
     if (!btn) return;
-    if (!confirm('Hapus elemen ini?')) return;
-    btn.closest('.elemen-item').remove();
-    reindex();
+    confirmAction('Hapus elemen ini?', function() {
+      btn.closest('.elemen-item').remove();
+      reindex();
+    });
   });
 
   // Re-index semua name[] supaya urut 0,1,2,...
