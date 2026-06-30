@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\News;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class NewsController extends Controller
 {
@@ -48,7 +48,7 @@ class NewsController extends Controller
         if ($request->hasFile('thumbnail')) {
             $file = $request->file('thumbnail');
             $fileName = time() . '-' . basename($file->getClientOriginalName());
-            $file->move(public_path('uploads/news'), $fileName);
+            $file->storeAs('news', $fileName, 'public');
         }
 
         News::create([
@@ -83,15 +83,12 @@ class NewsController extends Controller
         if ($request->hasFile('thumbnail')) {
             // Delete old thumbnail if exists
             if ($news->thumbnail) {
-                $oldPath = public_path('uploads/news/' . $news->thumbnail);
-                if (File::exists($oldPath)) {
-                    File::delete($oldPath);
-                }
+                Storage::disk('public')->delete('news/' . $news->thumbnail);
             }
 
             $file = $request->file('thumbnail');
             $fileName = time() . '-' . basename($file->getClientOriginalName());
-            $file->move(public_path('uploads/news'), $fileName);
+            $file->storeAs('news', $fileName, 'public');
         }
 
         $news->update([
@@ -110,10 +107,7 @@ class NewsController extends Controller
         $news = News::findOrFail($id);
 
         if ($news->thumbnail) {
-            $thumbnailPath = public_path('uploads/news/' . $news->thumbnail);
-            if (File::exists($thumbnailPath)) {
-                File::delete($thumbnailPath);
-            }
+            Storage::disk('public')->delete('news/' . $news->thumbnail);
         }
 
         $news->delete();

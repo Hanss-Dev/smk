@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\ContentJurusan;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class ContentJurusanController extends Controller
 {
@@ -61,15 +61,10 @@ class ContentJurusanController extends Controller
             'alts.*'   => 'nullable|string|max:255',
         ]);
 
-        $uploadPath = public_path('uploads/jurusan');
-        if (!File::exists($uploadPath)) {
-            File::makeDirectory($uploadPath, 0775, true);
-        }
-
         $content = [];
         foreach ($request->file('images') as $index => $file) {
             $fileName = time() . '-' . $index . '-' . $file->getClientOriginalName();
-            $file->move($uploadPath, $fileName);
+            $file->storeAs('jurusan', $fileName, 'public');
             $content[] = [
                 'image' => $fileName,
                 'alt'   => $request->alts[$index] ?? '',
@@ -124,7 +119,6 @@ class ContentJurusanController extends Controller
         ]);
 
         $contentJurusan = ContentJurusan::findOrFail($id);
-        $uploadPath     = public_path('uploads/jurusan');
 
         // Current images stored in DB
         $currentContent = is_string($contentJurusan->content)
@@ -139,10 +133,7 @@ class ContentJurusanController extends Controller
         // Delete images that were removed from the form
         foreach ((array) $currentContent as $item) {
             if (!in_array($item['image'], $keptNames)) {
-                $path = $uploadPath . DIRECTORY_SEPARATOR . $item['image'];
-                if (File::exists($path)) {
-                    File::delete($path);
-                }
+                Storage::disk('public')->delete('jurusan/' . $item['image']);
             }
         }
 
@@ -157,12 +148,9 @@ class ContentJurusanController extends Controller
 
         // Append newly uploaded images
         if ($request->hasFile('images')) {
-            if (!File::exists($uploadPath)) {
-                File::makeDirectory($uploadPath, 0775, true);
-            }
             foreach ($request->file('images') as $index => $file) {
                 $fileName = time() . '-' . $index . '-' . $file->getClientOriginalName();
-                $file->move($uploadPath, $fileName);
+                $file->storeAs('jurusan', $fileName, 'public');
                 $finalContent[] = [
                     'image' => $fileName,
                     'alt'   => $request->alts[$index] ?? '',
@@ -193,10 +181,7 @@ class ContentJurusanController extends Controller
             : ($contentJurusan->content ?? []);
 
         foreach ((array) $images as $item) {
-            $path = public_path('uploads/jurusan/' . $item['image']);
-            if (File::exists($path)) {
-                File::delete($path);
-            }
+            Storage::disk('public')->delete('jurusan/' . $item['image']);
         }
 
         $contentJurusan->delete();

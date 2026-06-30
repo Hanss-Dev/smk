@@ -32,7 +32,8 @@ class PageSection extends Model
         );
     }
 
-    // ── Helper: path folder uploads berdasarkan page_key ───────────────────
+    // ── Helper: path folder storage berdasarkan page_key ───────────────────
+    // Mengembalikan path relatif terhadap storage/app/public (disk 'public')
     public static function uploadFolder(string $key): string
     {
         $map = [
@@ -40,6 +41,12 @@ class PageSection extends Model
             self::KEY_LAB           => 'lab-komputer',
             self::KEY_SAFETY_RIDING => 'safety-riding',
         ];
-        return 'uploads/' . ($map[$key] ?? $key);
+        return $map[$key] ?? $key;
+    }
+
+    // ── Helper: path public (untuk asset()) ────────────────────────────────
+    public static function publicFolder(string $key): string
+    {
+        return 'storage/' . static::uploadFolder($key);
     }
 }

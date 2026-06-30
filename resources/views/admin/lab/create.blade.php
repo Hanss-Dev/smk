@@ -56,7 +56,7 @@
 
                   @include('admin._partials._elemen_builder', [
                     'existingElemen' => [],
-                    'folder'         => 'uploads/lab-komputer',
+                    'folder'         => 'storage/lab-komputer',
                   ])
                 </div>
 

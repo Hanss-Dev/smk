@@ -108,7 +108,7 @@ body.nx-body {
   <div class="nx-card">
     @if ($news->thumbnail)
       <div class="nx-image">
-        <img src="{{ asset('uploads/news/' . $news->thumbnail) }}" alt="{{ $news->title }}">
+        <img src="{{ asset('storage/news/' . $news->thumbnail) }}" alt="{{ $news->title }}">
       </div>
     @endif
 

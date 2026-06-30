@@ -56,7 +56,7 @@
 
                   @include('admin._partials._elemen_builder', [
                     'existingElemen' => [],
-                    'folder'         => 'uploads/safety-riding',
+                    'folder'         => 'storage/safety-riding',
                   ])
                 </div>
 

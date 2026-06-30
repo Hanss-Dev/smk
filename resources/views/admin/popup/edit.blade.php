@@ -48,7 +48,7 @@
                   <label>Gambar Saat Ini</label>
                   @if($popup->image)
                     <div class="mb-2">
-                      <img src="{{ asset('uploads/popup/' . $popup->image) }}" class="img-thumbnail" style="max-height:150px;">
+                      <img src="{{ asset('storage/popup/' . $popup->image) }}" class="img-thumbnail" style="max-height:150px;">
                     </div>
                   @endif
                   <label>Ganti Gambar (opsional)</label>

@@ -103,7 +103,7 @@
                               </td>
                               <td>
                                 @if($el['type'] === 'image')
-                                  <img class="preview-image" src="{{ asset('uploads/podcast/' . $el['value']) }}"
+                                  <img class="preview-image" src="{{ asset('storage/podcast/' . $el['value']) }}"
                                        style="height:40px; object-fit:cover; border-radius:4px;" class="mr-2">
                                   <small class="text-muted">{{ $el['alt'] ?? '' }}</small>
                                 @elseif($el['type'] === 'link')

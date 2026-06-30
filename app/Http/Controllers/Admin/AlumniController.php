@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Alumni;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class AlumniController extends Controller
 {
@@ -48,7 +48,7 @@ class AlumniController extends Controller
         if ($request->hasFile('GambarAlumni')) {
             $file = $request->file('GambarAlumni');
             $fileName = time() . '-' . basename($file->getClientOriginalName());
-            $file->move(public_path('uploads/Alumni'), $fileName);
+            $file->storeAs('alumni', $fileName, 'public');
         }
 
         Alumni::create([
@@ -84,15 +84,12 @@ class AlumniController extends Controller
         if ($request->hasFile('GambarAlumni')) {
             // Delete old thumbnail if exists
             if ($alumni->image) {
-                $oldPath = public_path('uploads/alumni/' . $alumni->image);
-                if (File::exists($oldPath)) {
-                    File::delete($oldPath);
-                }
+                Storage::disk('public')->delete('alumni/' . $alumni->image);
             }
 
             $file = $request->file('GambarAlumni');
             $fileName = time() . '-' . basename($file->getClientOriginalName());
-            $file->move(public_path('uploads/Alumni'), $fileName);
+            $file->storeAs('alumni', $fileName, 'public');
         }
 
         $alumni->update([
@@ -111,10 +108,7 @@ class AlumniController extends Controller
         $alumni = Alumni::findOrFail($id);
 
         if ($alumni->image) {
-            $imagePath = public_path('uploads/Alumni/' . $alumni->image);
-            if (File::exists($imagePath)) {
-                File::delete($imagePath);
-            }
+            Storage::disk('public')->delete('alumni/' . $alumni->image);
         }
 
         $alumni->delete();

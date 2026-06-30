@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Keungulan;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class KeungulanController extends Controller
 {
@@ -52,11 +52,6 @@ class KeungulanController extends Controller
             'is_active'         => 'nullable|boolean',
         ]);
 
-        $uploadDir = public_path('uploads/keungulan');
-        if (!File::isDirectory($uploadDir)) {
-            File::makeDirectory($uploadDir, 0755, true);
-        }
-
         $images   = $request->file('images');
         $names    = $request->input('nama_keunggulan', []);
         $alts     = $request->input('alts', []);
@@ -64,7 +59,7 @@ class KeungulanController extends Controller
 
         foreach ($images as $i => $file) {
             $fileName = time() . '-' . $i . '-' . basename($file->getClientOriginalName());
-            $file->move($uploadDir, $fileName);
+            $file->storeAs('keungulan', $fileName, 'public');
 
             Keungulan::create([
                 'nama_keunggulan' => $names[$i] ?? null,
@@ -103,20 +98,12 @@ class KeungulanController extends Controller
         if ($request->hasFile('image')) {
             // Hapus gambar lama jika ada
             if ($keungulan->image) {
-                $oldPath = public_path('uploads/keungulan/' . $keungulan->image);
-                if (File::exists($oldPath)) {
-                    File::delete($oldPath);
-                }
-            }
-
-            $uploadDir = public_path('uploads/keungulan');
-            if (!File::isDirectory($uploadDir)) {
-                File::makeDirectory($uploadDir, 0755, true);
+                Storage::disk('public')->delete('keungulan/' . $keungulan->image);
             }
 
             $file     = $request->file('image');
             $fileName = time() . '-' . basename($file->getClientOriginalName());
-            $file->move($uploadDir, $fileName);
+            $file->storeAs('keungulan', $fileName, 'public');
         }
 
         $keungulan->update([
@@ -136,10 +123,7 @@ class KeungulanController extends Controller
     public function destroy(Keungulan $keungulan)
     {
         if ($keungulan->image) {
-            $imagePath = public_path('uploads/keungulan/' . $keungulan->image);
-            if (File::exists($imagePath)) {
-                File::delete($imagePath);
-            }
+            Storage::disk('public')->delete('keungulan/' . $keungulan->image);
         }
 
         $keungulan->delete();

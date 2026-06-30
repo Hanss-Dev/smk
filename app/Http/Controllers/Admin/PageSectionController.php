@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\PageSection;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * Controller bersama untuk tiga halaman:
@@ -106,7 +106,7 @@ class PageSectionController extends Controller
                 if ($request->hasFile("elemen_file.{$i}")) {
                     $file     = $request->file("elemen_file.{$i}");
                     $fileName = time() . "-{$i}-" . basename($file->getClientOriginalName());
-                    $file->move(public_path($folder), $fileName);
+                    $file->storeAs($folder, $fileName, 'public');
                     $el['value'] = $fileName;
                 } else {
                     continue; // skip elemen image tanpa file
@@ -193,12 +193,11 @@ class PageSectionController extends Controller
                     // Hapus gambar lama jika ada
                     $oldFile = $request->input("elemen_existing.{$i}", '');
                     if ($oldFile) {
-                        $oldPath = public_path("{$folder}/{$oldFile}");
-                        if (File::exists($oldPath)) File::delete($oldPath);
+                        Storage::disk('public')->delete("{$folder}/{$oldFile}");
                     }
                     $file     = $request->file("elemen_file.{$i}");
                     $fileName = time() . "-{$i}-" . basename($file->getClientOriginalName());
-                    $file->move(public_path($folder), $fileName);
+                    $file->storeAs($folder, $fileName, 'public');
                     $el['value'] = $fileName;
                 } else {
                     // Tetap pakai gambar lama
@@ -243,8 +242,7 @@ class PageSectionController extends Controller
 
         // Hapus file dari storage jika elemen adalah gambar
         if ($el['type'] === 'image' && !empty($el['value'])) {
-            $path = public_path("{$folder}/{$el['value']}");
-            if (File::exists($path)) File::delete($path);
+            Storage::disk('public')->delete("{$folder}/{$el['value']}");
         }
 
         array_splice($content[$sIdx]['elemen'], $eIdx, 1);
@@ -270,8 +268,7 @@ class PageSectionController extends Controller
         // Hapus semua gambar dalam section ini
         foreach ($content[$sIdx]['elemen'] ?? [] as $el) {
             if ($el['type'] === 'image' && !empty($el['value'])) {
-                $path = public_path("{$folder}/{$el['value']}");
-                if (File::exists($path)) File::delete($path);
+                Storage::disk('public')->delete("{$folder}/{$el['value']}");
             }
         }
 

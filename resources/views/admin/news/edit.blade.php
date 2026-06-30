@@ -48,7 +48,7 @@
                   <label>Thumbnail Saat Ini</label>
                   @if($news->thumbnail)
                     <div class="mb-2">
-                      <img src="{{ asset('uploads/news/' . $news->thumbnail) }}" class="img-thumbnail" style="max-height:150px;">
+                      <img src="{{ asset('storage/news/' . $news->thumbnail) }}" class="img-thumbnail" style="max-height:150px;">
                     </div>
                   @endif
                   <label>Ganti Thumbnail (opsional)</label>

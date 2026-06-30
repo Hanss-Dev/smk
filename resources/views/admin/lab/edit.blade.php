@@ -66,7 +66,7 @@
 
                   @include('admin._partials._elemen_builder', [
                     'existingElemen' => $section['elemen'] ?? [],
-                    'folder'         => 'uploads/lab-komputer',
+                    'folder'         => 'storage/lab-komputer',
                   ])
                 </div>
 

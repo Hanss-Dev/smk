@@ -304,7 +304,7 @@
       @foreach ($highlights as $h)
         <article class="highlight-item">
           <div class="highlight-image">
-            <img src="{{ asset('uploads/highlight/' . $h->image) }}" alt="{{ $h->title }}">
+            <img src="{{ asset('storage/highlight/' . $h->image) }}" alt="{{ $h->title }}">
           </div>
           <div class="highlight-text">
             <h2 class="highlight-title">{{ $h->title }}</h2>
@@ -327,7 +327,7 @@
           <div class="berita-card">
             <div class="berita-image">
               @if ($n->thumbnail)
-                <img src="{{ asset('uploads/news/' . $n->thumbnail) }}" alt="{{ $n->title }}">
+                <img src="{{ asset('storage/news/' . $n->thumbnail) }}" alt="{{ $n->title }}">
               @endif
             </div>
             <div class="berita-content">
@@ -436,7 +436,7 @@
         <div class="popup-body">
           @if ($popup->image)
             <a href="{{ route('ppdb') }}">
-              <img src="{{ asset('uploads/popup/' . $popup->image) }}" alt="{{ $popup->title }}">
+              <img src="{{ asset('storage/popup/' . $popup->image) }}" alt="{{ $popup->title }}">
             </a>
           @endif
 

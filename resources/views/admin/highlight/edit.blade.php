@@ -53,7 +53,7 @@
                   <label>Gambar Saat Ini</label>
                   @if($highlight->image)
                     <div class="mb-2">
-                      <img src="{{ asset('uploads/highlight/' . $highlight->image) }}" class="img-thumbnail" style="max-height:150px;">
+                      <img src="{{ asset('storage/highlight/' . $highlight->image) }}" class="img-thumbnail" style="max-height:150px;">
                     </div>
                   @endif
                   <label>Ganti Gambar (opsional)</label>

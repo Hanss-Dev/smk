@@ -29,7 +29,7 @@
         <div class="berita-card" style="box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-radius: 8px; overflow: hidden; background: #fff; display: flex; flex-direction: column;">
           <div class="berita-image" style="height: 200px; overflow: hidden;">
             @if ($n->thumbnail)
-              <img src="{{ asset('uploads/news/' . $n->thumbnail) }}" alt="{{ $n->title }}" style="width: 100%; height: 100%; object-fit: cover;">
+              <img src="{{ asset('storage/news/' . $n->thumbnail) }}" alt="{{ $n->title }}" style="width: 100%; height: 100%; object-fit: cover;">
             @endif
           </div>
           <div class="berita-content" style="padding: 20px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between;">

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Popup;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class PopupController extends Controller
 {
@@ -47,7 +47,7 @@ class PopupController extends Controller
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $fileName = time() . '-' . basename($file->getClientOriginalName());
-            $file->move(public_path('uploads/popup'), $fileName);
+            $file->storeAs('popup', $fileName, 'public');
         }
 
         Popup::create([
@@ -81,15 +81,12 @@ class PopupController extends Controller
         if ($request->hasFile('image')) {
             // Delete old image if exists
             if ($popup->image) {
-                $oldPath = public_path('uploads/popup/' . $popup->image);
-                if (File::exists($oldPath)) {
-                    File::delete($oldPath);
-                }
+                Storage::disk('public')->delete('popup/' . $popup->image);
             }
 
             $file = $request->file('image');
             $fileName = time() . '-' . basename($file->getClientOriginalName());
-            $file->move(public_path('uploads/popup'), $fileName);
+            $file->storeAs('popup', $fileName, 'public');
         }
 
         $popup->update([
@@ -107,10 +104,7 @@ class PopupController extends Controller
         $popup = Popup::findOrFail($id);
 
         if ($popup->image) {
-            $imagePath = public_path('uploads/popup/' . $popup->image);
-            if (File::exists($imagePath)) {
-                File::delete($imagePath);
-            }
+            Storage::disk('public')->delete('popup/' . $popup->image);
         }
 
         $popup->delete();

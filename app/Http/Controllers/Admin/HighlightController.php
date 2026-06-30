@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Highlight;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class HighlightController extends Controller
 {
@@ -47,7 +47,7 @@ class HighlightController extends Controller
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $fileName = time() . '-' . basename($file->getClientOriginalName());
-            $file->move(public_path('uploads/highlight'), $fileName);
+            $file->storeAs('highlight', $fileName, 'public');
         }
 
         Highlight::create([
@@ -81,15 +81,12 @@ class HighlightController extends Controller
         if ($request->hasFile('image')) {
             // Delete old image if exists
             if ($highlight->image) {
-                $oldPath = public_path('uploads/highlight/' . $highlight->image);
-                if (File::exists($oldPath)) {
-                    File::delete($oldPath);
-                }
+                Storage::disk('public')->delete('highlight/' . $highlight->image);
             }
 
             $file = $request->file('image');
             $fileName = time() . '-' . basename($file->getClientOriginalName());
-            $file->move(public_path('uploads/highlight'), $fileName);
+            $file->storeAs('highlight', $fileName, 'public');
         }
 
         $highlight->update([
@@ -107,10 +104,7 @@ class HighlightController extends Controller
         $highlight = Highlight::findOrFail($id);
 
         if ($highlight->image) {
-            $imagePath = public_path('uploads/highlight/' . $highlight->image);
-            if (File::exists($imagePath)) {
-                File::delete($imagePath);
-            }
+            Storage::disk('public')->delete('highlight/' . $highlight->image);
         }
 
         $highlight->delete();

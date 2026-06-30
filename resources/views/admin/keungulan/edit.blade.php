@@ -85,7 +85,7 @@
                   <label>Gambar Saat Ini</label>
                   @if($keungulan->image)
                     <div class="mb-2">
-                      <img src="{{ asset('uploads/keungulan/' . $keungulan->image) }}"
+                      <img src="{{ asset('storage/keungulan/' . $keungulan->image) }}"
                            alt="{{ $keungulan->alt ?? $keungulan->nama_keunggulan }}"
                            class="img-thumbnail" style="max-height:160px; border-radius:6px;">
                     </div>

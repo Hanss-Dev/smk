@@ -58,7 +58,7 @@
 
                   @include('admin._partials._elemen_builder', [
                     'existingElemen' => old('elemen_type') ? [] : [],
-                    'folder'         => 'uploads/podcast',
+                    'folder'         => 'storage/podcast',
                   ])
                 </div>
 
