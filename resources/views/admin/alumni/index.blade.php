@@ -29,11 +29,28 @@
       @endif
 
       <div class="card">
-        <div class="card-header d-flex justify-content-between align-items-center">
-          <h3 class="card-title">Daftar Alumni</h3>
-          <a href="{{ route('admin.alumni.create') }}" class="btn btn-primary btn-sm">
-            <i class="fas fa-plus"></i> Tambah Alumni
-          </a>
+        <div class="card-header d-flex flex-wrap justify-content-between align-items-center">
+          <h3 class="card-title my-1">Daftar Alumni</h3>
+          <div class="d-flex align-items-center flex-wrap" style="gap: 10px;">
+            <form action="{{ route('admin.alumni.index') }}" method="GET" class="form-inline my-1">
+              <div class="input-group input-group-sm" style="width: 250px;">
+                <input type="text" name="search" class="form-control float-right" placeholder="Cari alumni..." value="{{ request('search') }}">
+                <div class="input-group-append">
+                  <button type="submit" class="btn btn-default">
+                    <i class="fas fa-search"></i>
+                  </button>
+                  @if(request('search'))
+                    <a href="{{ route('admin.alumni.index') }}" class="btn btn-default" title="Reset Pencarian">
+                      <i class="fas fa-times"></i>
+                    </a>
+                  @endif
+                </div>
+              </div>
+            </form>
+            <a href="{{ route('admin.alumni.create') }}" class="btn btn-primary btn-sm my-1">
+              <i class="fas fa-plus"></i> Tambah Alumni
+            </a>
+          </div>
         </div>
 
         <div class="card-body table-responsive">
@@ -86,7 +103,7 @@
         </div>
         <div class="card-footer clearfix">
           <div class="float-right">
-            {{ $alumnilist->appends(['per_page' => request('per_page')])->links() }}
+            {{ $alumnilist->appends(['search' => request('search'), 'per_page' => request('per_page')])->links() }}
           </div>
         </div>
       </div>

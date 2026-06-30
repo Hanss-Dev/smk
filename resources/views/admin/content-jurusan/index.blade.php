@@ -29,11 +29,30 @@
       @endif
 
       <div class="card">
-        <div class="card-header d-flex justify-content-between align-items-center">
-          <h3 class="card-title">Daftar Content Jurusan</h3>
-          <a href="{{ route('admin.content-jurusan.create') }}" class="btn btn-primary btn-sm">
-            <i class="fas fa-plus"></i> Tambah Content
-          </a>
+        <div class="card-header d-flex flex-wrap justify-content-between align-items-center">
+          <h3 class="card-title my-1">Daftar Content Jurusan</h3>
+          <div class="d-flex align-items-center flex-wrap" style="gap: 10px;">
+            <form action="{{ route('admin.content-jurusan.index') }}" method="GET" class="form-inline my-1" id="form-filter-jurusan">
+              <div class="input-group input-group-sm" style="width: 270px;">
+                <select name="jurusan" class="form-control" onchange="document.getElementById('form-filter-jurusan').submit()">
+                  <option value="">-- Semua Jurusan --</option>
+                  @foreach($jurusanList as $j)
+                    <option value="{{ $j }}" {{ request('jurusan') === $j ? 'selected' : '' }}>{{ $j }}</option>
+                  @endforeach
+                </select>
+                <div class="input-group-append">
+                  @if(request('jurusan'))
+                    <a href="{{ route('admin.content-jurusan.index') }}" class="btn btn-default" title="Reset Filter">
+                      <i class="fas fa-times"></i>
+                    </a>
+                  @endif
+                </div>
+              </div>
+            </form>
+            <a href="{{ route('admin.content-jurusan.create') }}" class="btn btn-primary btn-sm my-1">
+              <i class="fas fa-plus"></i> Tambah Content
+            </a>
+          </div>
         </div>
 
         <div class="card-body table-responsive">
@@ -92,7 +111,7 @@
         </div>
         <div class="card-footer clearfix">
           <div class="float-right">
-            {{ $contents->appends(['per_page' => request('per_page')])->links() }}
+            {{ $contents->appends(['jurusan' => request('jurusan'), 'per_page' => request('per_page')])->links() }}
           </div>
         </div>
       </div>

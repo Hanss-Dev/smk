@@ -15,7 +15,17 @@ class AlumniController extends Controller
         $perPage = request('per_page', 20);
         $perPage = $perPage === 'all' ? 999999 : (int) $perPage;
 
-        $alumnilist = Alumni::orderBy('id', 'desc')->paginate($perPage);
+        $search = request('search');
+
+        $alumnilist = Alumni::when($search, function ($q) use ($search) {
+                $q->where('nama_alumni', 'like', "%{$search}%")
+                  ->orWhere('jurusan_alumni', 'like', "%{$search}%")
+                  ->orWhere('nama_pekerjaan', 'like', "%{$search}%")
+                  ->orWhere('nama_perusahaan', 'like', "%{$search}%");
+            })
+            ->orderBy('id', 'desc')
+            ->paginate($perPage);
+
         return view('admin.alumni.index', compact('alumnilist'));
     }
 

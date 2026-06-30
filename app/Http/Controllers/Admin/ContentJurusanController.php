@@ -28,9 +28,16 @@ class ContentJurusanController extends Controller
         $perPage = request('per_page', 20);
         $perPage = $perPage === 'all' ? 999999 : (int) $perPage;
 
-        $contents = ContentJurusan::orderBy('jurusan')->paginate($perPage);
-        return view('admin.content-jurusan.index', compact('contents'));
+        $jurusanFilter = request('jurusan');
+        $jurusanList   = $this->jurusanList;
+
+        $contents = ContentJurusan::when($jurusanFilter, fn($q) => $q->where('jurusan', $jurusanFilter))
+            ->orderBy('jurusan')
+            ->paginate($perPage);
+
+        return view('admin.content-jurusan.index', compact('contents', 'jurusanList'));
     }
+
 
     /**
      * Show the form for creating a new resource.
