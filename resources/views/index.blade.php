@@ -52,31 +52,42 @@
 
         <div class="smi-liteViewport">
           <div class="smi-liteTrack">
-            <article class="smi-liteSlide">
-              <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800" alt="Diprakarsai Praktisi HRD Industri">
-              <div class="smi-slideOverlay"></div>
-              <h3>Diprakarsai Praktisi HRD Industri</h3>
-            </article>
-            <article class="smi-liteSlide">
-              <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800" alt="Kawasan Industri MM2100">
-              <div class="smi-slideOverlay"></div>
-              <h3>Kawasan Industri MM2100</h3>
-            </article>
-            <article class="smi-liteSlide">
-              <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800" alt="Sistem Link Match">
-              <div class="smi-slideOverlay"></div>
-              <h3>Sistem Terpadu Link & Match</h3>
-            </article>
-            <article class="smi-liteSlide">
-              <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?w=800" alt="Budaya Industri">
-              <div class="smi-slideOverlay"></div>
-              <h3>Menerapkan Budaya Industri</h3>
-            </article>
-            <article class="smi-liteSlide">
-              <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800" alt="Kerja Sama Industri">
-              <div class="smi-slideOverlay"></div>
-              <h3>Kerja Sama Sekolah, Kampus & Industri</h3>
-            </article>
+            @if ($keunggulan->isNotEmpty())
+              @foreach ($keunggulan as $item)
+                <article class="smi-liteSlide">
+                  <img src="{{ asset('storage/keungulan/' . $item->image) }}" alt="{{ $item->alt ?? $item->nama_keunggulan }}">
+                  <div class="smi-slideOverlay"></div>
+                  <h3>{{ $item->nama_keunggulan }}</h3>
+                </article>
+              @endforeach
+            @else
+              {{-- Konten default jika database kosong --}}
+              <article class="smi-liteSlide">
+                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800" alt="Diprakarsai Praktisi HRD Industri">
+                <div class="smi-slideOverlay"></div>
+                <h3>Diprakarsai Praktisi HRD Industri</h3>
+              </article>
+              <article class="smi-liteSlide">
+                <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800" alt="Kawasan Industri MM2100">
+                <div class="smi-slideOverlay"></div>
+                <h3>Kawasan Industri MM2100</h3>
+              </article>
+              <article class="smi-liteSlide">
+                <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800" alt="Sistem Link Match">
+                <div class="smi-slideOverlay"></div>
+                <h3>Sistem Terpadu Link & Match</h3>
+              </article>
+              <article class="smi-liteSlide">
+                <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?w=800" alt="Budaya Industri">
+                <div class="smi-slideOverlay"></div>
+                <h3>Menerapkan Budaya Industri</h3>
+              </article>
+              <article class="smi-liteSlide">
+                <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800" alt="Kerja Sama Industri">
+                <div class="smi-slideOverlay"></div>
+                <h3>Kerja Sama Sekolah, Kampus & Industri</h3>
+              </article>
+            @endif
           </div>
         </div>
 
@@ -97,41 +108,64 @@
       </div>
 
       <div class="alumni-grid">
-        <article class="alumni-card">
-          <div class="alumni-photo">
-            <img src="https://dummyimage.com/600x400/000/fff" alt="Alumni Industri Jepang">
-            <span class="alumni-badge">🌍 Jepang</span>
-          </div>
-          <div class="alumni-info">
-            <h3>Alumni Teknik Mesin</h3>
-            <p class="alumni-role">Operator CNC</p>
-            <p class="alumni-company">Manufaktur Otomotif Jepang</p>
-          </div>
-        </article>
+        @if ($alumniList->isNotEmpty())
+          @foreach ($alumniList as $alumni)
+            <article class="alumni-card">
+              <div class="alumni-photo">
+                @if ($alumni->image)
+                  <img src="{{ asset('storage/alumni/' . $alumni->image) }}" alt="{{ $alumni->nama_alumni }}">
+                @else
+                  <img src="https://dummyimage.com/600x400/000/fff" alt="{{ $alumni->nama_alumni }}">
+                @endif
+              </div>
+              <div class="alumni-info">
+                <h3>{{ $alumni->nama_alumni }}</h3>
+                <p class="alumni-role">{{ $alumni->nama_pekerjaan }}</p>
+                <p class="alumni-company">{{ $alumni->nama_perusahaan }}</p>
+                @if ($alumni->jurusan_alumni)
+                  <p class="alumni-jurusan">{{ $alumni->jurusan_alumni }}</p>
+                @endif
+              </div>
+            </article>
+          @endforeach
+        @else
+          {{-- Konten default jika database kosong --}}
+          <article class="alumni-card">
+            <div class="alumni-photo">
+              <img src="https://dummyimage.com/600x400/000/fff" alt="Alumni Industri Jepang">
+              <span class="alumni-badge">🌍 Jepang</span>
+            </div>
+            <div class="alumni-info">
+              <h3>Alumni Teknik Mesin</h3>
+              <p class="alumni-role">Operator CNC</p>
+              <p class="alumni-company">Manufaktur Otomotif Jepang</p>
+            </div>
+          </article>
 
-        <article class="alumni-card">
-          <div class="alumni-photo">
-            <img src="https://dummyimage.com/600x400/000/fff" alt="Alumni Industri Nasional">
-            <span class="alumni-badge">🇮🇩 Indonesia</span>
-          </div>
-          <div class="alumni-info">
-            <h3>Alumni TEI</h3>
-            <p class="alumni-role">Teknisi Otomasi</p>
-            <p class="alumni-company">Industri Elektronik Nasional</p>
-          </div>
-        </article>
+          <article class="alumni-card">
+            <div class="alumni-photo">
+              <img src="https://dummyimage.com/600x400/000/fff" alt="Alumni Industri Nasional">
+              <span class="alumni-badge">🇮🇩 Indonesia</span>
+            </div>
+            <div class="alumni-info">
+              <h3>Alumni TEI</h3>
+              <p class="alumni-role">Teknisi Otomasi</p>
+              <p class="alumni-company">Industri Elektronik Nasional</p>
+            </div>
+          </article>
 
-        <article class="alumni-card">
-          <div class="alumni-photo">
-            <img src="https://dummyimage.com/600x400/000/fff" alt="Alumni Hospitality">
-            <span class="alumni-badge">🌍 Timur Tengah</span>
-          </div>
-          <div class="alumni-info">
-            <h3>Alumni Perhotelan</h3>
-            <p class="alumni-role">Hotel Service Staff</p>
-            <p class="alumni-company">Hotel Internasional</p>
-          </div>
-        </article>
+          <article class="alumni-card">
+            <div class="alumni-photo">
+              <img src="https://dummyimage.com/600x400/000/fff" alt="Alumni Hospitality">
+              <span class="alumni-badge">🌍 Timur Tengah</span>
+            </div>
+            <div class="alumni-info">
+              <h3>Alumni Perhotelan</h3>
+              <p class="alumni-role">Hotel Service Staff</p>
+              <p class="alumni-company">Hotel Internasional</p>
+            </div>
+          </article>
+        @endif
       </div>
     </div>
   </section>
