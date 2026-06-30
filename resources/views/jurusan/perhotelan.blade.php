@@ -34,25 +34,36 @@
     </div>
 
     <div class="jurusan-gallery__grid">
-      <figure class="gallery-item gallery-item--main">
-        <img src="{{ asset('assets/img/HOTEL/HOTEL.jpg') }}" alt="Praktik Pelayanan Hotel & Hospitality">
-        <figcaption>Praktik Pelayanan Hotel & Hospitality</figcaption>
-      </figure>
+      @if (!empty($galleryImages))
+        @foreach ($galleryImages as $index => $imgData)
+          <figure class="gallery-item {{ $index === 0 ? 'gallery-item--main' : '' }}">
+            <img src="{{ asset('storage/jurusan/' . $imgData['image']) }}" alt="{{ $imgData['alt'] ?? '' }}">
+            @if (!empty($imgData['alt']))
+              <figcaption>{{ $imgData['alt'] }}</figcaption>
+            @endif
+          </figure>
+        @endforeach
+      @else
+        <figure class="gallery-item gallery-item--main">
+          <img src="{{ asset('assets/img/HOTEL/HOTEL.jpg') }}" alt="Praktik Pelayanan Hotel & Hospitality">
+          <figcaption>Praktik Pelayanan Hotel & Hospitality</figcaption>
+        </figure>
 
-      <figure class="gallery-item">
-        <img src="{{ asset('assets/img/HOTEL/hotel2.jpg') }}" alt="Housekeeping & Room Service">
-        <figcaption>Housekeeping & Room Service</figcaption>
-      </figure>
+        <figure class="gallery-item">
+          <img src="{{ asset('assets/img/HOTEL/hotel2.jpg') }}" alt="Housekeeping & Room Service">
+          <figcaption>Housekeeping & Room Service</figcaption>
+        </figure>
 
-      <figure class="gallery-item">
-        <img src="https://dummyimage.com/600x400/000/fff" alt="Food & Beverage Service">
-        <figcaption>Food & Beverage Service</figcaption>
-      </figure>
+        <figure class="gallery-item">
+          <img src="https://dummyimage.com/600x400/000/fff" alt="Food & Beverage Service">
+          <figcaption>Food & Beverage Service</figcaption>
+        </figure>
 
-      <figure class="gallery-item">
-        <img src="https://dummyimage.com/600x400/000/fff" alt="Front Office & Pelayanan Tamu">
-        <figcaption>Front Office & Pelayanan Tamu</figcaption>
-      </figure>
+        <figure class="gallery-item">
+          <img src="https://dummyimage.com/600x400/000/fff" alt="Front Office & Pelayanan Tamu">
+          <figcaption>Front Office & Pelayanan Tamu</figcaption>
+        </figure>
+      @endif
     </div>
   </section>
 </article>

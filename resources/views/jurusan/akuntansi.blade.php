@@ -34,25 +34,36 @@
     </div>
 
     <div class="jurusan-gallery__grid">
-      <figure class="gallery-item gallery-item--main">
-        <img src="{{ asset('assets/img/AKUNTANSI/AKUNTANSI.jpg') }}" alt="Praktik Akuntansi & Administrasi Keuangan">
-        <figcaption>Praktik Akuntansi & Administrasi Keuangan</figcaption>
-      </figure>
+      @if (!empty($galleryImages))
+        @foreach ($galleryImages as $index => $imgData)
+          <figure class="gallery-item {{ $index === 0 ? 'gallery-item--main' : '' }}">
+            <img src="{{ asset('storage/jurusan/' . $imgData['image']) }}" alt="{{ $imgData['alt'] ?? '' }}">
+            @if (!empty($imgData['alt']))
+              <figcaption>{{ $imgData['alt'] }}</figcaption>
+            @endif
+          </figure>
+        @endforeach
+      @else
+        <figure class="gallery-item gallery-item--main">
+          <img src="{{ asset('assets/img/AKUNTANSI/AKUNTANSI.jpg') }}" alt="Praktik Akuntansi & Administrasi Keuangan">
+          <figcaption>Praktik Akuntansi & Administrasi Keuangan</figcaption>
+        </figure>
 
-      <figure class="gallery-item">
-        <img src="{{ asset('assets/img/AKUNTANSI/AKUNTANSI.jpg') }}" alt="Kegiatan Siswa Akuntansi">
-        <figcaption>Kegiatan Siswa Akuntansi</figcaption>
-      </figure>
+        <figure class="gallery-item">
+          <img src="{{ asset('assets/img/AKUNTANSI/AKUNTANSI.jpg') }}" alt="Kegiatan Siswa Akuntansi">
+          <figcaption>Kegiatan Siswa Akuntansi</figcaption>
+        </figure>
 
-      <figure class="gallery-item">
-        <img src="{{ asset('assets/img/AKUNTANSI/AKUNTANSI.jpg') }}" alt="Suasana Pembelajaran">
-        <figcaption>Suasana Pembelajaran</figcaption>
-      </figure>
+        <figure class="gallery-item">
+          <img src="{{ asset('assets/img/AKUNTANSI/AKUNTANSI.jpg') }}" alt="Suasana Pembelajaran">
+          <figcaption>Suasana Pembelajaran</figcaption>
+        </figure>
 
-      <figure class="gallery-item">
-        <img src="{{ asset('assets/img/AKUNTANSI/AKUNTANSI.jpg') }}" alt="Praktik Software Akuntansi">
-        <figcaption>Praktik Software Akuntansi</figcaption>
-      </figure>
+        <figure class="gallery-item">
+          <img src="{{ asset('assets/img/AKUNTANSI/AKUNTANSI.jpg') }}" alt="Praktik Software Akuntansi">
+          <figcaption>Praktik Software Akuntansi</figcaption>
+        </figure>
+      @endif
     </div>
   </section>
 </article>

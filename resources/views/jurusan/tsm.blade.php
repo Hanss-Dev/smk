@@ -34,25 +34,36 @@
     </div>
 
     <div class="jurusan-gallery__grid">
-      <figure class="gallery-item gallery-item--main">
-        <img src="{{ asset('assets/img/TSM/TSM.jpg') }}" alt="Praktik Servis & Perawatan Sepeda Motor">
-        <figcaption>Praktik Servis & Perawatan Sepeda Motor</figcaption>
-      </figure>
+      @if (!empty($galleryImages))
+        @foreach ($galleryImages as $index => $imgData)
+          <figure class="gallery-item {{ $index === 0 ? 'gallery-item--main' : '' }}">
+            <img src="{{ asset('storage/jurusan/' . $imgData['image']) }}" alt="{{ $imgData['alt'] ?? '' }}">
+            @if (!empty($imgData['alt']))
+              <figcaption>{{ $imgData['alt'] }}</figcaption>
+            @endif
+          </figure>
+        @endforeach
+      @else
+        <figure class="gallery-item gallery-item--main">
+          <img src="{{ asset('assets/img/TSM/TSM.jpg') }}" alt="Praktik Servis & Perawatan Sepeda Motor">
+          <figcaption>Praktik Servis & Perawatan Sepeda Motor</figcaption>
+        </figure>
 
-      <figure class="gallery-item">
-        <img src="{{ asset('assets/img/TSM/TSM.jpg') }}" alt="Suasana Bengkel TBSM">
-        <figcaption>Suasana Bengkel TBSM</figcaption>
-      </figure>
+        <figure class="gallery-item">
+          <img src="{{ asset('assets/img/TSM/TSM.jpg') }}" alt="Suasana Bengkel TSM">
+          <figcaption>Suasana Bengkel TSM</figcaption>
+        </figure>
 
-      <figure class="gallery-item">
-        <img src="{{ asset('assets/img/TSM/TSM.jpg') }}" alt="Pembelajaran Teknik & Bisnis Bengkel">
-        <figcaption>Pembelajaran Teknik & Bisnis Bengkel</figcaption>
-      </figure>
+        <figure class="gallery-item">
+          <img src="{{ asset('assets/img/TSM/TSM.jpg') }}" alt="Pembelajaran Teknik & Bisnis Bengkel">
+          <figcaption>Pembelajaran Teknik & Bisnis Bengkel</figcaption>
+        </figure>
 
-      <figure class="gallery-item">
-        <img src="{{ asset('assets/img/TSM/TSM.jpg') }}" alt="Praktik Kerja & Persiapan Industri">
-        <figcaption>Praktik Kerja & Persiapan Industri</figcaption>
-      </figure>
+        <figure class="gallery-item">
+          <img src="{{ asset('assets/img/TSM/TSM.jpg') }}" alt="Praktik Kerja & Persiapan Industri">
+          <figcaption>Praktik Kerja & Persiapan Industri</figcaption>
+        </figure>
+      @endif
     </div>
   </section>
 </article>

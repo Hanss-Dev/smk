@@ -15,6 +15,8 @@ use App\Http\Controllers\Admin\ContentJurusanController;
 use App\Http\Controllers\Admin\PageSectionController;
 use App\Http\Controllers\Admin\KeungulanController;
 
+use App\Http\Controllers\JurusanController;
+
 // Public Pages
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/tentang-kami', function () { return view('tentangkami'); })->name('tentangkami');
@@ -37,14 +39,14 @@ Route::get('/kontak', function () { return view('kontak'); })->name('contact');
 
 // Jurusan Pages
 Route::prefix('jurusan')->name('jurusan.')->group(function () {
-    Route::get('/akuntansi', function () { return view('jurusan.akuntansi'); })->name('akuntansi');
-    Route::get('/perhotelan', function () { return view('jurusan.perhotelan'); })->name('perhotelan');
-    Route::get('/tei', function () { return view('jurusan.tei'); })->name('tei');
-    Route::get('/titl', function () { return view('jurusan.titl'); })->name('titl');
-    Route::get('/tm', function () { return view('jurusan.tm'); })->name('tm');
-    Route::get('/tkro', function () { return view('jurusan.tkro'); })->name('tkro');
-    Route::get('/tsm', function () { return view('jurusan.tsm'); })->name('tsm');
-    Route::get('/tki', function () { return view('jurusan.tki'); })->name('tki');
+    Route::get('/akuntansi', [JurusanController::class, 'show'])->defaults('name', 'akuntansi')->name('akuntansi');
+    Route::get('/perhotelan', [JurusanController::class, 'show'])->defaults('name', 'perhotelan')->name('perhotelan');
+    Route::get('/tei', [JurusanController::class, 'show'])->defaults('name', 'tei')->name('tei');
+    Route::get('/titl', [JurusanController::class, 'show'])->defaults('name', 'titl')->name('titl');
+    Route::get('/tm', [JurusanController::class, 'show'])->defaults('name', 'tm')->name('tm');
+    Route::get('/tkro', [JurusanController::class, 'show'])->defaults('name', 'tkro')->name('tkro');
+    Route::get('/tsm', [JurusanController::class, 'show'])->defaults('name', 'tsm')->name('tsm');
+    Route::get('/tki', [JurusanController::class, 'show'])->defaults('name', 'tki')->name('tki');
 });
 
 // Error Pages & Fallback

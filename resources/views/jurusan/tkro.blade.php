@@ -34,25 +34,36 @@
     </div>
 
     <div class="jurusan-gallery__grid">
-      <figure class="gallery-item gallery-item--main">
-        <img src="{{ asset('assets/img/TKR/tkr2.jpg') }}" alt="Praktik Servis & Tune Up Kendaraan">
-        <figcaption>Praktik Servis & Tune Up Kendaraan</figcaption>
-      </figure>
+      @if (!empty($galleryImages))
+        @foreach ($galleryImages as $index => $imgData)
+          <figure class="gallery-item {{ $index === 0 ? 'gallery-item--main' : '' }}">
+            <img src="{{ asset('storage/jurusan/' . $imgData['image']) }}" alt="{{ $imgData['alt'] ?? '' }}">
+            @if (!empty($imgData['alt']))
+              <figcaption>{{ $imgData['alt'] }}</figcaption>
+            @endif
+          </figure>
+        @endforeach
+      @else
+        <figure class="gallery-item gallery-item--main">
+          <img src="{{ asset('assets/img/TKR/tkr2.jpg') }}" alt="Praktik Servis & Tune Up Kendaraan">
+          <figcaption>Praktik Servis & Tune Up Kendaraan</figcaption>
+        </figure>
 
-      <figure class="gallery-item">
-        <img src="{{ asset('assets/img/TKR/TKR.jpg') }}" alt="Sistem Kelistrikan Kendaraan">
-        <figcaption>Sistem Kelistrikan Kendaraan</figcaption>
-      </figure>
+        <figure class="gallery-item">
+          <img src="{{ asset('assets/img/TKR/TKR.jpg') }}" alt="Sistem Kelistrikan Kendaraan">
+          <figcaption>Sistem Kelistrikan Kendaraan</figcaption>
+        </figure>
 
-      <figure class="gallery-item">
-        <img src="https://dummyimage.com/600x400/000/fff" alt="Diagnosa Mesin Otomotif">
-        <figcaption>Diagnosa Mesin Otomotif</figcaption>
-      </figure>
+        <figure class="gallery-item">
+          <img src="https://dummyimage.com/600x400/000/fff" alt="Diagnosa Mesin Otomotif">
+          <figcaption>Diagnosa Mesin Otomotif</figcaption>
+        </figure>
 
-      <figure class="gallery-item">
-        <img src="https://dummyimage.com/600x400/000/fff" alt="Workshop & Bengkel TKRO">
-        <figcaption>Workshop & Bengkel TKRO</figcaption>
-      </figure>
+        <figure class="gallery-item">
+          <img src="https://dummyimage.com/600x400/000/fff" alt="Workshop & Bengkel TKRO">
+          <figcaption>Workshop & Bengkel TKRO</figcaption>
+        </figure>
+      @endif
     </div>
   </section>
 </article>

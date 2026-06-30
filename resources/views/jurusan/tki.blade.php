@@ -38,25 +38,36 @@
     </div>
 
     <div class="jurusan-gallery__grid">
-      <figure class="gallery-item gallery-item--main">
-        <img src="{{ asset('assets/img/TKI/TKI-NYEMPROT.JPG') }}" alt="Praktik Laboratorium Teknik Kimia Industri">
-        <figcaption>Praktik Laboratorium Teknik Kimia Industri</figcaption>
-      </figure>
+      @if (!empty($galleryImages))
+        @foreach ($galleryImages as $index => $imgData)
+          <figure class="gallery-item {{ $index === 0 ? 'gallery-item--main' : '' }}">
+            <img src="{{ asset('storage/jurusan/' . $imgData['image']) }}" alt="{{ $imgData['alt'] ?? '' }}">
+            @if (!empty($imgData['alt']))
+              <figcaption>{{ $imgData['alt'] }}</figcaption>
+            @endif
+          </figure>
+        @endforeach
+      @else
+        <figure class="gallery-item gallery-item--main">
+          <img src="{{ asset('assets/img/TKI/TKI-NYEMPROT.JPG') }}" alt="Praktik Laboratorium Teknik Kimia Industri">
+          <figcaption>Praktik Laboratorium Teknik Kimia Industri</figcaption>
+        </figure>
 
-      <figure class="gallery-item">
-        <img src="https://dummyimage.com/600x400/000/fff" alt="Pengolahan Bahan Industri">
-        <figcaption>Pengolahan Bahan Industri</figcaption>
-      </figure>
+        <figure class="gallery-item">
+          <img src="https://dummyimage.com/600x400/000/fff" alt="Pengolahan Bahan Industri">
+          <figcaption>Pengolahan Bahan Industri</figcaption>
+        </figure>
 
-      <figure class="gallery-item">
-        <img src="https://dummyimage.com/600x400/000/fff" alt="Praktik Analisis Kimia">
-        <figcaption>Praktik Analisis Kimia</figcaption>
-      </figure>
+        <figure class="gallery-item">
+          <img src="https://dummyimage.com/600x400/000/fff" alt="Praktik Analisis Kimia">
+          <figcaption>Praktik Analisis Kimia</figcaption>
+        </figure>
 
-      <figure class="gallery-item">
-        <img src="https://dummyimage.com/600x400/000/fff" alt="Pembelajaran Berbasis Industri">
-        <figcaption>Pembelajaran Berbasis Industri</figcaption>
-      </figure>
+        <figure class="gallery-item">
+          <img src="https://dummyimage.com/600x400/000/fff" alt="Pembelajaran Berbasis Industri">
+          <figcaption>Pembelajaran Berbasis Industri</figcaption>
+        </figure>
+      @endif
     </div>
   </section>
 </article>

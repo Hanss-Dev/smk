@@ -34,25 +34,36 @@
     </div>
 
     <div class="jurusan-gallery__grid">
-      <figure class="gallery-item gallery-item--main">
-        <img src="{{ asset('assets/img/ELIND/ELIND-IC.jpg') }}" alt="Praktik Panel Kontrol & Sistem Elektronika Industri">
-        <figcaption>Praktik Panel Kontrol & Sistem Elektronika Industri</figcaption>
-      </figure>
+      @if (!empty($galleryImages))
+        @foreach ($galleryImages as $index => $imgData)
+          <figure class="gallery-item {{ $index === 0 ? 'gallery-item--main' : '' }}">
+            <img src="{{ asset('storage/jurusan/' . $imgData['image']) }}" alt="{{ $imgData['alt'] ?? '' }}">
+            @if (!empty($imgData['alt']))
+              <figcaption>{{ $imgData['alt'] }}</figcaption>
+            @endif
+          </figure>
+        @endforeach
+      @else
+        <figure class="gallery-item gallery-item--main">
+          <img src="{{ asset('assets/img/ELIND/ELIND-IC.jpg') }}" alt="Praktik Panel Kontrol & Sistem Elektronika Industri">
+          <figcaption>Praktik Panel Kontrol & Sistem Elektronika Industri</figcaption>
+        </figure>
 
-      <figure class="gallery-item">
-        <img src="{{ asset('assets/img/ELIND/ELIND-ROBOTIK.jpg') }}" alt="Praktik PLC & Otomasi Industri">
-        <figcaption>Praktik PLC & Otomasi Industri</figcaption>
-      </figure>
+        <figure class="gallery-item">
+          <img src="{{ asset('assets/img/ELIND/ELIND-ROBOTIK.jpg') }}" alt="Praktik PLC & Otomasi Industri">
+          <figcaption>Praktik PLC & Otomasi Industri</figcaption>
+        </figure>
 
-      <figure class="gallery-item">
-        <img src="{{ asset('assets/img/ELIND/ELIND-IOT.JPG') }}" alt="Sistem Kontrol & Instrumentasi">
-        <figcaption>Sistem Kontrol & Instrumentasi</figcaption>
-      </figure>
+        <figure class="gallery-item">
+          <img src="{{ asset('assets/img/ELIND/ELIND-IOT.JPG') }}" alt="Sistem Kontrol & Instrumentasi">
+          <figcaption>Sistem Kontrol & Instrumentasi</figcaption>
+        </figure>
 
-      <figure class="gallery-item">
-        <img src="https://dummyimage.com/600x400/000/fff" alt="Pembelajaran Berbasis Industri">
-        <figcaption>Pembelajaran Berbasis Industri</figcaption>
-      </figure>
+        <figure class="gallery-item">
+          <img src="https://dummyimage.com/600x400/000/fff" alt="Pembelajaran Berbasis Industri">
+          <figcaption>Pembelajaran Berbasis Industri</figcaption>
+        </figure>
+      @endif
     </div>
   </section>
 </article>
