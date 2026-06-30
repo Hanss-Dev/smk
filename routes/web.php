@@ -46,6 +46,18 @@ Route::prefix('jurusan')->name('jurusan.')->group(function () {
     Route::get('/tki', function () { return view('jurusan.tki'); })->name('tki');
 });
 
+// Error Pages & Fallback
+Route::get('/401', function () { return view('errors.401'); });
+Route::get('/403', function () { return view('errors.403'); });
+Route::get('/404', function () { return view('errors.404'); });
+Route::get('/419', function () { return view('errors.419'); });
+Route::get('/429', function () { return view('errors.429'); });
+Route::get('/500', function () { return view('errors.500'); });
+Route::get('/503', function () { return view('errors.503'); });
+Route::fallback(function () {
+    return response()->view('errors.404', [], 404);
+});
+
 // Admin Auth
 Route::get('/admin/login', [AuthController::class, 'showLoginForm'])->name('admin.login');
 Route::post('/admin/login', [AuthController::class, 'login'])->name('admin.login.post');
