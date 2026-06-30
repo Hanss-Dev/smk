@@ -25,9 +25,9 @@ Route::get('/profile', function () { return view('profile'); })->name('profile')
 Route::get('/fasilitas', function () { return view('fasilitas'); })->name('fasilitas');
 Route::get('/ppdb', function () { return view('ppdb'); })->name('ppdb');
 Route::get('/skill-passport', function () { return view('skill-passport'); })->name('skill-passport');
-Route::get('/podcast', function () { return view('podcast'); })->name('podcast');
-Route::get('/lab', function () { return view('lab'); })->name('lab');
-Route::get('/safety-riding', function () { return view('safety-riding'); })->name('safety-riding');
+Route::get('/podcast', [HomeController::class, 'podcast'])->name('podcast');
+Route::get('/lab', [HomeController::class, 'lab'])->name('lab');
+Route::get('/safety-riding', [HomeController::class, 'safetyRiding'])->name('safety-riding');
 
 // Public News
 Route::get('/news', [PublicNewsController::class, 'index'])->name('news.index');
