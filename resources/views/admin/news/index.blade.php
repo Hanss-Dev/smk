@@ -54,6 +54,7 @@
         </div>
 
         <div class="card-body table-responsive">
+          @include('admin.components.pagination-controls')
           <table class="table table-bordered table-hover">
             <thead class="bg-light">
               <tr>
@@ -104,7 +105,7 @@
         </div>
         <div class="card-footer clearfix">
           <div class="float-right">
-            {{ $newsList->appends(['search' => request('search')])->links() }}
+            {{ $newsList->appends(['search' => request('search'), 'per_page' => request('per_page')])->links() }}
           </div>
         </div>
       </div>

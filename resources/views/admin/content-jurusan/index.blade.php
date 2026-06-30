@@ -37,6 +37,7 @@
         </div>
 
         <div class="card-body table-responsive">
+          @include('admin.components.pagination-controls')
           <table class="table table-bordered table-hover">
             <thead class="bg-light">
               <tr>
@@ -55,7 +56,7 @@
                     : ($c->content ?? []);
                 @endphp
                 <tr>
-                  <td class="text-center">{{ $i + 1 }}</td>
+                  <td class="text-center">{{ ($contents->currentPage() - 1) * $contents->perPage() + $i + 1 }}</td>
                   <td>{{ $c->jurusan }}</td>
                   <td class="text-center">
                     <span class="badge badge-info">{{ count($images) }} gambar</span>
@@ -88,6 +89,11 @@
               @endforelse
             </tbody>
           </table>
+        </div>
+        <div class="card-footer clearfix">
+          <div class="float-right">
+            {{ $contents->appends(['per_page' => request('per_page')])->links() }}
+          </div>
         </div>
       </div>
 
