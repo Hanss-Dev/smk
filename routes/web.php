@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\PesanController;
 use App\Http\Controllers\Admin\AlumniController;
 use App\Http\Controllers\Admin\ContentJurusanController;
 use App\Http\Controllers\Admin\PageSectionController;
+use App\Http\Controllers\Admin\KeungulanController;
 
 // Public Pages
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -72,6 +73,7 @@ Route::middleware(['admin.auth','no.cache'])->prefix('admin')->name('admin.')->g
     Route::resource('news', NewsController::class);
     Route::resource('popup', PopupController::class);
     Route::resource('alumni', AlumniController::class);
+    Route::resource('keungulan', KeungulanController::class);
     Route::resource('content-jurusan', ContentJurusanController::class);
     
     // Messages management

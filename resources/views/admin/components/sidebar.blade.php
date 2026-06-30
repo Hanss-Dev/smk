@@ -29,7 +29,7 @@
         </li>
 
         @php
-          $isKonten = request()->is('admin/news*') || request()->is('admin/highlight*') || request()->is('admin/popup*') || request()->is('admin/alumni*') || request()->is('admin/content-jurusan*');
+          $isKonten = request()->is('admin/news*') || request()->is('admin/highlight*') || request()->is('admin/popup*') || request()->is('admin/alumni*') || request()->is('admin/content-jurusan*') || request()->is('admin/keungulan*');
         @endphp
 
         <li class="nav-item has-treeview {{ $isKonten ? 'menu-open' : '' }}">
@@ -67,6 +67,13 @@
                 class="nav-link {{ request()->is('admin/alumni*') ? 'active' : '' }}">
                 <i class="nav-icon fas fa-users-cog text-primary"></i>
                 <p>Alumni</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ route('admin.keungulan.index') }}"
+                class="nav-link {{ request()->is('admin/keungulan*') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-trophy text-success"></i>
+                <p>Keunggulan</p>
               </a>
             </li>
             <li class="nav-item">

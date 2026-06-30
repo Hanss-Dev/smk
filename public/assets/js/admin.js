@@ -15,6 +15,7 @@ import { initElemenBuilder } from './modules/elemen-builder.js';
 import { initReplyModal } from './modules/reply-modal.js';
 import { initContentJurusanCreate } from './modules/content-jurusan-create.js';
 import { initContentJurusanEdit } from './modules/content-jurusan-edit.js';
+import { initKeungulanCreate } from './modules/keungulan-create.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   initLoginPage();
@@ -22,4 +23,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initReplyModal();
   initContentJurusanCreate();
   initContentJurusanEdit();
+  initKeungulanCreate();
 });
