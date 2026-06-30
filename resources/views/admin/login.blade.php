@@ -71,7 +71,8 @@
             </svg>
             <input type="password" id="password" name="password"
                    placeholder="Masukkan password" required>
-            <span class="login-eye-toggle" onclick="togglePass()" title="Tampilkan / Sembunyikan">
+            {{-- "data-toggle-pass" replaces the old inline onclick="togglePass()" --}}
+            <span class="login-eye-toggle" data-toggle-pass title="Tampilkan / Sembunyikan">
               <svg id="eye-icon" xmlns="http://www.w3.org/2000/svg" fill="none"
                    viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -101,26 +102,6 @@
 
 </div>
 
-{{-- Scripts --}}
-<script>
-  // Toggle password visibility
-  function togglePass() {
-    const input = document.getElementById('password');
-    const icon  = document.getElementById('eye-icon');
-    if (input.type === 'password') {
-      input.type = 'text';
-      icon.style.color = '#4f46e5';
-    } else {
-      input.type = 'password';
-      icon.style.color = '';
-    }
-  }
-
-  (function() {
-    const opts = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
-    const date = new Date().toLocaleDateString('en-GB', opts);
-    document.getElementById('today-date').textContent = date;
-  })();
-</script>
+<script type="module" src="{{ asset('assets/js/admin.js') }}"></script>
 </body>
 </html>

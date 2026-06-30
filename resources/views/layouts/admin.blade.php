@@ -225,6 +225,7 @@
     @include('admin.pesan.reply-modal')
   @endif
 
+  <script type="module" src="{{ asset('assets/js/admin.js') }}"></script>
   @stack('scripts')
   @yield('scripts')
 </body>

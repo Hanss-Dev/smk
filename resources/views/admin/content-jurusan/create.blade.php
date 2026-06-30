@@ -73,12 +73,12 @@
                   </small>
 
                   <div id="imageRows">
-                    {{-- Rows ditambahkan via JavaScript --}}
+                    {{-- Rows ditambahkan via admin.js → modules/content-jurusan-create.js --}}
                   </div>
 
                   <button type="button"
                           class="btn btn-outline-primary btn-sm mt-2"
-                          onclick="addImageRow()">
+                          data-add-image-row>
                     <i class="fas fa-plus"></i> Tambah Gambar
                   </button>
                 </div>
@@ -101,152 +101,4 @@
     </div>
   </section>
 </div>
-@endsection
-
-@section('scripts')
-<script>
-  let rowCount = 0;
-
-  /* ============================================================
-     Tambah baris upload gambar baru
-  ============================================================ */
-  function addImageRow() {
-    rowCount++;
-    const rowId = rowCount;
-    const isFirst = rowId === 1;
-
-    const row = document.createElement('div');
-    row.className = 'image-upload-row card mb-2 border';
-    row.dataset.rowId = rowId;
-
-    row.innerHTML = `
-      <div class="card-body py-3">
-        <div class="d-flex justify-content-between align-items-center mb-2">
-          <span class="small font-weight-bold text-muted">
-            Gambar #<span class="row-num">${rowId}</span>
-          </span>
-          <button type="button"
-                  class="btn btn-sm btn-outline-danger"
-                  onclick="removeImageRow(this)">
-            <i class="fas fa-times"></i> Hapus Baris
-          </button>
-        </div>
-
-        <div class="row align-items-start">
-          <div class="col-md-5 mb-2">
-            <div class="dropzone-area rounded text-center p-3"
-                 style="cursor:pointer;
-                        border:2px dashed #ced4da;
-                        background:#f8f9fa;
-                        min-height:115px;
-                        transition:background .2s;">
-              <i class="fas fa-cloud-upload-alt fa-2x text-muted mt-1"></i>
-              <p class="text-muted small mt-1 mb-0 label-filename">
-                Klik atau seret gambar ke sini
-              </p>
-              <input type="file"
-                     name="images[]"
-                     accept="image/*"
-                     class="d-none file-input"
-                     ${isFirst ? 'required' : ''}>
-            </div>
-            <img class="img-fluid rounded preview-img d-none mt-2"
-                 style="max-height:130px; width:100%; object-fit:cover;">
-          </div>
-
-          <div class="col-md-7">
-            <label class="small font-weight-bold">
-              Alt Text
-              <span class="text-muted font-weight-normal">(opsional)</span>
-            </label>
-            <textarea name="alts[]"
-                      class="form-control form-control-sm"
-                      rows="4"
-                      placeholder="Deskripsi gambar untuk aksesibilitas dan SEO..."
-                      maxlength="255"></textarea>
-            <small class="text-muted">Maks. 255 karakter</small>
-          </div>
-        </div>
-      </div>
-    `;
-
-    document.getElementById('imageRows').appendChild(row);
-    bindDropzone(row);
-  }
-
-  /* ============================================================
-     Hapus baris upload (minimal 1 baris harus tersisa)
-  ============================================================ */
-  function removeImageRow(btn) {
-    const allRows = document.querySelectorAll('#imageRows .image-upload-row');
-    if (allRows.length <= 1) {
-      alert('Minimal harus ada 1 gambar!');
-      return;
-    }
-    if (confirm('Hapus baris ini?')) {
-      btn.closest('.image-upload-row').remove();
-    }
-  }
-
-  /* ============================================================
-     Bind event klik & drag-drop ke dropzone sebuah baris
-  ============================================================ */
-  function bindDropzone(row) {
-    const dropzone  = row.querySelector('.dropzone-area');
-    const fileInput = row.querySelector('.file-input');
-    const preview   = row.querySelector('.preview-img');
-    const label     = row.querySelector('.label-filename');
-
-    // Klik dropzone → buka file picker
-    dropzone.addEventListener('click', (e) => {
-      if (e.target !== fileInput) fileInput.click();
-    });
-
-    // Preview saat file dipilih
-    fileInput.addEventListener('change', () => {
-      const file = fileInput.files[0];
-      if (!file) return;
-      label.textContent = file.name;
-      const reader = new FileReader();
-      reader.onload = (ev) => {
-        preview.src = ev.target.result;
-        preview.classList.remove('d-none');
-      };
-      reader.readAsDataURL(file);
-    });
-
-    // Drag & drop
-    dropzone.addEventListener('dragover', (e) => {
-      e.preventDefault();
-      dropzone.style.background = '#e9ecef';
-    });
-    dropzone.addEventListener('dragleave', () => {
-      dropzone.style.background = '#f8f9fa';
-    });
-    dropzone.addEventListener('drop', (e) => {
-      e.preventDefault();
-      dropzone.style.background = '#f8f9fa';
-      const files = e.dataTransfer.files;
-      if (!files.length || !files[0].type.startsWith('image/')) return;
-
-      // Set file ke input (pakai DataTransfer API)
-      try {
-        const dt = new DataTransfer();
-        dt.items.add(files[0]);
-        fileInput.files = dt.files;
-      } catch (_) { /* browser lama mungkin tidak support */ }
-
-      label.textContent = files[0].name;
-      const reader = new FileReader();
-      reader.onload = (ev) => {
-        preview.src = ev.target.result;
-        preview.classList.remove('d-none');
-      };
-      reader.readAsDataURL(files[0]);
-    });
-  }
-
-  // Inisialisasi: tampilkan 1 baris saat halaman dimuat
-  document.addEventListener('DOMContentLoaded', () => addImageRow());
-</script>
 @endsection
