@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="utf-8">
-  <title>Login Admin | SMK Mitra Industri</title>
+  <title>Login Admin | SMK MITRA INDUSTRI</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" href="{{ asset('assets/img/logo-mt.png') }}" type="image/png">
   <link rel="stylesheet" href="{{ asset('assets/css/login-admin-style.css') }}">

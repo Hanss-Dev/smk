@@ -136,12 +136,13 @@
   </div>
   {{-- /SCROLLABLE --}}
 
-  <!-- STICKY: Logout -->
   <div class="ega-sidebar-logout">
-    <a href="{{ route('admin.logout') }}" class="nav-link">
-      <i class="nav-icon fas fa-sign-out-alt"></i>
-      <span class="logout-text">Logout</span>
+    <a href="{{ route('admin.logout') }}"
+       class="nav-link logout-link"
+       data-confirm-message="Yakin ingin keluar?">
+        <i class="nav-icon fas fa-sign-out-alt"></i>
+        <span class="logout-text">Logout</span>
     </a>
-  </div>
+</div>
 
 </aside>

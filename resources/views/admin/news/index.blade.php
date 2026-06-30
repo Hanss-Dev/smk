@@ -90,7 +90,7 @@
                     <a href="{{ route('admin.news.edit', $n->id) }}" class="btn btn-warning btn-sm" title="Edit">
                       <i class="fas fa-edit"></i>
                     </a>
-                    <form action="{{ route('admin.news.destroy', $n->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Hapus berita ini?')">
+                    <form action="{{ route('admin.news.destroy', $n->id) }}" method="POST" style="display:inline;" class="form-delete" data-confirm-message="Hapus berita ini?">
                       @csrf
                       @method('DELETE')
                       <button class="btn btn-danger btn-sm" title="Hapus"><i class="fas fa-trash"></i></button>

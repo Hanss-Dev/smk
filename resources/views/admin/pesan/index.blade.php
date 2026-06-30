@@ -92,7 +92,7 @@
                             title="Balas">
                       <i class="fas fa-reply"></i> Balas
                     </button>
-                    <form action="{{ route('admin.pesan.destroy', $p->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Hapus pesan ini?')">
+                    <form action="{{ route('admin.pesan.destroy', $p->id) }}" method="POST" style="display:inline;" class="form-delete" data-confirm-message="Hapus pesan ini?">
                       @csrf
                       @method('DELETE')
                       <button class="btn btn-danger btn-sm shadow-sm" title="Hapus"><i class="fas fa-trash"></i></button>

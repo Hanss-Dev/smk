@@ -74,7 +74,7 @@
                         data-pesan="{{ $pesan->pesan }}">
                   <i class="fas fa-reply mr-1"></i> Balas Pesan
                 </button>
-                <form action="{{ route('admin.pesan.destroy', $pesan->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Hapus pesan ini?')">
+                <form action="{{ route('admin.pesan.destroy', $pesan->id) }}" method="POST" style="display:inline;" class="form-delete" data-confirm-message="Hapus pesan ini?">
                   @csrf
                   @method('DELETE')
                   <button class="btn btn-danger shadow-sm"><i class="fas fa-trash"></i> Hapus Pesan</button>
