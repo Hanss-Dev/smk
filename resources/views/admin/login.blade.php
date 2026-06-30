@@ -2,12 +2,9 @@
 <html lang="id">
 <head>
   <meta charset="utf-8">
-  <title>Login | Cisat Learning Apps – SMK CIBITUNG 1</title>
+  <title>Login Admin | SMK Mitra Industri</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  {{-- Favicon (optional, place in public/) --}}
   <link rel="icon" href="{{ asset('assets/img/logo-mt.png') }}" type="image/png">
-
-  {{-- AdminLTE (kept for any shared layout that needs it) --}}
   <link rel="stylesheet" href="{{ asset('assets/css/login-admin-style.css') }}">
 </head>
 
@@ -24,7 +21,7 @@
     <div class="app-title">
       <h1>ADMIN LOGIN</h1>
       {{-- dari env --}}
-      <p>{{ env('APP_NAME') }}</p>
+      <p>SMK MITRA INDUSTRI</p>
     </div>
   </div>
 
