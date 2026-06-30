@@ -83,8 +83,9 @@
                   </td>
                   <td class="text-center">
                     @if($item->image)
-                      <img src="{{ asset('uploads/keungulan/' . $item->image) }}"
+                       <img src="{{ asset('uploads/keungulan/' . $item->image) }}"
                            alt="{{ $item->alt ?? $item->nama_keunggulan }}"
+                           class="preview-image"
                            style="height:44px; width:64px; object-fit:cover; border-radius:4px; border:1px solid #dee2e6;">
                     @else
                       <span class="text-muted">-</span>
