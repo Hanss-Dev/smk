@@ -20,7 +20,6 @@
     </div>
     <div class="app-title">
       <h1>ADMIN LOGIN</h1>
-      {{-- dari env --}}
       <p>SMK MITRA INDUSTRI</p>
     </div>
   </div>
