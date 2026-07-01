@@ -69,6 +69,76 @@
       </div>
 
       <div class="row">
+        <div class="col-lg-3 col-6">
+          <div class="small-box bg-secondary">
+            <div class="inner">
+              <h3>{{ $totalAlumni }}</h3>
+              <p>Alumni</p>
+            </div>
+            <div class="icon"><i class="fas fa-user-graduate"></i></div>
+            <a href="{{ route('admin.alumni.index') }}" class="small-box-footer">Lihat <i class="fas fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-6">
+          <div class="small-box bg-primary">
+            <div class="inner">
+              <h3>{{ $totalContentJurusan }}</h3>
+              <p>Content Jurusan</p>
+            </div>
+            <div class="icon"><i class="fas fa-book"></i></div>
+            <a href="{{ route('admin.content-jurusan.index') }}" class="small-box-footer">Lihat <i class="fas fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-6">
+          <div class="small-box bg-info">
+            <div class="inner">
+              <h3>{{ $totalKeungulan }}</h3>
+              <p>Keunggulan</p>
+            </div>
+            <div class="icon"><i class="fas fa-award"></i></div>
+            <a href="{{ route('admin.keungulan.index') }}" class="small-box-footer">Lihat <i class="fas fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-6">
+          <div class="small-box bg-warning">
+            <div class="inner">
+              <h3>{{ $totalPesan }}</h3>
+              <p>Pesan</p>
+            </div>
+            <div class="icon"><i class="fas fa-envelope"></i></div>
+            <a href="{{ route('admin.pesan.index') }}" class="small-box-footer">Lihat <i class="fas fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-3 col-6">
+          <div class="small-box bg-dark">
+            <div class="inner">
+              <h3>{{ $totalPageSection }}</h3>
+              <p>Page Sections (Podcast)</p>
+            </div>
+            <div class="icon"><i class="fas fa-th-large"></i></div>
+            <a href="{{ route('admin.podcast.index') }}" class="small-box-footer">Lihat <i class="fas fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-6">
+          <div class="small-box bg-secondary">
+            <div class="inner">
+              <h3>{{ $totalAdminUser }}</h3>
+              <p>Admin Users</p>
+            </div>
+            <div class="icon"><i class="fas fa-user-shield"></i></div>
+            <a href="#" class="small-box-footer">Lihat <i class="fas fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
         <div class="col-md-8">
           <div class="card card-primary card-outline">
             <div class="card-header">
