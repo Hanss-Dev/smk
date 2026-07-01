@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="300" alt="Laravel Logo">
+  <img src="https://upload.wikimedia.org/wikipedia/id/6/69/SMK_Mitra_Industri.png" width="300" alt="SMK Mitra Industri">
 </p>
 
 <h1 align="center">SMK Mitra Industri — Website Sekolah</h1>
