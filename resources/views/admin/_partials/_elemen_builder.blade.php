@@ -39,11 +39,16 @@
           <input type="hidden" name="elemen_existing[{{ $ei }}]" value="{{ $el['value'] ?? '' }}">
           @if(!empty($el['value']))
             <img src="{{ asset($folder . '/' . $el['value']) }}"
-                 class="img-thumbnail mb-2" style="max-height:100px;">
+                 class="preview-image img-thumbnail mb-2" style="max-height:100px; cursor:pointer;"
+                 data-modal-skip="false">
           @endif
+          <div class="elemen-img-preview mb-2" style="display:none;">
+            <img src="" alt="Preview" class="img-thumbnail" style="max-height:100px;" data-modal-skip="true">
+            <small class="text-muted d-block">Preview gambar baru</small>
+          </div>
           <div class="form-group mb-1">
             <label class="text-xs">Ganti Gambar (opsional)</label>
-            <input type="file" name="elemen_file[{{ $ei }}]" accept="image/*" class="form-control-file form-control-sm">
+            <input type="file" name="elemen_file[{{ $ei }}]" accept="image/*" class="form-control-file form-control-sm elemen-file-input">
           </div>
           <div class="form-group mb-0">
             <label class="text-xs">Alt Text</label>

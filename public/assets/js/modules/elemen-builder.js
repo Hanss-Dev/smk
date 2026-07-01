@@ -22,9 +22,13 @@ const TEMPLATES = {
   image: (i) => `
     <input type="hidden" name="elemen_type[${i}]" value="image">
     <input type="hidden" name="elemen_existing[${i}]" value="">
+    <div class="elemen-img-preview mb-2" style="display:none;">
+      <img src="" alt="Preview" class="img-thumbnail" style="max-height:100px;" data-modal-skip="true">
+      <small class="text-muted d-block">Preview gambar baru</small>
+    </div>
     <div class="form-group mb-1">
       <label class="text-xs">Upload Gambar <span class="text-danger">*</span></label>
-      <input type="file" name="elemen_file[${i}]" accept="image/*" class="form-control-file form-control-sm">
+      <input type="file" name="elemen_file[${i}]" accept="image/*" class="form-control-file form-control-sm elemen-file-input">
     </div>
     <div class="form-group mb-0">
       <label class="text-xs">Alt Text</label>
@@ -59,6 +63,44 @@ export function initElemenBuilder(root = document) {
     if (!confirm('Hapus elemen ini?')) return;
     removeBtn.closest('.elemen-item').remove();
     reindex(list);
+  });
+
+  // Live preview: delegasi ke #elemen-list untuk menangkap input file baru maupun yang sudah ada
+  list.addEventListener('change', (e) => {
+    const fileInput = e.target.closest('.elemen-file-input');
+    if (!fileInput) return;
+    const cardBody = fileInput.closest('.card-body');
+    if (!cardBody) return;
+
+    const previewWrapper = cardBody.querySelector('.elemen-img-preview');
+    if (!previewWrapper) return;
+
+    const file = fileInput.files && fileInput.files[0];
+    if (!file) {
+      previewWrapper.style.display = 'none';
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      const previewImg = previewWrapper.querySelector('img');
+      if (previewImg) {
+        previewImg.src = ev.target.result;
+        previewImg.style.cursor = 'pointer';
+        previewImg.removeAttribute('data-modal-skip');
+
+        // Bind click buka modal (hapus listener lama dulu)
+        previewImg.removeEventListener('click', previewImg._modalHandler);
+        previewImg._modalHandler = () => {
+          if (window.ImageModal && typeof window.ImageModal.open === 'function') {
+            window.ImageModal.open(previewImg.src, previewImg.alt || 'Preview gambar');
+          }
+        };
+        previewImg.addEventListener('click', previewImg._modalHandler);
+      }
+      previewWrapper.style.display = 'block';
+    };
+    reader.readAsDataURL(file);
   });
 }
 

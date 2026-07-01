@@ -301,8 +301,21 @@
           $('#dropzone p').text(file.name);
           const reader = new FileReader();
           reader.onload = function (e) {
-            $('#previewImage').attr('src', e.target.result).removeClass('d-none');
-          }
+            const $preview = $('#previewImage');
+            $preview
+              .attr('src', e.target.result)
+              .removeClass('d-none')
+              .css('cursor', 'pointer')
+              .addClass('preview-image')
+              .removeAttr('data-modal-skip');
+
+            // Pastikan image-modal sudah siap, bind langsung supaya langsung bisa diklik
+            $preview.off('click.previewModal').on('click.previewModal', function () {
+              if (window.ImageModal && typeof window.ImageModal.open === 'function') {
+                window.ImageModal.open(this.src, this.alt || 'Preview gambar');
+              }
+            });
+          };
           reader.readAsDataURL(file);
         }
       });

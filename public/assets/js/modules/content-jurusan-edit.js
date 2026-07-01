@@ -141,6 +141,16 @@ function showPreview(file, label, preview) {
   reader.onload = (ev) => {
     preview.src = ev.target.result;
     preview.classList.remove('d-none');
+    preview.style.cursor = 'pointer';
+
+    // Bind click buka modal (hapus listener lama)
+    preview.removeEventListener('click', preview._modalHandler);
+    preview._modalHandler = () => {
+      if (window.ImageModal && typeof window.ImageModal.open === 'function') {
+        window.ImageModal.open(preview.src, preview.alt || label.textContent || 'Preview gambar');
+      }
+    };
+    preview.addEventListener('click', preview._modalHandler);
   };
   reader.readAsDataURL(file);
 }

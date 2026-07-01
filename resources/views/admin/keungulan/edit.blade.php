@@ -87,7 +87,7 @@
                     <div class="mb-2">
                       <img src="{{ asset('storage/keungulan/' . $keungulan->image) }}"
                            alt="{{ $keungulan->alt ?? $keungulan->nama_keunggulan }}"
-                           class="img-thumbnail" style="max-height:160px; border-radius:6px;">
+                           class="preview-image img-thumbnail" style="max-height:160px; border-radius:6px; cursor:pointer;">
                     </div>
                   @else
                     <p class="text-muted small">Belum ada gambar.</p>
@@ -100,7 +100,7 @@
                     <p class="text-muted mt-2 mb-0">Klik atau seret gambar ke sini</p>
                     <input type="file" id="fileInput" name="image" accept="image/*" class="d-none">
                   </div>
-                  <img id="previewImage" class="img-fluid rounded mt-2 d-none" style="max-height:200px;">
+                  <img id="previewImage" class="img-fluid rounded mt-2 d-none" style="max-height:200px;" data-modal-skip="true">
                   @error('image')
                     <div class="text-danger small mt-1">{{ $message }}</div>
                   @enderror

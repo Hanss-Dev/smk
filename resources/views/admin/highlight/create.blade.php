@@ -55,7 +55,7 @@
                     <p class="text-muted mt-2">Klik atau seret gambar ke sini</p>
                     <input type="file" id="fileInput" name="image" accept="image/*" class="d-none" required>
                   </div>
-                  <img id="previewImage" class="img-fluid rounded mt-2 d-none" style="max-height:200px;">
+                  <img id="previewImage" class="img-fluid rounded mt-2 d-none" style="max-height:200px;" data-modal-skip="true">
                 </div>
 
                 <div class="form-group">
