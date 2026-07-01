@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://upload.wikimedia.org/wikipedia/id/6/69/SMK_Mitra_Industri.png" width="300" alt="SMK Mitra Industri">
+  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3PTr5J-attndlAwdALwVvb96pRFYLv9jtHTk-RkWCcg&s=10" width="300" alt="SMK Mitra Industri">
 </p>
 
 <h1 align="center">SMK Mitra Industri — Website Sekolah</h1>
