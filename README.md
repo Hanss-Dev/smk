@@ -22,16 +22,17 @@
 
 | Fitur | Keterangan |
 |---|---|
-| 🏠 **Halaman Publik** | Beranda, profil, visi-misi, jurusan, fasilitas, berita, kontak, PPDB, dll. |
-| 🔐 **Panel Admin** | Dashboard untuk mengelola semua konten website |
-| 📰 **Manajemen Berita** | CRUD berita/artikel sekolah |
-| 🎓 **Data Alumni** | Kelola data alumni sekolah |
-| 🏭 **Konten Jurusan** | Kelola halaman tiap jurusan secara dinamis |
-| 📌 **Highlight** | Kelola highlight/unggulan yang tampil di beranda |
-| 💬 **Pesan / Kontak** | Terima dan kelola pesan dari pengunjung website |
-| 🎉 **Popup** | Tampilkan popup pengumuman ke pengunjung |
-| 📄 **Page Sections** | Edit konten halaman secara dinamis (teks hero, deskripsi, dll.) |
-| 📧 **Email (SMTP)** | Kirim notifikasi email via Gmail SMTP |
+| 🏠 **Halaman Publik** | Beranda, profil, visi-misi, jurusan (akuntansi, perhotelan, tei, titl, tki, tkro, tm, tsm), fasilitas, lab komputer, safety riding, podcast, skill passport, berita, kontak, dan PPDB. |
+| 🔐 **Panel Admin** | Dashboard untuk mengelola semua konten website secara dinamis. |
+| 📰 **Manajemen Berita** | CRUD berita/artikel sekolah beserta detail berita publik. |
+| 🎓 **Data Alumni** | Kelola data alumni sekolah. |
+| 🌟 **Keunggulan** | CRUD keunggulan sekolah untuk ditampilkan pada halaman beranda. |
+| 🏭 **Konten Jurusan** | Kelola isi dan deskripsi halaman tiap jurusan secara dinamis. |
+| 📌 **Highlight** | Kelola highlight/unggulan yang tampil di halaman beranda. |
+| 💬 **Pesan / Kontak** | Terima, baca, hapus, dan balas (reply via SMTP Email) pesan dari pengunjung. |
+| 🎉 **Popup** | Tampilkan popup pengumuman/informasi penting ke pengunjung. |
+| 📄 **Page Sections** | Kelola section dan element secara dinamis untuk halaman khusus seperti **Podcast**, **Lab Komputer**, dan **Safety Riding**. |
+| 📧 **Email (SMTP)** | Kirim balasan email secara langsung dari panel admin ke pengunjung via Gmail SMTP. |
 
 ---
 
@@ -194,12 +195,14 @@ smk/
 │   │   │   │   ├── NewsController.php           # CRUD berita
 │   │   │   │   ├── AlumniController.php         # CRUD data alumni
 │   │   │   │   ├── HighlightController.php      # CRUD highlight
+│   │   │   │   ├── KeungulanController.php      # CRUD keunggulan sekolah
 │   │   │   │   ├── PesanController.php          # Kelola pesan kontak
 │   │   │   │   ├── PopupController.php          # Kelola popup
 │   │   │   │   ├── ContentJurusanController.php # Konten per jurusan
-│   │   │   │   └── PageSectionController.php    # Edit section halaman
-│   │   │   ├── HomeController.php               # Halaman beranda publik
+│   │   │   │   └── PageSectionController.php    # Kelola section & element (Podcast, Lab, Safety Riding)
+│   │   │   ├── HomeController.php               # Halaman beranda publik, podcast, lab, safety riding
 │   │   │   ├── ContactController.php            # Form kontak publik
+│   │   │   ├── JurusanController.php            # Tampilan halaman jurusan publik
 │   │   │   └── PublicNewsController.php         # Tampilan berita publik
 │   │   └── Middleware/           # Middleware (autentikasi, dll.)
 │   ├── Models/                   # Model Eloquent (representasi tabel DB)
@@ -208,6 +211,7 @@ smk/
 │   │   ├── News.php              # Model berita
 │   │   ├── Alumni.php            # Model alumni
 │   │   ├── Highlight.php         # Model highlight
+│   │   ├── Keungulan.php         # Model keunggulan sekolah
 │   │   ├── Pesan.php             # Model pesan kontak
 │   │   ├── Popup.php             # Model popup
 │   │   ├── ContentJurusan.php    # Model konten jurusan
@@ -229,6 +233,10 @@ smk/
 │       │   ├── news/             # Halaman CRUD berita
 │       │   ├── alumni/           # Halaman CRUD alumni
 │       │   ├── highlight/        # Halaman CRUD highlight
+│       │   ├── keungulan/        # Halaman CRUD keunggulan
+│       │   ├── lab/              # Halaman kelola Lab Komputer
+│       │   ├── podcast/          # Halaman kelola Podcast
+│       │   ├── safety-riding/    # Halaman kelola Safety Riding
 │       │   ├── pesan/            # Halaman kelola pesan
 │       │   ├── popup/            # Halaman kelola popup
 │       │   └── content-jurusan/  # Halaman kelola konten jurusan
@@ -237,6 +245,14 @@ smk/
 │       ├── tentangkami.blade.php # Halaman tentang kami
 │       ├── visi-misi.blade.php   # Halaman visi & misi
 │       ├── jurusan/              # Halaman per jurusan
+│       │   ├── akuntansi.blade.php
+│       │   ├── perhotelan.blade.php
+│       │   ├── tei.blade.php
+│       │   ├── titl.blade.php
+│       │   ├── tki.blade.php
+│       │   ├── tkro.blade.php
+│       │   ├── tm.blade.php
+│       │   └── tsm.blade.php
 │       ├── news.blade.php        # Daftar berita publik
 │       ├── news-detail.blade.php # Detail berita
 │       ├── fasilitas.blade.php   # Halaman fasilitas
@@ -244,7 +260,8 @@ smk/
 │       ├── kontak.blade.php      # Halaman kontak
 │       ├── ppdb.blade.php        # Halaman PPDB
 │       ├── podcast.blade.php     # Halaman podcast
-│       └── safety-riding.blade.php
+│       ├── safety-riding.blade.php # Halaman safety riding
+│       └── skill-passport.blade.php # Halaman skill passport
 │
 ├── routes/
 │   ├── web.php                   # Definisi semua route (URL) aplikasi
