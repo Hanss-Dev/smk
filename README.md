@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3PTr5J-attndlAwdALwVvb96pRFYLv9jtHTk-RkWCcg&s=10" width="300" alt="SMK Mitra Industri">
+  <img src="https://smkind-mm2100.sch.id/wp-content/uploads/2022/10/MM2100-LOGO-SMK-Mitra-Industri-MM2100-PNG-150x150.png" width="300" alt="SMK Mitra Industri">
 </p>
 
 <h1 align="center">SMK Mitra Industri — Website Sekolah</h1>
