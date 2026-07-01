@@ -30,9 +30,14 @@ class DashboardController extends Controller
         $totalContentJurusan = ContentJurusan::count();
         $totalKeungulan = Keungulan::count();
         $totalPesan = Pesan::count();
+        $unreadPesan = Pesan::where('status', 'unread')->count();
         $totalPageSection = PageSection::count();
         $totalAdminUser = AdminUser::count();
         $totalUser = User::count();
+
+        // Additional stats
+        $publishPercent = $totalNews ? (int) round($publishNews * 100 / $totalNews) : 0;
+        $latestNews = News::orderBy('created_at', 'desc')->take(5)->get(['id', 'title', 'status', 'created_at']);
 
         return view('admin.dashboard', compact(
             'totalNews',
@@ -46,7 +51,10 @@ class DashboardController extends Controller
             'totalPesan',
             'totalPageSection',
             'totalAdminUser',
-            'totalUser'
+            'totalUser',
+            'unreadPesan',
+            'publishPercent',
+            'latestNews'
         ));
     }
 }
