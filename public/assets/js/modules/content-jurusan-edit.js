@@ -1,0 +1,156 @@
+/**
+ * modules/content-jurusan-edit.js
+ * Handles: removing existing images, plus dynamic "add new image" rows
+ * with drag & drop + preview, for the "Edit Content Jurusan" form.
+ *
+ * Required markup: #existingImagesContainer .existing-image-card[data-remove-existing],
+ * #newImageRows, button[data-add-image-row]
+ */
+
+let newRowCount = 0;
+
+export function initContentJurusanEdit() {
+  bindExistingImageRemoval();
+  bindAddRow();
+}
+
+function bindExistingImageRemoval() {
+  document.querySelectorAll('.existing-image-card [data-remove-existing]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      if (!confirm('Hapus gambar ini?\nGambar akan dihapus permanen dari server setelah kamu menyimpan perubahan.')) {
+        return;
+      }
+      btn.closest('.existing-image-card').remove();
+
+      const remaining = document.querySelectorAll('#existingImagesContainer .existing-image-card');
+      if (remaining.length === 0) {
+        const container = document.getElementById('existingImagesContainer');
+        if (container) {
+          container.innerHTML = `
+            <div class="col-12">
+              <div class="alert alert-warning">
+                <i class="fas fa-exclamation-triangle mr-1"></i>
+                Semua gambar dihapus. Pastikan menambahkan setidaknya 1 gambar baru sebelum menyimpan.
+              </div>
+            </div>`;
+        }
+      }
+    });
+  });
+}
+
+function bindAddRow() {
+  const container = document.getElementById('newImageRows');
+  if (!container) return;
+
+  document.querySelectorAll('[data-add-image-row]').forEach((btn) => {
+    btn.addEventListener('click', () => addNewImageRow(container));
+  });
+}
+
+function addNewImageRow(container) {
+  newRowCount++;
+  const rowId = newRowCount;
+
+  const row = document.createElement('div');
+  row.className = 'image-upload-row card mb-2 border';
+  row.dataset.rowId = rowId;
+
+  row.innerHTML = `
+    <div class="card-body py-3">
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <span class="small font-weight-bold text-muted">Gambar Baru #${rowId}</span>
+        <button type="button" class="btn btn-sm btn-outline-danger" data-remove-row>
+          <i class="fas fa-times"></i> Hapus Baris
+        </button>
+      </div>
+
+      <div class="row align-items-start">
+        <div class="col-md-5 mb-2">
+          <div class="dropzone-area rounded text-center p-3"
+               style="cursor:pointer; border:2px dashed #ced4da; background:#f8f9fa; min-height:115px; transition:background .2s;">
+            <i class="fas fa-cloud-upload-alt fa-2x text-muted mt-1"></i>
+            <p class="text-muted small mt-1 mb-0 label-filename">Klik atau seret gambar ke sini</p>
+            <input type="file" name="images[]" accept="image/*" class="d-none file-input">
+          </div>
+          <img class="img-fluid rounded preview-img d-none mt-2" style="max-height:130px; width:100%; object-fit:cover;">
+        </div>
+
+        <div class="col-md-7">
+          <label class="small font-weight-bold">
+            Alt Text <span class="text-muted font-weight-normal">(opsional)</span>
+          </label>
+          <textarea name="alts[]" class="form-control form-control-sm" rows="4"
+                    placeholder="Deskripsi gambar untuk aksesibilitas dan SEO..." maxlength="255"></textarea>
+          <small class="text-muted">Maks. 255 karakter</small>
+        </div>
+      </div>
+    </div>`;
+
+  container.appendChild(row);
+  row.querySelector('[data-remove-row]').addEventListener('click', () => {
+    if (confirm('Hapus baris ini?')) row.remove();
+  });
+  bindDropzone(row);
+}
+
+function bindDropzone(row) {
+  const dropzone = row.querySelector('.dropzone-area');
+  const fileInput = row.querySelector('.file-input');
+  const preview = row.querySelector('.preview-img');
+  const label = row.querySelector('.label-filename');
+
+  dropzone.addEventListener('click', (e) => {
+    if (e.target !== fileInput) fileInput.click();
+  });
+
+  fileInput.addEventListener('change', () => {
+    const file = fileInput.files[0];
+    if (!file) return;
+    showPreview(file, label, preview);
+  });
+
+  dropzone.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    dropzone.style.background = '#e9ecef';
+  });
+  dropzone.addEventListener('dragleave', () => {
+    dropzone.style.background = '#f8f9fa';
+  });
+  dropzone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    dropzone.style.background = '#f8f9fa';
+    const files = e.dataTransfer.files;
+    if (!files.length || !files[0].type.startsWith('image/')) return;
+
+    try {
+      const dt = new DataTransfer();
+      dt.items.add(files[0]);
+      fileInput.files = dt.files;
+    } catch (_) {
+      /* older browsers without DataTransfer support */
+    }
+
+    showPreview(files[0], label, preview);
+  });
+}
+
+function showPreview(file, label, preview) {
+  label.textContent = file.name;
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    preview.src = ev.target.result;
+    preview.classList.remove('d-none');
+    preview.style.cursor = 'pointer';
+
+    // Bind click buka modal (hapus listener lama)
+    preview.removeEventListener('click', preview._modalHandler);
+    preview._modalHandler = () => {
+      if (window.ImageModal && typeof window.ImageModal.open === 'function') {
+        window.ImageModal.open(preview.src, preview.alt || label.textContent || 'Preview gambar');
+      }
+    };
+    preview.addEventListener('click', preview._modalHandler);
+  };
+  reader.readAsDataURL(file);
+}
