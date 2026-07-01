@@ -1016,7 +1016,7 @@ img {
 
 .smi-heroLite__wrap {
   display: grid;
-  grid-template-columns: 1fr 1.2fr;
+  grid-template-columns: 1fr 1fr;
   gap: 40px;
   align-items: center;
 }
@@ -1081,6 +1081,7 @@ SLIDER
 .smi-liteViewport {
   overflow: hidden;
   border-radius: 28px;
+  width: 100%;
 }
 
 .smi-liteTrack {
@@ -1091,22 +1092,23 @@ SLIDER
 }
 
 .smi-liteSlide {
-  min-width: calc(50% - 8px);
+  flex: 0 0 100%;
+  width: 100%;
   height: 420px;
 
   position: relative;
   overflow: hidden;
   border-radius: 28px;
 
-  flex-shrink: 0;
-
   background: #ddd;
 }
 
 .smi-liteSlide img {
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
   transition: transform .5s ease;
 }
 
@@ -1231,8 +1233,10 @@ RESPONSIVE
   }
 
   .smi-liteSlide {
-    min-width: 100%;
-    height: 360px;
+    flex: 0 0 100%;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 629 / 420;
   }
 
   .smi-liteBtn.prev {
@@ -1299,7 +1303,14 @@ RESPONSIVE
 
   .smi-liteSlide {
     flex: 0 0 100%;
-    max-width: 100%;
+    width: 100%;
+    max-width: 629px;
+    height: auto;
+  }
+
+  .smi-liteSlide img {
+    width: 100%;
+    height: 100%;
   }
 }
 

@@ -28,6 +28,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const prevBtn = document.querySelector(".prev");
   const nextBtn = document.querySelector(".next");
 
+  if (!slider || slides.length === 0 || !prevBtn || !nextBtn) return;
+
   let currentIndex = 0;
   const totalSlides = slides.length;
 
@@ -49,6 +51,112 @@ document.addEventListener("DOMContentLoaded", () => {
     currentIndex = (currentIndex + 1) % totalSlides;
     updateSlider();
   }, 5000);
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const hero = document.querySelector(".smi-heroLite");
+  if (!hero) return;
+
+  const viewport = hero.querySelector(".smi-liteViewport");
+  const track = hero.querySelector(".smi-liteTrack");
+  const slides = hero.querySelectorAll(".smi-liteSlide");
+  const prevBtn = hero.querySelector(".smi-liteBtn.prev");
+  const nextBtn = hero.querySelector(".smi-liteBtn.next");
+  const dots = hero.querySelector(".smi-liteDots");
+
+  if (!track || !viewport || slides.length === 0) return;
+
+  const getGap = () => {
+    const computedGap = getComputedStyle(track).gap || getComputedStyle(track).columnGap || "16px";
+    return parseFloat(computedGap);
+  };
+
+
+
+  const setViewportWidth = () => {
+    viewport.style.maxWidth = "100%";
+  };
+
+  if (slides.length <= 1) {
+    prevBtn?.style.setProperty("display", "none");
+    nextBtn?.style.setProperty("display", "none");
+    if (dots) dots.innerHTML = "";
+    setViewportWidth();
+    return;
+  }
+
+  let currentIndex = 0;
+  let autoSlide;
+
+  const updateDots = () => {
+    if (!dots) return;
+    const dotButtons = dots.querySelectorAll("button");
+    dotButtons.forEach((dot, index) => {
+      dot.classList.toggle("active", index === currentIndex);
+    });
+  };
+
+  const updateSlider = () => {
+    const slideWidth = slides[0].getBoundingClientRect().width + getGap();
+    track.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
+    updateDots();
+  };
+
+  const createDots = () => {
+    if (!dots) return;
+    dots.innerHTML = "";
+
+    slides.forEach((_, index) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.setAttribute("aria-label", `Pindah ke slide ${index + 1}`);
+      button.addEventListener("click", () => {
+        currentIndex = index;
+        updateSlider();
+        startAuto();
+      });
+      dots.appendChild(button);
+    });
+
+    updateDots();
+  };
+
+  const startAuto = () => {
+    if (autoSlide) clearInterval(autoSlide);
+    autoSlide = setInterval(() => {
+      currentIndex = (currentIndex + 1) % slides.length;
+      updateSlider();
+    }, 5000);
+  };
+
+  const stopAuto = () => {
+    if (autoSlide) clearInterval(autoSlide);
+  };
+
+  prevBtn?.addEventListener("click", () => {
+    currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+    updateSlider();
+    startAuto();
+  });
+
+  nextBtn?.addEventListener("click", () => {
+    currentIndex = (currentIndex + 1) % slides.length;
+    updateSlider();
+    startAuto();
+  });
+
+  hero.addEventListener("mouseenter", stopAuto);
+  hero.addEventListener("mouseleave", startAuto);
+
+  window.addEventListener("resize", () => {
+    setViewportWidth();
+    updateSlider();
+  });
+
+  setViewportWidth();
+  createDots();
+  updateSlider();
+  startAuto();
 });
 
 
@@ -265,175 +373,6 @@ document.addEventListener("DOMContentLoaded", () => {
   observer.observe(figuran);
 });
 
-
-document.addEventListener("DOMContentLoaded", () => {
-
-  const slider = document.querySelector(".smi-liteSlider");
-
-  if (!slider) return;
-
-  const viewport = slider.querySelector(".smi-liteViewport");
-  const track    = slider.querySelector(".smi-liteTrack");
-  const slides   = slider.querySelectorAll(".smi-liteSlide");
-
-  const prevBtn  = slider.querySelector(".prev");
-  const nextBtn  = slider.querySelector(".next");
-  const dotsWrap = slider.querySelector(".smi-liteDots");
-
-  const GAP = 16;
-
-  let index = 0;
-  let timer;
-
-  if (slides.length === 0) return;
-
-  function slideWidth(){
-    return slides[0].offsetWidth + GAP;
-  }
-
-  function visibleCount(){
-
-    if(window.innerWidth <= 991){
-      return 1;
-    }
-
-    return 2;
-  }
-
-  function maxIndex(){
-    return Math.max(slides.length - visibleCount(), 0);
-  }
-
-  function canSlide(){
-    return slides.length > visibleCount();
-  }
-
-  function update(){
-
-    track.style.transform =
-      `translateX(-${index * slideWidth()}px)`;
-
-    updateDots();
-  }
-
-  function next(){
-
-    if(index >= maxIndex()){
-      index = 0;
-    }else{
-      index++;
-    }
-
-    update();
-  }
-
-  /* =========================
-  PREV
-  ========================= */
-
-  function prev(){
-
-    if(index <= 0){
-      index = maxIndex();
-    }else{
-      index--;
-    }
-
-    update();
-  }
-
-  /* =========================
-  DOTS
-  ========================= */
-
-  function buildDots(){
-
-    dotsWrap.innerHTML = "";
-
-    for(let i = 0; i <= maxIndex(); i++){
-
-      const dot = document.createElement("button");
-
-      if(i === 0){
-        dot.classList.add("active");
-      }
-
-      dot.addEventListener("click", () => {
-        index = i;
-        update();
-        restart();
-      });
-
-      dotsWrap.appendChild(dot);
-    }
-  }
-
-  function updateDots(){
-
-    const dots = dotsWrap.querySelectorAll("button");
-
-    dots.forEach((dot, i) => {
-      dot.classList.toggle("active", i === index);
-    });
-  }
-
-  function start(){
-
-    if(!canSlide()) return;
-
-    stop();
-
-    timer = setInterval(() => {
-      next();
-    }, 5000);
-  }
-
-  function stop(){
-
-    clearInterval(timer);
-  }
-
-  function restart(){
-
-    stop();
-    start();
-  }
-
-  function refreshControls(){
-    const slidable = canSlide();
-    prevBtn.style.display = slidable ? "" : "none";
-    nextBtn.style.display = slidable ? "" : "none";
-    dotsWrap.style.display = slidable ? "" : "none";
-  }
-
-  nextBtn.addEventListener("click", () => {
-    next();
-    restart();
-  });
-
-  prevBtn.addEventListener("click", () => {
-    prev();
-    restart();
-  });
-
-  slider.addEventListener("mouseenter", stop);
-  slider.addEventListener("mouseleave", start);
-
-  window.addEventListener("resize", () => {
-
-    index = 0;
-
-    buildDots();
-    update();
-    refreshControls();
-  });
-
-  buildDots();
-  update();
-  refreshControls();
-  start();
-
-});
 
 document.addEventListener("DOMContentLoaded", () => {
   const track = document.querySelector(".jg-track");
