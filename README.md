@@ -8,8 +8,6 @@
   <img src="https://img.shields.io/badge/Laravel-13.x-red?logo=laravel" alt="Laravel">
   <img src="https://img.shields.io/badge/PHP-8.3%2B-blue?logo=php" alt="PHP">
   <img src="https://img.shields.io/badge/MySQL-Database-orange?logo=mysql" alt="MySQL">
-  <img src="https://img.shields.io/badge/TailwindCSS-4.x-38bdf8?logo=tailwindcss" alt="Tailwind">
-  <img src="https://img.shields.io/badge/Vite-8.x-purple?logo=vite" alt="Vite">
 </p>
 
 ---

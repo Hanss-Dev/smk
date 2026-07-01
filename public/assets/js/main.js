@@ -1,6 +1,3 @@
-/* =========================
-   NAV TOGGLE (AMAN)
-========================= */
 const navToggle = document.getElementById("nav-toggle");
 const navMenu = document.getElementById("nav-menu");
 
@@ -11,111 +8,20 @@ if (navToggle && navMenu) {
   });
 }
 
-/* =========================
-   DROPDOWN MENU (klik arrow)
-========================= */
 document.addEventListener("DOMContentLoaded", () => {
   const dropdownItems = document.querySelectorAll(".dropdown__item");
 
   dropdownItems.forEach(item => {
     const link = item.querySelector(".nav__link");
     link.addEventListener("click", () => {
-      // tutup semua dropdown lain
       dropdownItems.forEach(i => {
         if (i !== item) i.classList.remove("open");
       });
-      // toggle dropdown yang diklik
       item.classList.toggle("open");
     });
   });
 });
 
-document.addEventListener("DOMContentLoaded", () => {
-  const slider = document.querySelector(".smi-liteSlider");
-  const viewport = slider.querySelector(".smi-liteViewport");
-  const track = slider.querySelector(".smi-liteTrack");
-  const slides = Array.from(slider.querySelectorAll(".smi-liteSlide"));
-  const prev = slider.querySelector(".prev");
-  const next = slider.querySelector(".next");
-  const dotsWrap = slider.querySelector(".smi-liteDots");
-
-  let index = 0;                 // slide aktif
-  const total = slides.length;   // total slide
-
-  /* =====================
-     CORE UPDATE (CENTER)
-  ===================== */
-  function update() {
-    const slide = slides[0];
-    const slideRect = slide.getBoundingClientRect();
-    const slideWidth = slideRect.width;
-
-    const gap = parseFloat(getComputedStyle(track).gap) || 0;
-
-    // offset supaya slide aktif pas di tengah viewport
-    const offset =
-      index * (slideWidth + gap) -
-      (viewport.clientWidth - slideWidth) / 2;
-
-    track.style.transform = `translateX(-${Math.max(offset, 0)}px)`;
-
-    // update dots
-    dotsWrap.querySelectorAll("button").forEach((dot, i) => {
-      dot.classList.toggle("active", i === index);
-    });
-
-    // update nav
-    prev.classList.toggle("disabled", index === 0);
-    next.classList.toggle("disabled", index === total - 1);
-  }
-
-  /* =====================
-     DOTS
-  ===================== */
-  function buildDots() {
-    dotsWrap.innerHTML = "";
-    for (let i = 0; i < total; i++) {
-      const dot = document.createElement("button");
-      if (i === index) dot.classList.add("active");
-      dot.addEventListener("click", () => {
-        index = i;
-        update();
-      });
-      dotsWrap.appendChild(dot);
-    }
-  }
-
-  /* =====================
-     NAVIGATION
-  ===================== */
-  prev.addEventListener("click", () => {
-    if (index > 0) {
-      index--;
-      update();
-    }
-  });
-
-  next.addEventListener("click", () => {
-    if (index < total - 1) {
-      index++;
-      update();
-    }
-  });
-
-  /* =====================
-     RESIZE (RE-CENTER)
-  ===================== */
-  window.addEventListener("resize", () => {
-    update(); // cukup hitung ulang posisi center
-  });
-
-  buildDots();
-  update();
-});
-
-/* =========================
-   SLIDER GENERIC (.slider)
-========================= */
 document.addEventListener("DOMContentLoaded", () => {
   const slider = document.querySelector(".slider");
   const slides = document.querySelectorAll(".slide");
@@ -145,9 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }, 5000);
 });
 
-/* =========================
-   TABS FILTER (.tab)
-========================= */
+
 const tabs = document.querySelectorAll(".tab");
 const cards = document.querySelectorAll(".network-card");
 
@@ -168,9 +72,6 @@ tabs.forEach(tab => {
   });
 });
 
-/* =========================
-   BERITA SLIDER (.berita-slider)
-========================= */
 document.addEventListener("DOMContentLoaded", () => {
   const slider = document.querySelector(".berita-slider");
   const prevBtn = document.getElementById("prevBtn");
@@ -190,7 +91,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const maxScroll = slider.scrollWidth - slider.clientWidth;
 
     if (slider.scrollLeft >= maxScroll - 5) {
-      // balik ke awal kalau sudah mentok kanan
       slider.scrollTo({ left: 0, behavior: "smooth" });
     } else {
       slider.scrollBy({ left: getScrollAmount(), behavior: "smooth" });
@@ -199,14 +99,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function startAutoSlide() {
     stopAutoSlide();
-    autoSlideInterval = setInterval(slideNext, 5000); // 5 detik
+    autoSlideInterval = setInterval(slideNext, 5000); 
   }
 
   function stopAutoSlide() {
     if (autoSlideInterval) clearInterval(autoSlideInterval);
   }
 
-  // Tombol manual
   nextBtn.addEventListener("click", () => {
     slideNext();
     startAutoSlide();
@@ -220,21 +119,16 @@ document.addEventListener("DOMContentLoaded", () => {
     startAutoSlide();
   });
 
-  // Pause saat hover (desktop)
   slider.addEventListener("mouseenter", stopAutoSlide);
   slider.addEventListener("mouseleave", startAutoSlide);
 
-  // Pause saat swipe (mobile)
   slider.addEventListener("touchstart", stopAutoSlide);
   slider.addEventListener("touchend", startAutoSlide);
 
-  // Start
   startAutoSlide();
 });
 
-/* =========================
-   YUKO SLIDER (LOAD GAMBAR SAAT AKTIF)
-========================= */
+
 document.addEventListener("DOMContentLoaded", () => {
   const slider = document.querySelector(".yuko-sldr");
   if (!slider) return;
@@ -265,10 +159,8 @@ document.addEventListener("DOMContentLoaded", () => {
     item.classList.add("active");
     contents[i]?.classList.add("active");
 
-    // load hanya saat aktif
     loadImage(item);
 
-    // background ikut ganti
     bg.style.backgroundImage = `url(${item.dataset.bg})`;
 
     index = i;
@@ -393,9 +285,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let index = 0;
   let timer;
 
-  /* =========================
-  HELPERS
-  ========================= */
+  if (slides.length === 0) return;
 
   function slideWidth(){
     return slides[0].offsetWidth + GAP;
@@ -411,12 +301,12 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function maxIndex(){
-    return slides.length - visibleCount();
+    return Math.max(slides.length - visibleCount(), 0);
   }
 
-  /* =========================
-  UPDATE
-  ========================= */
+  function canSlide(){
+    return slides.length > visibleCount();
+  }
 
   function update(){
 
@@ -425,10 +315,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     updateDots();
   }
-
-  /* =========================
-  NEXT
-  ========================= */
 
   function next(){
 
@@ -491,11 +377,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  /* =========================
-  AUTOPLAY
-  ========================= */
-
   function start(){
+
+    if(!canSlide()) return;
 
     stop();
 
@@ -515,9 +399,12 @@ document.addEventListener("DOMContentLoaded", () => {
     start();
   }
 
-  /* =========================
-  EVENTS
-  ========================= */
+  function refreshControls(){
+    const slidable = canSlide();
+    prevBtn.style.display = slidable ? "" : "none";
+    nextBtn.style.display = slidable ? "" : "none";
+    dotsWrap.style.display = slidable ? "" : "none";
+  }
 
   nextBtn.addEventListener("click", () => {
     next();
@@ -538,14 +425,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     buildDots();
     update();
+    refreshControls();
   });
-
-  /* =========================
-  INIT
-  ========================= */
 
   buildDots();
   update();
+  refreshControls();
   start();
 
 });
@@ -589,7 +474,6 @@ document.addEventListener("DOMContentLoaded", () => {
     updateSlider();
   }
 
-  // TOUCH EVENTS (HP)
   track.addEventListener("touchstart", e => {
     startX = e.touches[0].clientX;
     isDragging = true;
@@ -609,9 +493,6 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("resize", updateSlider);
 });
 
-// =======================================
-// NILAI UTAMA – TRUE 3D POP (PER ITEM)
-// =======================================
 document.addEventListener("DOMContentLoaded", () => {
   const items = document.querySelectorAll(".nilai-item");
 
@@ -621,12 +502,11 @@ document.addEventListener("DOMContentLoaded", () => {
     (entries, obs) => {
       entries.forEach((entry, index) => {
         if (entry.isIntersecting) {
-          // delay bertahap biar kerasa "nimbul satu-satu"
           setTimeout(() => {
             entry.target.classList.add("is-visible");
           }, index * 180);
 
-          obs.unobserve(entry.target); // jalan sekali
+          obs.unobserve(entry.target); 
         }
       });
     },
@@ -639,7 +519,6 @@ document.addEventListener("DOMContentLoaded", () => {
   items.forEach(item => observer.observe(item));
 });
 
-//pesan
 const textarea = document.getElementById("msg");
 const counter = document.getElementById("counter");
 
