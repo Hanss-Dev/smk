@@ -110,6 +110,12 @@
       }
     }
 
+    /* ── Nonaktifkan transisi saat restore state dari localStorage ──── */
+    body.sidebar-no-transition .main-sidebar,
+    body.sidebar-no-transition .main-sidebar * {
+      transition: none !important;
+    }
+
     /* ── Sidebar COLLAPSED state (desktop, not hovered) ─────── */
     @media (min-width: 992px) {
       /* Paksa lebar sidebar benar-benar mengecil saat collapse, lalu
@@ -199,6 +205,14 @@
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
+  {{-- Terapkan state sidebar SEBELUM render agar tidak ada flash --}}
+  <script>
+    (function () {
+      if (localStorage.getItem('sidebar_collapsed') === 'true') {
+        document.body.classList.add('sidebar-collapse');
+      }
+    })();
+  </script>
   <div class="wrapper">
 
     <!-- Header Navbar -->
@@ -230,7 +244,23 @@
         e.preventDefault();
         // Gunakan PushMenu AdminLTE untuk toggle collapse
         $('[data-widget="pushmenu"]').first().PushMenu('toggle');
+
+        // Simpan state ke localStorage agar bertahan saat pindah halaman
+        var isCollapsed = $('body').hasClass('sidebar-collapse');
+        localStorage.setItem('sidebar_collapsed', isCollapsed ? 'true' : 'false');
       });
+
+      // ── Sync state awal AdminLTE dengan localStorage ──────────────────────
+      // Jika LocalStorage bilang collapsed, pastikan class sudah ada (sudah di-set
+      // oleh inline script di atas), tapi kita trigger event agar AdminLTE sync.
+      // Tidak perlu animasi di sini karena transition sudah dimatikan sementara.
+      if (localStorage.getItem('sidebar_collapsed') === 'true') {
+        // Tambahkan sementara class no-transition agar tidak ada animasi flash
+        $('body').addClass('sidebar-no-transition');
+        setTimeout(function () {
+          $('body').removeClass('sidebar-no-transition');
+        }, 50);
+      }
 
       // ── Dropzone handlers ────────────────────────────────────────────────
       $(document).on('click', '#dropzone', function (e) {
