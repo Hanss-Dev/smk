@@ -16,7 +16,7 @@
 
 ## 📌 Tentang Proyek Ini
 
-**SMK Mitra Industri** adalah aplikasi web profil sekolah yang dibangun menggunakan **Laravel 13** (framework PHP). Aplikasi ini dirancang sebagai website resmi SMK yang menampilkan informasi sekolah secara publik, sekaligus menyediakan **panel admin** untuk mengelola seluruh konten website secara dinamis tanpa perlu menyentuh kode.
+Aplikasi web profil sekolah **SMK Mitra Industri** yang dibangun menggunakan **Laravel 13** (framework PHP). Aplikasi ini dirancang sebagai website resmi SMK yang menampilkan informasi sekolah secara publik, sekaligus menyediakan **panel admin** untuk mengelola seluruh konten website secara dinamis tanpa perlu menyentuh kode.
 
 ### ✨ Fitur Utama
 
