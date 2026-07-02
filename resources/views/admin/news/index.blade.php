@@ -55,10 +55,23 @@
 
         <div class="card-body table-responsive">
           @include('admin.components.pagination-controls')
-          <table class="table table-bordered table-hover">
-            <thead class="bg-light">
-              <tr>
-                <th width="50">No</th>
+          <form action="{{ route('admin.news.bulk-delete') }}" method="POST" class="bulk-delete-form">
+            @csrf
+            @method('DELETE')
+            <div class="mb-2 d-flex justify-content-between align-items-center">
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input bulk-select-all" id="selectAllNews">
+                <label class="custom-control-label" for="selectAllNews">Pilih semua</label>
+              </div>
+              <button type="submit" class="btn btn-danger btn-sm">
+                <i class="fas fa-trash"></i> Hapus Pilihan
+              </button>
+            </div>
+            <table class="table table-bordered table-hover">
+              <thead class="bg-light">
+                <tr>
+                  <th width="40"><i class="fas fa-check-square"></i></th>
+                  <th width="50">No</th>
                 <th>Thumbnail</th>
                 <th>Judul</th>
                 <th>Slug</th>
@@ -70,6 +83,9 @@
             <tbody>
               @forelse($newsList as $i => $n)
                 <tr>
+                  <td class="text-center">
+                    <input type="checkbox" name="ids[]" value="{{ $n->id }}" class="bulk-select-row">
+                  </td>
                   <td class="text-center">{{ ($newsList->currentPage() - 1) * $newsList->perPage() + $i + 1 }}</td>
                   <td>
                     @if($n->thumbnail)
@@ -98,10 +114,11 @@
                   </td>
                 </tr>
               @empty
-                <tr><td colspan="7" class="text-center text-muted">Belum ada berita.</td></tr>
+                <tr><td colspan="8" class="text-center text-muted">Belum ada berita.</td></tr>
               @endforelse
             </tbody>
-          </table>
+            </table>
+          </form>
         </div>
         <div class="card-footer clearfix">
           <div class="float-right">

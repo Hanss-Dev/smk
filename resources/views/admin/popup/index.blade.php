@@ -55,10 +55,23 @@
 
         <div class="card-body table-responsive">
           @include('admin.components.pagination-controls')
-          <table class="table table-bordered table-hover">
-            <thead class="bg-light">
-              <tr>
-                <th width="50">No</th>
+          <form action="{{ route('admin.popup.bulk-delete') }}" method="POST" class="bulk-delete-form">
+            @csrf
+            @method('DELETE')
+            <div class="mb-2 d-flex justify-content-between align-items-center">
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input bulk-select-all" id="selectAllPopup">
+                <label class="custom-control-label" for="selectAllPopup">Pilih semua</label>
+              </div>
+              <button type="submit" class="btn btn-danger btn-sm">
+                <i class="fas fa-trash"></i> Hapus Pilihan
+              </button>
+            </div>
+            <table class="table table-bordered table-hover">
+              <thead class="bg-light">
+                <tr>
+                  <th width="40"><i class="fas fa-check-square"></i></th>
+                  <th width="50">No</th>
                 <th>Gambar</th>
                 <th>Judul</th>
                 <th>Konten</th>
@@ -69,6 +82,9 @@
             <tbody>
               @forelse($popups as $i => $p)
                 <tr>
+                  <td class="text-center">
+                    <input type="checkbox" name="ids[]" value="{{ $p->id }}" class="bulk-select-row">
+                  </td>
                   <td class="text-center">{{ ($popups->currentPage() - 1) * $popups->perPage() + $i + 1 }}</td>
                   <td>
                     @if($p->image)
@@ -96,10 +112,11 @@
                   </td>
                 </tr>
               @empty
-                <tr><td colspan="6" class="text-center text-muted">Belum ada popup.</td></tr>
+                <tr><td colspan="7" class="text-center text-muted">Belum ada popup.</td></tr>
               @endforelse
             </tbody>
-          </table>
+            </table>
+          </form>
         </div>
         <div class="card-footer clearfix">
           <div class="float-right">

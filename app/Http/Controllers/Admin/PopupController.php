@@ -111,4 +111,25 @@ class PopupController extends Controller
 
         return redirect()->route('admin.popup.index')->with('success', 'Popup berhasil dihapus');
     }
+
+    public function bulkDelete(Request $request)
+    {
+        $ids = $request->input('ids', []);
+
+        if (empty($ids)) {
+            return redirect()->back()->with('success', 'Tidak ada data yang dipilih.');
+        }
+
+        $popups = Popup::whereIn('id', $ids)->get();
+
+        foreach ($popups as $popup) {
+            if ($popup->image) {
+                Storage::disk('public')->delete('popup/' . $popup->image);
+            }
+        }
+
+        Popup::whereIn('id', $ids)->delete();
+
+        return redirect()->back()->with('success', 'Popup yang dipilih berhasil dihapus.');
+    }
 }

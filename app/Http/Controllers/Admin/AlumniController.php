@@ -115,4 +115,25 @@ class AlumniController extends Controller
 
         return redirect()->route('admin.alumni.index')->with('success', 'Data Alumni berhasil dihapus');
     }
+
+    public function bulkDelete(Request $request)
+    {
+        $ids = $request->input('ids', []);
+
+        if (empty($ids)) {
+            return redirect()->back()->with('success', 'Tidak ada data yang dipilih.');
+        }
+
+        $alumni = Alumni::whereIn('id', $ids)->get();
+
+        foreach ($alumni as $item) {
+            if ($item->image) {
+                Storage::disk('public')->delete('alumni/' . $item->image);
+            }
+        }
+
+        Alumni::whereIn('id', $ids)->delete();
+
+        return redirect()->back()->with('success', 'Data alumni yang dipilih berhasil dihapus.');
+    }
 }

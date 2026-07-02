@@ -190,4 +190,29 @@ class ContentJurusanController extends Controller
             ->route('admin.content-jurusan.index')
             ->with('success', 'Content Jurusan berhasil dihapus.');
     }
+
+    public function bulkDelete(Request $request)
+    {
+        $ids = $request->input('ids', []);
+
+        if (empty($ids)) {
+            return redirect()->back()->with('success', 'Tidak ada data yang dipilih.');
+        }
+
+        $contents = ContentJurusan::whereIn('id', $ids)->get();
+
+        foreach ($contents as $contentJurusan) {
+            $images = is_string($contentJurusan->content)
+                ? json_decode($contentJurusan->content, true)
+                : ($contentJurusan->content ?? []);
+
+            foreach ((array) $images as $item) {
+                Storage::disk('public')->delete('jurusan/' . $item['image']);
+            }
+        }
+
+        ContentJurusan::whereIn('id', $ids)->delete();
+
+        return redirect()->back()->with('success', 'Content jurusan yang dipilih berhasil dihapus.');
+    }
 }

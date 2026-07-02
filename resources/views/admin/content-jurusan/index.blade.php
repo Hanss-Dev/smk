@@ -57,10 +57,23 @@
 
         <div class="card-body table-responsive">
           @include('admin.components.pagination-controls')
-          <table class="table table-bordered table-hover">
-            <thead class="bg-light">
-              <tr>
-                <th width="50">No</th>
+          <form action="{{ route('admin.content-jurusan.bulk-delete') }}" method="POST" class="bulk-delete-form">
+            @csrf
+            @method('DELETE')
+            <div class="mb-2 d-flex justify-content-between align-items-center">
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input bulk-select-all" id="selectAllContentJurusan">
+                <label class="custom-control-label" for="selectAllContentJurusan">Pilih semua</label>
+              </div>
+              <button type="submit" class="btn btn-danger btn-sm">
+                <i class="fas fa-trash"></i> Hapus Pilihan
+              </button>
+            </div>
+            <table class="table table-bordered table-hover">
+              <thead class="bg-light">
+                <tr>
+                  <th width="40"><i class="fas fa-check-square"></i></th>
+                  <th width="50">No</th>
                 <th>Jurusan</th>
                 <th width="140" class="text-center">Jumlah Gambar</th>
                 <th width="150" class="text-center">Tanggal Dibuat</th>
@@ -75,6 +88,9 @@
                     : ($c->content ?? []);
                 @endphp
                 <tr>
+                  <td class="text-center">
+                    <input type="checkbox" name="ids[]" value="{{ $c->id }}" class="bulk-select-row">
+                  </td>
                   <td class="text-center">{{ ($contents->currentPage() - 1) * $contents->perPage() + $i + 1 }}</td>
                   <td>{{ $c->jurusan }}</td>
                   <td class="text-center">
@@ -103,11 +119,12 @@
                 </tr>
               @empty
                 <tr>
-                  <td colspan="5" class="text-center text-muted">Belum ada data content jurusan.</td>
+                  <td colspan="6" class="text-center text-muted">Belum ada data content jurusan.</td>
                 </tr>
               @endforelse
             </tbody>
-          </table>
+            </table>
+          </form>
         </div>
         <div class="card-footer clearfix">
           <div class="float-right">

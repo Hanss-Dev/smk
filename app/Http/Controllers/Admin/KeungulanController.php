@@ -131,4 +131,25 @@ class KeungulanController extends Controller
         return redirect()->route('admin.keungulan.index')
             ->with('success', 'Keunggulan berhasil dihapus');
     }
+
+    public function bulkDelete(Request $request)
+    {
+        $ids = $request->input('ids', []);
+
+        if (empty($ids)) {
+            return redirect()->back()->with('success', 'Tidak ada data yang dipilih.');
+        }
+
+        $items = Keungulan::whereIn('id', $ids)->get();
+
+        foreach ($items as $item) {
+            if ($item->image) {
+                Storage::disk('public')->delete('keungulan/' . $item->image);
+            }
+        }
+
+        Keungulan::whereIn('id', $ids)->delete();
+
+        return redirect()->back()->with('success', 'Keunggulan yang dipilih berhasil dihapus.');
+    }
 }
