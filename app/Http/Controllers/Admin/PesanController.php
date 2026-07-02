@@ -3,17 +3,19 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\ReplyMessageMail;
 use App\Models\Pesan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\ReplyMessageMail; 
 
 class PesanController extends Controller
 {
     public function index(Request $request)
     {
+        Pesan::where('tanggal', '<', now()->subDays(14))->delete();
+
         $search = $request->input('search');
-        
+
         $perPage = request('per_page', 20);
         $perPage = $perPage === 'all' ? 999999 : (int) $perPage;
 
