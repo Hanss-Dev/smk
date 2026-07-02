@@ -319,6 +319,23 @@
           reader.readAsDataURL(file);
         }
       });
+
+      $(document).on('change', '.bulk-select-all', function () {
+        $('.bulk-select-row').prop('checked', this.checked);
+      });
+
+      $(document).on('change', '.bulk-select-row', function () {
+        const allRows = $('.bulk-select-row').length;
+        const checkedRows = $('.bulk-select-row:checked').length;
+        $('.bulk-select-all').prop('checked', allRows > 0 && allRows === checkedRows);
+      });
+
+      $(document).on('submit', '.bulk-delete-form', function (e) {
+        if ($('.bulk-select-row:checked').length === 0) {
+          e.preventDefault();
+          alert('Pilih minimal satu data untuk dihapus.');
+        }
+      });
     });
   </script>
 

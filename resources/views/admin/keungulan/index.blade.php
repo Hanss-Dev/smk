@@ -64,10 +64,23 @@
         <div class="card-body table-responsive">
           @include('admin.components.pagination-controls')
 
-          <table class="table table-bordered table-hover">
-            <thead class="bg-light">
-              <tr>
-                <th width="50">No</th>
+          <form action="{{ route('admin.keungulan.bulk-delete') }}" method="POST" class="bulk-delete-form">
+            @csrf
+            @method('DELETE')
+            <div class="mb-2 d-flex justify-content-between align-items-center">
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input bulk-select-all" id="selectAllKeunggulan">
+                <label class="custom-control-label" for="selectAllKeunggulan">Pilih semua</label>
+              </div>
+              <button type="submit" class="btn btn-danger btn-sm">
+                <i class="fas fa-trash"></i> Hapus Pilihan
+              </button>
+            </div>
+            <table class="table table-bordered table-hover">
+              <thead class="bg-light">
+                <tr>
+                  <th width="40"><i class="fas fa-check-square"></i></th>
+                  <th width="50">No</th>
                 <th width="100">Gambar</th>
                 <th>Nama Keunggulan</th>
                 <th>Alt Text</th>
@@ -78,6 +91,9 @@
             <tbody>
               @forelse($keunggulan as $i => $item)
                 <tr>
+                  <td class="text-center">
+                    <input type="checkbox" name="ids[]" value="{{ $item->id }}" class="bulk-select-row">
+                  </td>
                   <td class="text-center">
                     {{ ($keunggulan->currentPage() - 1) * $keunggulan->perPage() + $i + 1 }}
                   </td>
@@ -118,7 +134,7 @@
                 </tr>
               @empty
                 <tr>
-                  <td colspan="6" class="text-center text-muted py-4">
+                  <td colspan="7" class="text-center text-muted py-4">
                     @if($search)
                       Tidak ada keunggulan yang cocok dengan pencarian <strong>"{{ $search }}"</strong>.
                     @else
@@ -128,7 +144,8 @@
                 </tr>
               @endforelse
             </tbody>
-          </table>
+            </table>
+          </form>
         </div>
 
         <div class="card-footer clearfix">

@@ -111,4 +111,25 @@ class HighlightController extends Controller
 
         return redirect()->route('admin.highlight.index')->with('success', 'Highlight berhasil dihapus');
     }
+
+    public function bulkDelete(Request $request)
+    {
+        $ids = $request->input('ids', []);
+
+        if (empty($ids)) {
+            return redirect()->back()->with('success', 'Tidak ada data yang dipilih.');
+        }
+
+        $highlights = Highlight::whereIn('id', $ids)->get();
+
+        foreach ($highlights as $highlight) {
+            if ($highlight->image) {
+                Storage::disk('public')->delete('highlight/' . $highlight->image);
+            }
+        }
+
+        Highlight::whereIn('id', $ids)->delete();
+
+        return redirect()->back()->with('success', 'Highlight yang dipilih berhasil dihapus.');
+    }
 }

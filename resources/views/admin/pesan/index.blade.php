@@ -52,10 +52,23 @@
 
         <div class="card-body table-responsive">
           @include('admin.components.pagination-controls')
-          <table class="table table-bordered table-hover">
-            <thead class="bg-light">
-              <tr>
-                <th width="50">No</th>
+          <form action="{{ route('admin.pesan.bulk-delete') }}" method="POST" class="bulk-delete-form">
+            @csrf
+            @method('DELETE')
+            <div class="mb-2 d-flex justify-content-between align-items-center">
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input bulk-select-all" id="selectAllPesan">
+                <label class="custom-control-label" for="selectAllPesan">Pilih semua</label>
+              </div>
+              <button type="submit" class="btn btn-danger btn-sm">
+                <i class="fas fa-trash"></i> Hapus Pilihan
+              </button>
+            </div>
+            <table class="table table-bordered table-hover">
+              <thead class="bg-light">
+                <tr>
+                  <th width="40"><i class="fas fa-check-square"></i></th>
+                  <th width="50">No</th>
                 <th>Nama Pengirim</th>
                 <th>Email</th>
                 <th>Telepon</th>
@@ -68,6 +81,9 @@
             <tbody>
               @forelse($pesanList as $i => $p)
                 <tr class="{{ $p->status === 'unread' ? 'font-weight-bold table-warning' : '' }}">
+                  <td class="text-center">
+                    <input type="checkbox" name="ids[]" value="{{ $p->id }}" class="bulk-select-row">
+                  </td>
                   <td class="text-center">{{ ($pesanList->currentPage() - 1) * $pesanList->perPage() + $i + 1 }}</td>
                   <td>{{ $p->nama }}</td>
                   <td>{{ $p->email }}</td>
@@ -107,10 +123,11 @@
                   </td>
                 </tr>
               @empty
-                <tr><td colspan="8" class="text-center text-muted">Belum ada pesan masuk.</td></tr>
+                <tr><td colspan="9" class="text-center text-muted">Belum ada pesan masuk.</td></tr>
               @endforelse
             </tbody>
-          </table>
+            </table>
+          </form>
         </div>
         <div class="card-footer clearfix">
           <div class="float-right">

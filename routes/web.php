@@ -71,6 +71,14 @@ Route::middleware(['admin.auth','no.cache'])->prefix('admin')->name('admin.')->g
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     
     // Resource routes for highlight, news, popup
+    Route::delete('/highlight/bulk-delete', [HighlightController::class, 'bulkDelete'])->name('highlight.bulk-delete');
+    Route::delete('/news/bulk-delete', [NewsController::class, 'bulkDelete'])->name('news.bulk-delete');
+    Route::delete('/popup/bulk-delete', [PopupController::class, 'bulkDelete'])->name('popup.bulk-delete');
+    Route::delete('/alumni/bulk-delete', [AlumniController::class, 'bulkDelete'])->name('alumni.bulk-delete');
+    Route::delete('/keungulan/bulk-delete', [KeungulanController::class, 'bulkDelete'])->name('keungulan.bulk-delete');
+    Route::delete('/content-jurusan/bulk-delete', [ContentJurusanController::class, 'bulkDelete'])->name('content-jurusan.bulk-delete');
+    Route::delete('/pesan/bulk-delete', [PesanController::class, 'bulkDelete'])->name('pesan.bulk-delete');
+
     Route::resource('highlight', HighlightController::class);
     Route::resource('news', NewsController::class);
     Route::resource('popup', PopupController::class);
