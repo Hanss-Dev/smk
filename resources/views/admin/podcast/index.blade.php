@@ -29,117 +29,106 @@
       @endif
 
       <div class="card">
-        <div class="card-header d-flex justify-content-between align-items-center flex-wrap gap-2">
-          <h3 class="card-title mb-0">Daftar Bagian — Podcast</h3>
-          <div class="d-flex align-items-center" style="gap: 8px;">
-            <!-- Search Box -->
-            <div class="input-group input-group-sm" style="width: 240px;">
-              <input type="text" id="searchSection" class="form-control"
-                     placeholder="Cari nama bagian..." autocomplete="off">
-              <div class="input-group-append">
-                <span class="input-group-text"><i class="fas fa-search"></i></span>
+        <div class="card-header d-flex flex-wrap justify-content-between align-items-center">
+          <h3 class="card-title my-1">Daftar Bagian — Podcast</h3>
+          <div class="d-flex align-items-center flex-wrap" style="gap: 10px;">
+            <form action="{{ route('admin.podcast.index') }}" method="GET" class="form-inline my-1">
+              <div class="input-group input-group-sm" style="width: 250px;">
+                <input type="text" name="search" class="form-control float-right" placeholder="Cari bagian..." value="{{ request('search') }}">
+                <div class="input-group-append">
+                  <button type="submit" class="btn btn-default">
+                    <i class="fas fa-search"></i>
+                  </button>
+                  @if(request('search'))
+                    <a href="{{ route('admin.podcast.index') }}" class="btn btn-default" title="Reset Pencarian">
+                      <i class="fas fa-times"></i>
+                    </a>
+                  @endif
+                </div>
               </div>
-            </div>
-            <a href="{{ route('admin.podcast.create') }}" class="btn btn-primary btn-sm">
+            </form>
+            <a href="{{ route('admin.podcast.create') }}" class="btn btn-primary btn-sm my-1">
               <i class="fas fa-plus"></i> Tambah Bagian
             </a>
           </div>
         </div>
 
-        <div class="card-body">
-          @php $sections = $page->content ?? []; @endphp
-
-          @if(count($sections) === 0)
-            <p class="text-muted text-center py-3">Belum ada bagian. Klik "Tambah Bagian" untuk mulai.</p>
-          @else
-            <div id="sectionsContainer">
-              @foreach($sections as $sIdx => $section)
-                <div class="card card-outline card-primary mb-3 section-card"
-                     data-name="{{ strtolower($section['nama'] ?? 'bagian ' . ($sIdx + 1)) }}">
-                  <div class="card-header d-flex align-items-center justify-content-between">
-                    <h5 class="card-title mb-0">
-                      <i class="fas fa-layer-group mr-1 text-primary"></i>
-                      {{ $section['nama'] ?? 'Bagian ' . ($sIdx + 1) }}
-                      <span class="badge badge-light ml-2">{{ count($section['elemen'] ?? []) }} elemen</span>
-                    </h5>
-                    <div>
-                      <a href="{{ route('admin.podcast.edit', ['sIdx' => $sIdx]) }}"
-                         class="btn btn-warning btn-sm" title="Edit bagian ini">
+        <div class="card-body table-responsive">
+          @include('admin.components.pagination-controls')
+          <form action="{{ route('admin.pagesection.bulkDelete', 'podcast') }}" method="POST" class="bulk-delete-form">
+            @csrf
+            @method('DELETE')
+            <div class="mb-2 d-flex justify-content-between align-items-center">
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input bulk-select-all" id="selectAllPodcast">
+                <label class="custom-control-label" for="selectAllPodcast">Pilih semua</label>
+              </div>
+              <button type="submit" class="btn btn-danger btn-sm">
+                <i class="fas fa-trash"></i> Hapus Pilihan
+              </button>
+            </div>
+            <table class="table table-bordered table-hover">
+              <thead class="bg-light">
+                <tr>
+                  <th width="40"></th>
+                  <th width="50">No</th>
+                  <th>Nama Bagian</th>
+                  <th>Ringkasan Elemen</th>
+                  <th width="120">Aksi</th>
+                </tr>
+              </thead>
+              <tbody>
+                @php $i = ($sections->currentPage() - 1) * $sections->perPage() + 1; @endphp
+                @forelse($sections as $sIdx => $section)
+                  <tr>
+                    <td class="text-center">
+                      <input type="checkbox" name="ids[]" value="{{ $sIdx }}" class="bulk-select-row">
+                    </td>
+                    <td class="text-center">{{ $i++ }}</td>
+                    <td>{{ $section['nama'] ?? 'Bagian ' . ($sIdx + 1) }}</td>
+                    <td>
+                      @php
+                        $elemenList = $section['elemen'] ?? [];
+                        $types = array_map(function($el) {
+                            return strtoupper($el['type'] ?? 'TEXT');
+                        }, $elemenList);
+                        $typesCount = array_count_values($types);
+                        $summary = [];
+                        foreach($typesCount as $type => $count) {
+                            $summary[] = "$count $type";
+                        }
+                      @endphp
+                      @if(count($elemenList) > 0)
+                        <span class="badge badge-info">{{ count($elemenList) }} Elemen</span>
+                        <small class="text-muted ml-2">({{ implode(', ', $summary) }})</small>
+                      @else
+                        <span class="text-muted">-</span>
+                      @endif
+                    </td>
+                    <td class="text-center">
+                      <a href="{{ route('admin.podcast.edit', ['sIdx' => $sIdx]) }}" class="btn btn-warning btn-sm" title="Edit">
                         <i class="fas fa-edit"></i>
                       </a>
-                      <form action="{{ route('admin.pagesection.deleteSection', ['key' => 'podcast', 'sIdx' => $sIdx]) }}"
-                            method="POST" style="display:inline;"
-                            class="form-delete" data-confirm-message="Hapus bagian ini beserta semua elemennya?">
-                        @csrf @method('DELETE')
-                        <button class="btn btn-danger btn-sm" title="Hapus bagian">
-                          <i class="fas fa-trash"></i>
-                        </button>
+                      <form action="{{ route('admin.pagesection.deleteSection', ['key' => 'podcast', 'sIdx' => $sIdx]) }}" method="POST" style="display:inline;" class="form-delete" data-confirm-message="Hapus bagian ini beserta semua elemennya?">
+                        @csrf
+                        @method('DELETE')
+                        <button class="btn btn-danger btn-sm" title="Hapus"><i class="fas fa-trash"></i></button>
                       </form>
-                    </div>
-                  </div>
-
-                  <div class="card-body py-2">
-                    <div class="table-responsive">
-                      <table class="table table-sm table-bordered mb-0">
-                        <thead class="bg-light">
-                          <tr>
-                            <th width="40">#</th>
-                            <th width="80">Tipe</th>
-                            <th>Preview / Nilai</th>
-                            <th width="80">Aksi</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          @forelse($section['elemen'] ?? [] as $eIdx => $el)
-                            <tr>
-                              <td class="text-center">{{ $eIdx + 1 }}</td>
-                              <td>
-                                <span class="badge
-                                  @if($el['type'] === 'image') badge-success
-                                  @elseif($el['type'] === 'link') badge-info
-                                  @else badge-secondary @endif">
-                                  {{ strtoupper($el['type']) }}
-                                </span>
-                              </td>
-                              <td>
-                                @if($el['type'] === 'image')
-                                  <img class="preview-image" src="{{ asset('storage/podcast/' . $el['value']) }}"
-                                       style="height:40px; object-fit:cover; border-radius:4px;" class="mr-2">
-                                  <small class="text-muted">{{ $el['alt'] ?? '' }}</small>
-                                @elseif($el['type'] === 'link')
-                                  <a href="{{ $el['value'] }}" target="_blank">{{ $el['label'] ?? $el['value'] }}</a>
-                                @else
-                                  {{ Str::limit($el['value'] ?? '', 100) }}
-                                @endif
-                              </td>
-                              <td class="text-center">
-                                <form action="{{ route('admin.pagesection.deleteElement', ['key' => 'podcast', 'sIdx' => $sIdx, 'eIdx' => $eIdx]) }}"
-                                      method="POST" style="display:inline;"
-                                      class="form-delete" data-confirm-message="Hapus elemen ini?{{ $el['type'] === 'image' ? ' Gambar juga akan dihapus dari server.' : '' }}">
-                                  @csrf @method('DELETE')
-                                  <button class="btn btn-danger btn-xs" title="Hapus elemen">
-                                    <i class="fas fa-times"></i>
-                                  </button>
-                                </form>
-                              </td>
-                            </tr>
-                          @empty
-                            <tr><td colspan="4" class="text-center text-muted">Tidak ada elemen.</td></tr>
-                          @endforelse
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-              @endforeach
-
-              <!-- Empty search result message -->
-              <div id="noSearchResult" class="text-center text-muted py-4" style="display:none;">
-                <i class="fas fa-search fa-2x mb-2"></i>
-                <p>Tidak ada bagian yang cocok dengan pencarian.</p>
-              </div>
-            </div>
-          @endif
+                    </td>
+                  </tr>
+                @empty
+                  <tr>
+                    <td colspan="5" class="text-center text-muted">Belum ada bagian. Klik "Tambah Bagian" untuk mulai.</td>
+                  </tr>
+                @endforelse
+              </tbody>
+            </table>
+          </form>
+        </div>
+        <div class="card-footer clearfix">
+          <div class="float-right">
+            {{ $sections->appends(['search' => request('search'), 'per_page' => request('per_page')])->links() }}
+          </div>
         </div>
       </div>
 
@@ -147,26 +136,3 @@
   </section>
 </div>
 @endsection
-
-@push('scripts')
-<script>
-  document.getElementById('searchSection')?.addEventListener('input', function () {
-    const keyword = this.value.toLowerCase().trim();
-    const cards   = document.querySelectorAll('.section-card');
-    let   visible = 0;
-
-    cards.forEach(card => {
-      const name = card.dataset.name || '';
-      if (!keyword || name.includes(keyword)) {
-        card.style.display = '';
-        visible++;
-      } else {
-        card.style.display = 'none';
-      }
-    });
-
-    const noResult = document.getElementById('noSearchResult');
-    if (noResult) noResult.style.display = visible === 0 ? 'block' : 'none';
-  });
-</script>
-@endpush

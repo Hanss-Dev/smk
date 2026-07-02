@@ -79,7 +79,7 @@
             <table class="table table-bordered table-hover">
               <thead class="bg-light">
                 <tr>
-                  <th width="40"><i class="fas fa-check-square"></i></th>
+                  <th width="40"></th>
                   <th width="50">No</th>
                 <th width="100">Gambar</th>
                 <th>Nama Keunggulan</th>

@@ -72,7 +72,7 @@
             <table class="table table-bordered table-hover">
               <thead class="bg-light">
                 <tr>
-                  <th width="40"><i class="fas fa-check-square"></i></th>
+                  <th width="40"></th>
                   <th width="50">No</th>
                 <th>Jurusan</th>
                 <th width="140" class="text-center">Jumlah Gambar</th>

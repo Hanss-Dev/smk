@@ -118,4 +118,5 @@ Route::middleware(['admin.auth','no.cache'])->prefix('admin')->name('admin.')->g
     // ── Shared: Delete element & delete section (semua page_key) ──────────────
     Route::delete('/page-section/{key}/section/{sIdx}/element/{eIdx}', [PageSectionController::class, 'deleteElement'])->name('pagesection.deleteElement');
     Route::delete('/page-section/{key}/section/{sIdx}', [PageSectionController::class, 'deleteSection'])->name('pagesection.deleteSection');
+    Route::delete('/page-section/{key}/bulk-delete', [PageSectionController::class, 'bulkDeleteSections'])->name('pagesection.bulkDelete');
 });

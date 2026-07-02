@@ -6,30 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Models\PageSection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 /**
  * Controller bersama untuk tiga halaman:
  *   - Podcast        (page_key = 'podcast')
  *   - Lab Komputer   (page_key = 'lab-komputer')
  *   - Safety Riding  (page_key = 'safety-riding')
- *
- * Routes yang dibutuhkan (letakkan di routes/web.php):
- *
- *   Route::get('/admin/podcast',         [PageSectionController::class, 'indexPodcast'])->name('admin.podcast.index');
- *   Route::get('/admin/podcast/create',  [PageSectionController::class, 'createPodcast'])->name('admin.podcast.create');
- *   Route::post('/admin/podcast',        [PageSectionController::class, 'storePodcast'])->name('admin.podcast.store');
- *   Route::get('/admin/podcast/edit',    [PageSectionController::class, 'editPodcast'])->name('admin.podcast.edit');
- *   Route::put('/admin/podcast',         [PageSectionController::class, 'updatePodcast'])->name('admin.podcast.update');
- *
- *   // Begitu pula untuk lab dan safety-riding (ganti prefix)
- *   Route::get('/admin/lab',             [PageSectionController::class, 'indexLab'])->name('admin.lab.index');
- *   ...dst
- *
- *   // Delete satu elemen (AJAX/form submit)
- *   Route::delete('/admin/page-section/{key}/section/{sIdx}/element/{eIdx}',
- *       [PageSectionController::class, 'deleteElement'])->name('admin.pagesection.deleteElement');
- *   Route::delete('/admin/page-section/{key}/section/{sIdx}',
- *       [PageSectionController::class, 'deleteSection'])->name('admin.pagesection.deleteSection');
  */
 class PageSectionController extends Controller
 {
@@ -55,8 +38,48 @@ class PageSectionController extends Controller
     private function indexPage(string $key, string $routeName, string $title)
     {
         $page = PageSection::forPage($key);
-        $viewKey = str_replace('-', '_', $key); // misal: safety_riding
-        return view("admin.{$this->viewFolder($key)}.index", compact('page', 'title'));
+        $sections = $page->content ?? [];
+
+        $search = request('search');
+        if (!empty($search)) {
+            $search = strtolower($search);
+            $sections = array_filter($sections, function($item) use ($search) {
+                $name = strtolower($item['nama'] ?? '');
+                return str_contains($name, $search);
+            });
+        }
+
+        // Pagination
+        $perPage = request('per_page', 20);
+        $currentPage = LengthAwarePaginator::resolveCurrentPage();
+        $total = count($sections);
+
+        if ($perPage === 'all') {
+            $paginatedSections = $sections;
+            $perPageNum = $total > 0 ? $total : 20;
+        } else {
+            $perPageNum = (int)$perPage;
+            $offset = ($currentPage - 1) * $perPageNum;
+            // Slice the array while preserving keys
+            $paginatedSections = array_slice($sections, $offset, $perPageNum, true);
+        }
+
+        $paginatedSectionsObject = new LengthAwarePaginator(
+            $paginatedSections,
+            $total,
+            $perPageNum,
+            $currentPage,
+            [
+                'path' => LengthAwarePaginator::resolveCurrentPath(),
+                'query' => request()->query(),
+            ]
+        );
+
+        return view("admin.{$this->viewFolder($key)}.index", [
+            'page' => $page,
+            'title' => $title,
+            'sections' => $paginatedSectionsObject
+        ]);
     }
 
     // ═══════════════════════════════════════════════════════════════════════
@@ -276,6 +299,41 @@ class PageSectionController extends Controller
         $page->update(['content' => $content]);
 
         return back()->with('success', 'Bagian berhasil dihapus.');
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════
+    //  BULK DELETE SECTIONS
+    // ═══════════════════════════════════════════════════════════════════════
+    public function bulkDeleteSections(Request $request, string $key)
+    {
+        $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'integer|min:0',
+        ]);
+
+        $page    = PageSection::forPage($key);
+        $content = $page->content ?? [];
+        $folder  = PageSection::uploadFolder($key);
+
+        // Sort indices descending to avoid index shifting problems while deleting
+        $ids = array_map('intval', $request->ids);
+        rsort($ids);
+
+        foreach ($ids as $sIdx) {
+            if (isset($content[$sIdx])) {
+                // Hapus semua gambar dalam section ini
+                foreach ($content[$sIdx]['elemen'] ?? [] as $el) {
+                    if ($el['type'] === 'image' && !empty($el['value'])) {
+                        Storage::disk('public')->delete("{$folder}/{$el['value']}");
+                    }
+                }
+                array_splice($content, $sIdx, 1);
+            }
+        }
+
+        $page->update(['content' => $content]);
+
+        return back()->with('success', 'Bagian-bagian terpilih berhasil dihapus.');
     }
 
     // ─── Private helper ────────────────────────────────────────────────────
