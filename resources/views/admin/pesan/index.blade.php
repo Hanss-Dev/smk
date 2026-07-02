@@ -61,7 +61,7 @@
                 <th>Telepon</th>
                 <th>Cuplikan Pesan</th>
                 <th width="100">Status</th>
-                <th width="120">Tanggal</th>
+                <th width="140">Kadaluarsa</th>
                 <th width="120">Aksi</th>
               </tr>
             </thead>
@@ -78,25 +78,32 @@
                       {{ $p->status === 'unread' ? 'Belum Dibaca' : 'Dibaca' }}
                     </span>
                   </td>
-                  <td class="text-center">{{ $p->tanggal }}</td>
                   <td class="text-center">
-                    <a href="{{ route('admin.pesan.show', $p->id) }}" class="btn btn-info btn-sm shadow-sm" title="Detail / Baca">
-                      <i class="fas fa-envelope-open-text"></i> Baca
-                    </a>
-                    <button type="button" class="btn btn-primary btn-sm btn-balas shadow-sm" 
-                            data-id="{{ $p->id }}" 
-                            data-nama="{{ $p->nama }}" 
-                            data-email="{{ $p->email }}" 
-                            data-telepon="{{ $p->telepon }}"
-                            data-pesan="{{ $p->pesan }}"
-                            title="Balas">
-                      <i class="fas fa-reply"></i> Balas
-                    </button>
-                    <form action="{{ route('admin.pesan.destroy', $p->id) }}" method="POST" style="display:inline;" class="form-delete" data-confirm-message="Hapus pesan ini?">
-                      @csrf
-                      @method('DELETE')
-                      <button class="btn btn-danger btn-sm shadow-sm" title="Hapus"><i class="fas fa-trash"></i></button>
-                    </form>
+                    <div class="small text-muted">{{ $p->tanggal->format('d M Y H:i') }}</div>
+                    <div class="small {{ $p->remaining_time === 'Sudah habis' ? 'text-danger' : 'text-warning' }}">
+                      {{ $p->remaining_time }}
+                    </div>
+                  </td>
+                  <td class="text-center">
+                    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
+                      <a href="{{ route('admin.pesan.show', $p->id) }}" class="btn btn-info btn-sm shadow-sm" title="Detail / Baca">
+                        <i class="fas fa-envelope-open-text"></i> Baca
+                      </a>
+                      <button type="button" class="btn btn-primary btn-sm btn-balas shadow-sm"
+                              data-id="{{ $p->id }}"
+                              data-nama="{{ $p->nama }}"
+                              data-email="{{ $p->email }}"
+                              data-telepon="{{ $p->telepon }}"
+                              data-pesan="{{ $p->pesan }}"
+                              title="Balas">
+                        <i class="fas fa-reply"></i> Balas
+                      </button>
+                      <form action="{{ route('admin.pesan.destroy', $p->id) }}" method="POST" class="form-delete m-0" data-confirm-message="Hapus pesan ini?">
+                        @csrf
+                        @method('DELETE')
+                        <button class="btn btn-danger btn-sm shadow-sm" title="Hapus"><i class="fas fa-trash"></i></button>
+                      </form>
+                    </div>
                   </td>
                 </tr>
               @empty

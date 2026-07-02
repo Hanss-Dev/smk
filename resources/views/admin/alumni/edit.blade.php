@@ -48,7 +48,7 @@
                   <label>Gambar Saat Ini</label>
                   @if($alumni->image)
                     <div class="mb-2">
-                      <img src="{{ asset('storage/alumni/' . $alumni->image) }}" class="preview-image img-thumbnail" style="max-height:150px; cursor:pointer;">
+                      <img src="{{ asset('storage/alumni/' . $alumni->image) }}" class="preview-image img-thumbnail" style="max-height:150px;">
                     </div>
                   @endif
                   <label>Ganti Gambar (opsional)</label>
@@ -57,7 +57,7 @@
                     <p class="text-muted mt-2">Klik atau seret gambar ke sini</p>
                     <input type="file" id="fileInput" name="GambarAlumni" accept="image/*" class="d-none">
                   </div>
-                  <img id="previewImage" class="img-fluid rounded mt-2 d-none" style="max-height:200px;" data-modal-skip="true">
+                  <img id="previewImage" class="preview-image img-fluid rounded mt-2 d-none" style="max-height:200px;">
                 </div>
 
                 <div class="form-group">

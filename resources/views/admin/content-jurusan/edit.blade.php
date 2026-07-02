@@ -85,8 +85,8 @@
                             {{-- Thumbnail + Tombol Hapus --}}
                             <div class="position-relative">
                               <img src="{{ asset('storage/jurusan/' . $item['image']) }}"
-                                   class="card-img-top preview-image"
-                                   style="height:150px; object-fit:cover; cursor:pointer;"
+                                   class="preview-image card-img-top"
+                                   style="height:150px; object-fit:cover;"
                                    alt="{{ $item['alt'] ?? '' }}">
 
                               <button type="button"
