@@ -28,11 +28,11 @@
       <div class="nilai-item">
         <img src="{{ asset('assets/img/LIMA-NILAI/kerjasama.png') }}" alt="Kerja Sama" />
         <p>Kerja Sama</p>
-      </div>
+      </div>    
       <div class="nilai-item">
         <img src="{{ asset('assets/img/LIMA-NILAI/peduli.png') }}" alt="Peduli" />
         <p>Peduli</p>
-      </div>
+      </div>            
     </div>
   </section>
 
