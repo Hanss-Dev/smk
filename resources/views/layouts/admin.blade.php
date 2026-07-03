@@ -199,6 +199,92 @@
         margin:2px 8px;
         padding:.65rem 0 !important;
     }
+
+    .admin-tour-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.55);
+      z-index: 1090;
+      pointer-events: none;
+    }
+
+    .admin-tour-overlay.active {
+      display: block;
+      pointer-events: auto;
+    }
+
+    .admin-tour-highlight {
+      display: none;
+      position: absolute;
+      border: 3px solid #4fc3f7;
+      border-radius: 0.75rem;
+      box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.35);
+      background: transparent;
+      pointer-events: none;
+      transition: all 0.3s ease;
+      z-index: 1095;
+    }
+
+    .admin-tour-tooltip {
+      display: none;
+      position: absolute;
+      width: min(320px, calc(100vw - 2rem));
+      max-width: 340px;
+      background: #ffffff;
+      border-radius: 1rem;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.15);
+      color: #111;
+      padding: 1rem;
+      z-index: 1110;
+      pointer-events: auto;
+    }
+
+    .admin-tour-tooltip.active {
+      display: block;
+    }
+
+    .admin-tour-tooltip-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.75rem;
+      align-items: flex-start;
+      margin-bottom: 0.75rem;
+    }
+
+    .admin-tour-tooltip-header h3 {
+      margin: 0;
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+
+    .admin-tour-tooltip-body {
+      margin-bottom: 0.9rem;
+      line-height: 1.5;
+      font-size: 0.95rem;
+    }
+
+    .admin-tour-tooltip-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .admin-tour-tooltip-footer .btn {
+      min-width: 90px;
+    }
+
+    .admin-tour-close {
+      border: none;
+      background: transparent;
+      color: #333;
+      font-size: 1.25rem;
+      cursor: pointer;
+      line-height: 1;
+      padding: 0;
+    }
   </style>
 
   @yield('styles')
@@ -227,6 +313,24 @@
     <!-- Footer -->
     @include('admin.components.footer')
 
+  </div>
+
+  <div id="admin-tour-overlay" class="admin-tour-overlay" aria-hidden="true">
+    <div id="admin-tour-highlight" class="admin-tour-highlight"></div>
+    <div id="admin-tour-tooltip" class="admin-tour-tooltip" role="dialog" aria-modal="true" aria-labelledby="admin-tour-title">
+      <div class="admin-tour-tooltip-header">
+        <h3 id="admin-tour-title">Panduan Admin</h3>
+        <button type="button" class="admin-tour-close" aria-label="Tutup panduan">×</button>
+      </div>
+      <div id="admin-tour-description" class="admin-tour-tooltip-body"></div>
+      <div class="admin-tour-tooltip-footer">
+        <span id="admin-tour-counter" class="text-muted"></span>
+        <div class="btn-group" role="group">
+          <button type="button" id="admin-tour-prev" class="btn btn-outline-secondary btn-sm">Sebelumnya</button>
+          <button type="button" id="admin-tour-next" class="btn btn-primary btn-sm">Berikutnya</button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- Scripts -->

@@ -16,6 +16,7 @@ import { initReplyModal } from './modules/reply-modal.js';
 import { initContentJurusanCreate } from './modules/content-jurusan-create.js';
 import { initContentJurusanEdit } from './modules/content-jurusan-edit.js';
 import { initKeungulanCreate } from './modules/keungulan-create.js';
+import { initAdminTour } from './modules/admin-tour.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   initLoginPage();
@@ -24,4 +25,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initContentJurusanCreate();
   initContentJurusanEdit();
   initKeungulanCreate();
+  initAdminTour();
 });
