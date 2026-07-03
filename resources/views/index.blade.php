@@ -465,7 +465,7 @@
   </section>
 
   @if ($popup)
-    <div id="ppdb-popup" class="popup show">
+    <div id="ppdb-popup" class="popup">
       <div class="popup-content">
         <div class="popup-body">
           @if ($popup->image)
@@ -558,6 +558,9 @@ document.addEventListener("DOMContentLoaded", function() {
     text: 'Pesan berhasil dikirim!',
     confirmButtonColor: '#3085d6'
   });
+
+  const cleanUrl = window.location.pathname + window.location.hash;
+  window.history.replaceState(null, '', cleanUrl);
 });
 </script>
 @endif
@@ -574,6 +577,9 @@ document.addEventListener("DOMContentLoaded", function() {
       (request()->query("error") == 3 ? "Nomor telepon tidak valid!" : "Terjadi kesalahan!"))
     }}'
   });
+
+  const cleanUrl = window.location.pathname + window.location.hash;
+  window.history.replaceState(null, '', cleanUrl);
 });
 </script>
 @endif
