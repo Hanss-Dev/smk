@@ -335,7 +335,15 @@ document.addEventListener('DOMContentLoaded', function () {
     popup.classList.remove('show');
   }
 
-  popupTimer = setTimeout(openPopup, 1500);
+  function shouldShowPopup() {
+    return !window.location.search && !window.location.hash;
+  }
+
+  if (shouldShowPopup()) {
+    popupTimer = setTimeout(openPopup, 1500);
+  } else {
+    popup.classList.remove('show');
+  }
 
   if (popupClose) {
     popupClose.addEventListener('click', closePopup);
