@@ -49,15 +49,21 @@ function showFieldError(field) {
 
   if (field.type === 'file') {
     const dropzone = formGroup?.querySelector('#dropzone, .dropzone');
+    const targetZone = dropzone || field.parentElement || field;
+    targetZone.classList.add('border-danger');
     if (dropzone) {
-      dropzone.classList.add('border-danger');
-      const existingFeedback = dropzone.parentElement?.querySelector('.invalid-feedback[data-field-error="true"]');
-      if (!existingFeedback) {
-        const feedback = document.createElement('div');
-        feedback.className = 'invalid-feedback d-block text-danger mt-2';
-        feedback.setAttribute('data-field-error', 'true');
-        feedback.textContent = INVALID_MESSAGE;
+      dropzone.style.borderColor = '#dc3545';
+    }
+    const existingFeedback = targetZone.parentElement?.querySelector('.invalid-feedback[data-field-error="true"]');
+    if (!existingFeedback) {
+      const feedback = document.createElement('div');
+      feedback.className = 'invalid-feedback d-block text-danger mt-2';
+      feedback.setAttribute('data-field-error', 'true');
+      feedback.textContent = INVALID_MESSAGE;
+      if (dropzone) {
         dropzone.insertAdjacentElement('afterend', feedback);
+      } else {
+        targetZone.insertAdjacentElement('afterend', feedback);
       }
     }
     return;
@@ -74,7 +80,7 @@ function showFieldError(field) {
 }
 
 function isFieldEmpty(field) {
-  if (!field.hasAttribute('required')) {
+  if (!field.hasAttribute('required') && !field.dataset.validateRequired) {
     return false;
   }
 
@@ -88,6 +94,10 @@ function isFieldEmpty(field) {
 
   if (field.type === 'checkbox' || field.type === 'radio') {
     return !field.checked;
+  }
+
+  if (field.type === 'file' || field.dataset.validateRequired === 'true') {
+    return getFieldValue(field) === '';
   }
 
   return getFieldValue(field) === '';
@@ -105,32 +115,64 @@ export function initFormValidation() {
       return;
     }
 
+    form.noValidate = true;
+    form.setAttribute('novalidate', 'novalidate');
     form.dataset.formValidationInitialized = 'true';
 
-    form.querySelectorAll('input[required], textarea[required], select[required]').forEach((field) => {
+    form.querySelectorAll('input[type=file][required]').forEach((field) => {
+      field.dataset.validateRequired = 'true';
+      field.required = false;
+    });
+
+    const clearFormAlert = () => {
+      const alert = form.querySelector('.form-validation-alert');
+      if (alert) {
+        alert.remove();
+      }
+    };
+
+    const showFormAlert = () => {
+      clearFormAlert();
+      const alert = document.createElement('div');
+      alert.className = 'alert alert-danger form-validation-alert';
+      alert.textContent = 'Data Anda belum lengkap. Mohon lengkapi semua field wajib sebelum melanjutkan.';
+      form.insertAdjacentElement('afterbegin', alert);
+    };
+
+    form.querySelectorAll('input[required], textarea[required], select[required], input[data-validate-required="true"]').forEach((field) => {
       field.addEventListener('input', () => {
         if (!isFieldEmpty(field)) {
           clearFieldError(field);
         }
+        clearFormAlert();
       });
 
       field.addEventListener('change', () => {
         if (!isFieldEmpty(field)) {
           clearFieldError(field);
         }
+        clearFormAlert();
       });
     });
 
     form.addEventListener('submit', (event) => {
-      const fields = Array.from(form.querySelectorAll('input[required], textarea[required], select[required]'));
+      const fields = Array.from(form.querySelectorAll('input[required], textarea[required], select[required], input[data-validate-required="true"]'));
       const invalidFields = [];
 
-      form.querySelectorAll('.invalid-feedback[data-field-error="true"], .border-danger, .is-invalid').forEach((element) => {
-        element.classList.remove('is-invalid', 'border-danger');
+      form.querySelectorAll('.invalid-feedback[data-field-error="true"], .is-invalid, .border-danger').forEach((element) => {
         if (element.matches('.invalid-feedback[data-field-error="true"]')) {
           element.remove();
+        } else {
+          element.classList.remove('is-invalid', 'border-danger');
         }
       });
+
+      form.querySelectorAll('#dropzone').forEach((dropzone) => {
+        dropzone.classList.remove('border-danger');
+        dropzone.style.borderColor = '';
+      });
+
+      clearFormAlert();
 
       fields.forEach((field) => {
         if (isFieldEmpty(field)) {
@@ -144,11 +186,21 @@ export function initFormValidation() {
       if (invalidFields.length > 0) {
         event.preventDefault();
         event.stopPropagation();
+        showFormAlert();
 
         const firstInvalid = invalidFields[0];
         if (firstInvalid) {
-          firstInvalid.focus({ preventScroll: true });
-          firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          const target = firstInvalid.type === 'file'
+            ? firstInvalid.closest('.form-group') || firstInvalid
+            : firstInvalid;
+
+          if (typeof target.scrollIntoView === 'function') {
+            target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+
+          if (firstInvalid.type !== 'file' && typeof firstInvalid.focus === 'function') {
+            firstInvalid.focus({ preventScroll: true });
+          }
         }
       }
     });
