@@ -48,7 +48,7 @@
                 {{-- Nama Keunggulan --}}
                 <div class="form-group">
                   <label for="nama_keunggulan">Nama Keunggulan <span class="text-danger">*</span></label>
-                  <input type="text" id="nama_keunggulan" name="nama_keunggulan"
+                  <input type="text" id="nama_keunggulan" name="nama_keunggulan" data-guide="form-input"
                          class="form-control @error('nama_keunggulan') is-invalid @enderror"
                          value="{{ old('nama_keunggulan', $keungulan->nama_keunggulan) }}"
                          required>
@@ -94,7 +94,7 @@
                   @endif
 
                   <label>Ganti Gambar <small class="text-muted font-weight-normal">(opsional)</small></label>
-                  <div id="dropzone" class="border rounded p-4 text-center"
+                  <div id="dropzone" data-guide="form-dropzone" class="border rounded p-4 text-center"
                        style="cursor:pointer; border-style:dashed !important; transition: background .2s;">
                     <i class="fas fa-cloud-upload-alt fa-2x text-muted"></i>
                     <p class="text-muted mt-2 mb-0">Klik atau seret gambar ke sini</p>
@@ -109,10 +109,10 @@
               </div>
 
               <div class="card-footer d-flex justify-content-between">
-                <a href="{{ route('admin.keungulan.index') }}" class="btn btn-secondary">
+                <a href="{{ route('admin.keungulan.index') }}" data-guide="form-back" class="btn btn-secondary">
                   <i class="fas fa-arrow-left"></i> Kembali
                 </a>
-                <button type="submit" class="btn btn-warning">
+                <button type="submit" data-guide="form-submit" class="btn btn-warning">
                   <i class="fas fa-save"></i> Update
                 </button>
               </div>

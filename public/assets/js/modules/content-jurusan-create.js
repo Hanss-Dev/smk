@@ -43,6 +43,7 @@ function addImageRow(container) {
       <div class="row align-items-start">
         <div class="col-md-5 mb-2">
           <div class="dropzone-area rounded text-center p-3"
+              ${isFirst ? 'data-guide="form-dropzone"' : ''}
                style="cursor:pointer; border:2px dashed #ced4da; background:#f8f9fa; min-height:115px; transition:background .2s;">
             <i class="fas fa-cloud-upload-alt fa-2x text-muted mt-1"></i>
             <p class="text-muted small mt-1 mb-0 label-filename">Klik atau seret gambar ke sini</p>

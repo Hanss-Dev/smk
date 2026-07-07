@@ -32,7 +32,7 @@
         <div class="card-header d-flex flex-wrap justify-content-between align-items-center">
           <h3 class="card-title my-1">Daftar Bagian — Lab Komputer</h3>
           <div class="d-flex align-items-center flex-wrap" style="gap: 10px;">
-            <form action="{{ route('admin.lab.index') }}" method="GET" class="form-inline my-1">
+            <form action="{{ route('admin.lab.index') }}" method="GET" data-guide="index-search"  class="form-inline my-1">
               <div class="input-group input-group-sm" style="width: 250px;">
                 <input type="text" name="search" class="form-control float-right" placeholder="Cari bagian..." value="{{ request('search') }}">
                 <div class="input-group-append">
@@ -47,7 +47,7 @@
                 </div>
               </div>
             </form>
-            <a href="{{ route('admin.lab.create') }}" class="btn btn-primary btn-sm my-1">
+            <a href="{{ route('admin.lab.create') }}" data-guide="index-add-btn" class="btn btn-primary btn-sm my-1">
               <i class="fas fa-plus"></i> Tambah Bagian
             </a>
           </div>
@@ -63,11 +63,11 @@
                 <input type="checkbox" class="custom-control-input bulk-select-all" id="selectAllLab">
                 <label class="custom-control-label" for="selectAllLab">Pilih semua</label>
               </div>
-              <button type="submit" class="btn btn-danger btn-sm">
+              <button type="submit" data-guide="index-bulk-delete" class="btn btn-danger btn-sm">
                 <i class="fas fa-trash"></i> Hapus Pilihan
               </button>
             </div>
-            <table class="table table-bordered table-hover">
+            <table class="table table-bordered table-hover" data-guide="index-table">
               <thead class="bg-light">
                 <tr>
                   <th width="40"></th>
@@ -105,7 +105,7 @@
                         <span class="text-muted">-</span>
                       @endif
                     </td>
-                    <td class="text-center">
+                     <td class="text-center" @if($sIdx === 0) data-guide="index-row-actions" @endif>
                       <a href="{{ route('admin.lab.edit', ['sIdx' => $sIdx]) }}" class="btn btn-warning btn-sm" title="Edit">
                         <i class="fas fa-edit"></i>
                       </a>

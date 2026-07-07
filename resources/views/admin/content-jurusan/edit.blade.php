@@ -54,7 +54,7 @@
                 ======================== --}}
                 <div class="form-group">
                   <label>Jurusan <span class="text-danger">*</span></label>
-                  <select name="jurusan" class="form-control" required>
+                  <select name="jurusan" data-guide="form-input" class="form-control" required>
                     <option value="">-- Pilih Jurusan --</option>
                     @foreach($jurusanList as $j)
                       <option value="{{ $j }}"
@@ -77,7 +77,7 @@
                   </small>
 
                   @if(count($images) > 0)
-                    <div class="row" id="existingImagesContainer">
+                    <div class="row" id="existingImagesContainer" data-guide="form-existing-images">
                       @foreach($images as $key => $item)
                         <div class="col-md-4 col-lg-3 mb-3 existing-image-card" data-key="{{ $key }}">
                           <div class="card border h-100 shadow-sm">
@@ -148,7 +148,7 @@
 
                   <button type="button"
                           class="btn btn-outline-primary btn-sm mt-2"
-                          data-add-image-row>
+                          data-add-image-row data-guide="form-add-image">
                     <i class="fas fa-plus"></i> Tambah Gambar
                   </button>
                 </div>
@@ -156,10 +156,10 @@
               </div>
 
               <div class="card-footer d-flex justify-content-between">
-                <a href="{{ route('admin.content-jurusan.index') }}" class="btn btn-secondary">
+                <a href="{{ route('admin.content-jurusan.index') }}" data-guide="form-back" class="btn btn-secondary">
                   <i class="fas fa-arrow-left"></i> Kembali
                 </a>
-                <button type="submit" class="btn btn-warning">
+                <button type="submit" data-guide="form-submit" class="btn btn-warning">
                   <i class="fas fa-save"></i> Simpan Perubahan
                 </button>
               </div>

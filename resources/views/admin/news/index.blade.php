@@ -32,7 +32,7 @@
         <div class="card-header d-flex flex-wrap justify-content-between align-items-center">
           <h3 class="card-title my-1">Daftar Berita</h3>
           <div class="d-flex align-items-center flex-wrap" style="gap: 10px;">
-            <form action="{{ route('admin.news.index') }}" method="GET" class="form-inline my-1">
+            <form action="{{ route('admin.news.index') }}" method="GET" data-guide="index-search" class="form-inline my-1">
               <div class="input-group input-group-sm" style="width: 250px;">
                 <input type="text" name="search" class="form-control float-right" placeholder="Cari berita..." value="{{ request('search') }}">
                 <div class="input-group-append">
@@ -47,7 +47,7 @@
                 </div>
               </div>
             </form>
-            <a href="{{ route('admin.news.create') }}" class="btn btn-primary btn-sm my-1">
+            <a href="{{ route('admin.news.create') }}"  data-guide="index-add-btn" class="btn btn-primary btn-sm my-1">
               <i class="fas fa-plus"></i> Tambah Berita
             </a>
           </div>
@@ -63,11 +63,11 @@
                 <input type="checkbox" class="custom-control-input bulk-select-all" id="selectAllNews">
                 <label class="custom-control-label" for="selectAllNews">Pilih semua</label>
               </div>
-              <button type="submit" class="btn btn-danger btn-sm">
+              <button type="submit" data-guide="index-bulk-delete" class="btn btn-danger btn-sm">
                 <i class="fas fa-trash"></i> Hapus Pilihan
               </button>
             </div>
-            <table class="table table-bordered table-hover">
+            <table class="table table-bordered table-hover" data-guide="index-table">
               <thead class="bg-light">
                 <tr>
                   <th width="40"></th>
@@ -102,7 +102,7 @@
                     </span>
                   </td>
                   <td class="text-center">{{ $n->created_at ? $n->created_at->format('d M Y') : '-' }}</td>
-                  <td class="text-center">
+                  <td class="text-center" @if($i === 0) data-guide="index-row-actions" @endif>
                     <a href="{{ route('admin.news.edit', $n->id) }}" class="btn btn-warning btn-sm" title="Edit">
                       <i class="fas fa-edit"></i>
                     </a>

@@ -40,7 +40,7 @@
 
                 <div class="form-group">
                   <label>Judul Highlight</label>
-                  <input type="text" name="title" class="form-control" value="{{ old('title') }}" required>
+                  <input type="text" name="title" data-guide="form-input" class="form-control" value="{{ old('title') }}" required>
                 </div>
 
                 <div class="form-group">
@@ -50,7 +50,7 @@
 
                 <div class="form-group">
                   <label>Gambar</label>
-                  <div id="dropzone" class="border rounded p-4 text-center" style="cursor:pointer; border-style:dashed !important;">
+                  <div id="dropzone" data-guide="form-dropzone" class="border rounded p-4 text-center" style="cursor:pointer; border-style:dashed !important;">
                     <i class="fas fa-cloud-upload-alt fa-2x text-muted"></i>
                     <p class="text-muted mt-2">Klik atau seret gambar ke sini</p>
                     <input type="file" id="fileInput" name="image" accept="image/*" class="d-none" required>
@@ -69,10 +69,10 @@
               </div>
 
               <div class="card-footer d-flex justify-content-between">
-                <a href="{{ route('admin.highlight.index') }}" class="btn btn-secondary">
+                <a href="{{ route('admin.highlight.index') }}" data-guide="form-back" class="btn btn-secondary">
                   <i class="fas fa-arrow-left"></i> Kembali
                 </a>
-                <button type="submit" class="btn btn-primary">
+                <button type="submit" data-guide="form-submit" class="btn btn-primary">
                   <i class="fas fa-save"></i> Simpan Highlight
                 </button>
               </div>

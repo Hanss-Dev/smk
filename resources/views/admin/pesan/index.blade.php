@@ -32,7 +32,7 @@
         <div class="card-header d-flex flex-wrap justify-content-between align-items-center">
           <h3 class="card-title my-1">Daftar Pesan Hubungi Kami</h3>
           <div class="card-tools my-1">
-            <form action="{{ route('admin.pesan.index') }}" method="GET" class="form-inline">
+            <form action="{{ route('admin.pesan.index') }}" method="GET" data-guide="index-search" class="form-inline">
               <div class="input-group input-group-sm" style="width: 250px;">
                 <input type="text" name="search" class="form-control float-right" placeholder="Cari pesan..." value="{{ request('search') }}">
                 <div class="input-group-append">
@@ -60,11 +60,11 @@
                 <input type="checkbox" class="custom-control-input bulk-select-all" id="selectAllPesan">
                 <label class="custom-control-label" for="selectAllPesan">Pilih semua</label>
               </div>
-              <button type="submit" class="btn btn-danger btn-sm">
+              <button type="submit" data-guide="index-bulk-delete" class="btn btn-danger btn-sm">
                 <i class="fas fa-trash"></i> Hapus Pilihan
               </button>
             </div>
-            <table class="table table-bordered table-hover">
+            <table class="table table-bordered table-hover" data-guide="index-table">
               <thead class="bg-light">
                 <tr>
                   <th width="40"></th>
@@ -100,7 +100,7 @@
                       {{ $p->remaining_time }}
                     </div>
                   </td>
-                  <td class="text-center">
+                   <td class="text-center" @if($i === 0) data-guide="index-row-actions" @endif>
                     <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
                       <a href="{{ route('admin.pesan.show', $p->id) }}" class="btn btn-info btn-sm shadow-sm" title="Detail / Baca">
                         <i class="fas fa-envelope-open-text"></i> Baca

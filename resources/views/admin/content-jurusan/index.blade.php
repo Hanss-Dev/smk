@@ -32,7 +32,7 @@
         <div class="card-header d-flex flex-wrap justify-content-between align-items-center">
           <h3 class="card-title my-1">Daftar Content Jurusan</h3>
           <div class="d-flex align-items-center flex-wrap" style="gap: 10px;">
-            <form action="{{ route('admin.content-jurusan.index') }}" method="GET" class="form-inline my-1" id="form-filter-jurusan">
+            <form action="{{ route('admin.content-jurusan.index') }}" method="GET" data-guide="index-search" class="form-inline my-1" id="form-filter-jurusan">
               <div class="input-group input-group-sm" style="width: 270px;">
                 <select name="jurusan" class="form-control" onchange="document.getElementById('form-filter-jurusan').submit()">
                   <option value="">-- Semua Jurusan --</option>
@@ -49,7 +49,7 @@
                 </div>
               </div>
             </form>
-            <a href="{{ route('admin.content-jurusan.create') }}" class="btn btn-primary btn-sm my-1">
+            <a href="{{ route('admin.content-jurusan.create') }}" data-guide="index-add-btn" class="btn btn-primary btn-sm my-1">
               <i class="fas fa-plus"></i> Tambah Content
             </a>
           </div>
@@ -65,11 +65,11 @@
                 <input type="checkbox" class="custom-control-input bulk-select-all" id="selectAllContentJurusan">
                 <label class="custom-control-label" for="selectAllContentJurusan">Pilih semua</label>
               </div>
-              <button type="submit" class="btn btn-danger btn-sm">
+              <button type="submit" data-guide="index-bulk-delete" class="btn btn-danger btn-sm">
                 <i class="fas fa-trash"></i> Hapus Pilihan
               </button>
             </div>
-            <table class="table table-bordered table-hover">
+            <table class="table table-bordered table-hover" data-guide="index-table">
               <thead class="bg-light">
                 <tr>
                   <th width="40"></th>
@@ -99,7 +99,7 @@
                   <td class="text-center">
                     {{ $c->created_at ? $c->created_at->format('d M Y') : '-' }}
                   </td>
-                  <td class="text-center">
+                  <td class="text-center" @if($i === 0) data-guide="index-row-actions" @endif>
                     <a href="{{ route('admin.content-jurusan.edit', $c->id) }}"
                        class="btn btn-warning btn-sm"
                        title="Edit">

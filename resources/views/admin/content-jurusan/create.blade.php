@@ -52,7 +52,7 @@
                   <label>
                     Jurusan <span class="text-danger">*</span>
                   </label>
-                  <select name="jurusan" class="form-control" required>
+                  <select name="jurusan" data-guide="form-input" class="form-control" required>
                     <option value="">-- Pilih Jurusan --</option>
                     @foreach($jurusanList as $j)
                       <option value="{{ $j }}" {{ old('jurusan') == $j ? 'selected' : '' }}>
@@ -77,7 +77,7 @@
                   </div>
 
                   <button type="button"
-                          class="btn btn-outline-primary btn-sm mt-2"
+                          class="btn btn-outline-primary btn-sm mt-2" data-add-image-row data-guide="form-add-image"
                           data-add-image-row>
                     <i class="fas fa-plus"></i> Tambah Gambar
                   </button>
@@ -86,10 +86,10 @@
               </div>
 
               <div class="card-footer d-flex justify-content-between">
-                <a href="{{ route('admin.content-jurusan.index') }}" class="btn btn-secondary">
+                <a href="{{ route('admin.content-jurusan.index') }}" data-guide="form-back" class="btn btn-secondary">
                   <i class="fas fa-arrow-left"></i> Kembali
                 </a>
-                <button type="submit" class="btn btn-primary">
+                <button type="submit"  data-guide="form-submit" class="btn btn-primary">
                   <i class="fas fa-save"></i> Simpan
                 </button>
               </div>

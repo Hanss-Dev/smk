@@ -34,7 +34,7 @@
             <h3 class="card-title mb-0">Daftar Keunggulan</h3>
             <div class="d-flex align-items-center" style="gap: .5rem;">
               {{-- Search --}}
-              <form action="{{ route('admin.keungulan.index') }}" method="GET" class="d-flex" style="gap:.4rem;">
+              <form action="{{ route('admin.keungulan.index') }}" method="GET" data-guide="index-search" class="d-flex" style="gap:.4rem;">
                 @if(request('per_page'))
                   <input type="hidden" name="per_page" value="{{ request('per_page') }}">
                 @endif

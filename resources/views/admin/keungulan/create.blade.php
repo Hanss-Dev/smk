@@ -48,7 +48,7 @@
 
                 {{-- Status Aktif --}}
                 <div class="form-group">
-                  <div class="custom-control custom-switch">
+                  <div class="custom-control custom-switch" data-guide="form-input">
                     <input type="checkbox" class="custom-control-input" id="is_active"
                            name="is_active" value="1"
                            {{ old('is_active', '1') == '1' ? 'checked' : '' }}>
@@ -66,7 +66,7 @@
                   {{-- Image rows container --}}
                   <div id="keungulanImageRows"></div>
 
-                  <button type="button" class="btn btn-sm btn-outline-primary mt-2" data-add-keungulan-row>
+                  <button type="button" class="btn btn-sm btn-outline-primary mt-2" data-add-keungulan-row data-guide="form-add-image">
                     <i class="fas fa-plus"></i> Tambah Gambar
                   </button>
                 </div>
@@ -74,10 +74,10 @@
               </div>
 
               <div class="card-footer d-flex justify-content-between">
-                <a href="{{ route('admin.keungulan.index') }}" class="btn btn-secondary">
+                <a href="{{ route('admin.keungulan.index') }}" data-guide="form-back" class="btn btn-secondary">
                   <i class="fas fa-arrow-left"></i> Kembali
                 </a>
-                <button type="submit" class="btn btn-primary">
+                <button type="submit" data-guide="form-submit" class="btn btn-primary">
                   <i class="fas fa-save"></i> Simpan
                 </button>
               </div>

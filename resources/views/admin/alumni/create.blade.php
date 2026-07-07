@@ -11,7 +11,7 @@
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('admin.alumni.index') }}">Data Alumni</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('admin.alumni.index') }}" data-guide="form-back" class="btn btn-secondary">Data Alumni</a></li>
             <li class="breadcrumb-item active">Tambah</li>
           </ol>
         </div>
@@ -40,12 +40,12 @@
 
                 <div class="form-group">
                   <label>Nama Siswa</label>
-                  <input type="text" name="NamaSiswa" class="form-control" value="{{ old('nama_siswa') }}" required>
+                  <input type="text" name="NamaSiswa" data-guide="form-input" class="form-control" value="{{ old('nama_siswa') }}" required>
                 </div>
 
                 <div class="form-group">
                   <label>Gambar</label>
-                  <div id="dropzone" class="border rounded p-4 text-center" style="cursor:pointer; border-style:dashed !important;">
+                  <div id="dropzone" data-guide="form-dropzone" class="border rounded p-4 text-center" style="cursor:pointer; border-style:dashed !important;">
                     <i class="fas fa-cloud-upload-alt fa-2x text-muted"></i>
                     <p class="text-muted mt-2">Klik atau seret gambar ke sini</p>
                     <input type="file" id="fileInput" name="GambarAlumni" accept="image/*" class="d-none" required>
@@ -75,7 +75,7 @@
                 <a href="{{ route('admin.news.index') }}" class="btn btn-secondary">
                   <i class="fas fa-arrow-left"></i> Kembali
                 </a>
-                <button type="submit" class="btn btn-primary">
+                <button type="submit" data-guide="form-submit" class="btn btn-primary">
                   <i class="fas fa-save"></i> Simpan Berita
                 </button>
               </div>

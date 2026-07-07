@@ -41,7 +41,7 @@
 
                 <div class="form-group">
                   <label>Nama Siswa</label>
-                  <input type="text" name="NamaSiswa" class="form-control" value="{{ old('title', $alumni->nama_alumni) }}" required>
+                  <input type="text" name="NamaSiswa" data-guide="form-input" class="form-control" value="{{ old('title', $alumni->nama_alumni) }}" required>
                 </div>
 
                 <div class="form-group">
@@ -52,7 +52,7 @@
                     </div>
                   @endif
                   <label>Ganti Gambar (opsional)</label>
-                  <div id="dropzone" class="border rounded p-4 text-center" style="cursor:pointer; border-style:dashed !important;">
+                  <div id="dropzone" data-guide="form-dropzone" class="border rounded p-4 text-center" style="cursor:pointer; border-style:dashed !important;">
                     <i class="fas fa-cloud-upload-alt fa-2x text-muted"></i>
                     <p class="text-muted mt-2">Klik atau seret gambar ke sini</p>
                     <input type="file" id="fileInput" name="GambarAlumni" accept="image/*" class="d-none">
@@ -78,10 +78,10 @@
               </div>
 
               <div class="card-footer d-flex justify-content-between">
-                <a href="{{ route('admin.alumni.index') }}" class="btn btn-secondary">
+                <a href="{{ route('admin.alumni.index') }}" data-guide="form-back" class="btn btn-secondary">
                   <i class="fas fa-arrow-left"></i> Kembali
                 </a>
-                <button type="submit" class="btn btn-warning">
+                <button type="submit" data-guide="form-submit" class="btn btn-warning">
                   <i class="fas fa-save"></i> Update Berita
                 </button>
               </div>

@@ -1,4 +1,4 @@
-<div class="d-flex justify-content-end align-items-center mb-2" style="font-size: 0.875rem;">
+<div class="d-flex justify-content-end align-items-center mb-2" data-guide="pagination-controls" style="font-size: 0.875rem;">
     <a href="{{ request()->fullUrlWithQuery(['per_page' => 'all']) }}" class="text-primary text-decoration-none">Show all</a>
     <span class="mx-2 text-muted">|</span>
     <span class="mr-2">Number of rows:</span>

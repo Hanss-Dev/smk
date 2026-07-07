@@ -29,7 +29,7 @@
             </div>
 
             <div class="card-body">
-              <table class="table table-bordered">
+              <table class="table table-bordered" data-guide="detail-table">
                 <tr>
                   <th width="180" class="bg-light">Nama Pengirim</th>
                   <td>{{ $pesan->nama }}</td>
@@ -61,7 +61,7 @@
               </table>
             </div>
 
-            <div class="card-footer d-flex justify-content-between">
+            <div class="card-footer d-flex justify-content-between" data-guide="detail-actions">
               <a href="{{ route('admin.pesan.index') }}" class="btn btn-secondary">
                 <i class="fas fa-arrow-left"></i> Kembali ke Daftar Pesan
               </a>

@@ -52,7 +52,7 @@
 
                 <div class="form-group">
                   <label>Nama Bagian <span class="text-danger">*</span></label>
-                  <input type="text" name="nama_bagian" class="form-control"
+                  <input type="text" name="nama_bagian" data-guide="form-input" class="form-control"
                          value="{{ old('nama_bagian', $section['nama'] ?? '') }}" required>
                 </div>
 
@@ -73,10 +73,10 @@
               </div>
 
               <div class="card-footer d-flex justify-content-between">
-                <a href="{{ route('admin.lab.index') }}" class="btn btn-secondary">
+                <a href="{{ route('admin.lab.index') }}" data-guide="form-back" class="btn btn-secondary">
                   <i class="fas fa-arrow-left"></i> Kembali
                 </a>
-                <button type="submit" class="btn btn-warning">
+                <button type="submit" data-guide="form-submit" class="btn btn-warning">
                   <i class="fas fa-save"></i> Update Bagian
                 </button>
               </div>

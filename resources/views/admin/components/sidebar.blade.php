@@ -4,7 +4,7 @@
   <!-- STICKY: Logo -->
   <div class="ega-sidebar-logo text-center py-3 position-relative">
     <!-- Desktop toggle button (manual JS, bukan data-widget agar tidak konflik) -->
-    <a href="#" id="sidebar-toggle-desktop" class="sidebar-toggle-btn text-white position-absolute"
+    <a href="#" id="sidebar-toggle-desktop" data-guide="sidebar-toggle" class="sidebar-toggle-btn text-white position-absolute"
        role="button" style="right: 12px; top: 14px; z-index: 1050;" title="Collapse/Expand Sidebar">
       <i class="fas fa-bars"></i>
     </a>
@@ -21,7 +21,7 @@
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
         <li class="nav-item">
-          <a href="{{ route('admin.dashboard') }}"
+          <a href="{{ route('admin.dashboard') }}" data-guide="menu-dashboard"
             class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
             <i class="nav-icon fas fa-chart-line"></i>
             <p>Dashboard</p>
@@ -33,7 +33,7 @@
         @endphp
 
         <li class="nav-item has-treeview {{ $isKonten ? 'menu-open' : '' }}">
-          <a href="#" class="nav-link {{ $isKonten ? 'active' : '' }}">
+          <a href="#" data-guide="menu-konten" class="nav-link {{ $isKonten ? 'active' : '' }}">
             <i class="nav-icon fas fa-layer-group"></i>
             <p>
               Kelola Konten
@@ -91,7 +91,7 @@
         @endphp
 
         <li class="nav-item has-treeview {{ $isHalaman ? 'menu-open' : '' }}">
-          <a href="#" class="nav-link {{ $isHalaman ? 'active' : '' }}">
+          <a href="#" data-guide="menu-halaman" class="nav-link {{ $isHalaman ? 'active' : '' }}">
             <i class="nav-icon fas fa-file-alt"></i>
             <p>
               Kelola Halaman
@@ -124,7 +124,7 @@
         </li>
 
         <li class="nav-item">
-          <a href="{{ route('admin.pesan.index') }}"
+          <a href="{{ route('admin.pesan.index') }}" data-guide="menu-pesan"
             class="nav-link {{ request()->is('admin/pesan*') ? 'active' : '' }}">
             <i class="nav-icon fas fa-envelope"></i>
             <p>Pesan Masuk</p>
@@ -137,7 +137,7 @@
   {{-- /SCROLLABLE --}}
 
   <div class="ega-sidebar-logout">
-    <a href="{{ route('admin.logout') }}"
+    <a href="{{ route('admin.logout') }}" data-guide="sidebar-logout"
        class="nav-link logout-link"
        data-confirm-message="Yakin ingin keluar?">
         <i class="nav-icon fas fa-sign-out-alt"></i>

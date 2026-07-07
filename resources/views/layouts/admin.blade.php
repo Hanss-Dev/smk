@@ -8,6 +8,7 @@
 
   <link rel="stylesheet" href="{{ asset('assets/adminlte/plugins/fontawesome-free/css/all.min.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/adminlte/dist/css/adminlte.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/vendor/driver.css') }}">
   <link rel="icon" href="{{ asset('assets/img/logo-mt.png') }}" type="image/png">
 
   <style>
@@ -226,6 +227,13 @@
 
     <!-- Footer -->
     @include('admin.components.footer')
+
+    <button type="button" id="guide-trigger-btn"
+      class="btn btn-info rounded-circle shadow"
+      style="position:fixed; bottom:20px; right:20px; width:50px; height:50px; z-index:1080;"
+      title="Panduan Halaman Ini">
+      <i class="fas fa-question"></i>
+    </button>
 
   </div>
 
