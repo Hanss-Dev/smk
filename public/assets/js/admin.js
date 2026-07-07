@@ -16,7 +16,8 @@ import { initReplyModal } from './modules/reply-modal.js';
 import { initContentJurusanCreate } from './modules/content-jurusan-create.js';
 import { initContentJurusanEdit } from './modules/content-jurusan-edit.js';
 import { initKeungulanCreate } from './modules/keungulan-create.js';
-import { initUserGuide } from './modules/user-guide.js';   // ⬅ tambahkan
+import { initUserGuide } from './modules/user-guide.js';
+import { initFormValidation } from './modules/form-validation.js';
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -27,4 +28,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initContentJurusanEdit();
   initKeungulanCreate();
   initUserGuide();
+  initFormValidation();
 });
