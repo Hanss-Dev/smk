@@ -44,7 +44,7 @@
         </div>
       @endif
 
-      <div class="row">
+      <div class="row" data-guide="dash-stats">
         <div class="col-lg-3 col-6">
           <div class="small-box bg-info">
             <div class="inner">
@@ -162,7 +162,7 @@
 
       <div class="row">
         <div class="col-md-4">
-          <div class="card card-info">
+          <div class="card card-info" data-guide="dash-quick-stats">
             <div class="card-header">
               <h3 class="card-title">Quick Statistics</h3>
             </div>
@@ -197,7 +197,7 @@
         </div>
 
         <div class="col-md-8">
-          <div class="card card-outline">
+          <div class="card card-outline" data-guide="dash-recent-news">
             <div class="card-header">
               <h3 class="card-title">Berita Terbaru</h3>
             </div>
@@ -221,7 +221,7 @@
         </div>
       </div>
 
-      <div class="row mt-3">
+      <div class="row mt-3" data-guide="dash-charts">
         <div class="col-md-8">
           <div class="card card-primary card-outline">
             <div class="card-header">

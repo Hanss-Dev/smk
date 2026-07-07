@@ -2,10 +2,146 @@ import { driver } from '../vendor/driver.js.mjs';
 
 const STORAGE_KEY = 'admin_guide_seen_v1';
 
-function addStep(steps, selector, popover) {
+function addStep(steps, selector, popover, condition = true) {
   const el = document.querySelector(selector);
-  if (el) {
-    steps.push({ element: selector, popover });
+  if (!el) {
+    return;
+  }
+
+  if (typeof condition === 'function' ? !condition() : !condition) {
+    return;
+  }
+
+  const style = window.getComputedStyle(el);
+  const isVisible = style.display !== 'none' && style.visibility !== 'hidden' && el.offsetParent !== null;
+  if (!isVisible) {
+    return;
+  }
+
+  steps.push({ element: selector, popover });
+}
+
+const GUIDE_STYLE_ID = 'admin-guide-sidebar-style';
+
+function injectGuideSidebarStyle() {
+  if (document.getElementById(GUIDE_STYLE_ID)) {
+    return;
+  }
+
+  const style = document.createElement('style');
+  style.id = GUIDE_STYLE_ID;
+  style.textContent = `
+    body.guide-sidebar-expanded .main-sidebar {
+      width: 250px !important;
+    }
+    body.guide-sidebar-expanded .main-sidebar:hover {
+      width: 250px !important;
+    }
+    body.guide-sidebar-expanded.sidebar-mini.sidebar-collapse .main-sidebar .nav-sidebar .nav-link > p,
+    body.guide-sidebar-expanded.sidebar-mini.sidebar-collapse .ega-logo-text,
+    body.guide-sidebar-expanded.sidebar-mini.sidebar-collapse .ega-sidebar-logout .logout-text {
+      display: block !important;
+      opacity: 1 !important;
+      height: auto !important;
+    }
+    body.guide-sidebar-expanded.sidebar-mini.sidebar-collapse .main-sidebar .nav-sidebar > .nav-item > .nav-link,
+    body.guide-sidebar-expanded.sidebar-mini.sidebar-collapse .main-sidebar .nav-sidebar .nav-treeview > .nav-item > .nav-link {
+      justify-content: flex-start !important;
+      padding: .65rem 1rem !important;
+      width: auto !important;
+    }
+  `;
+  document.head.appendChild(style);
+}
+
+function ensureGuideSidebarOpen() {
+  const body = document.body;
+  body.classList.remove('sidebar-collapse', 'sidebar-closed');
+  localStorage.setItem('sidebar_collapsed', 'false');
+
+  if (window.innerWidth < 992 && !body.classList.contains('sidebar-open')) {
+    body.classList.add('sidebar-open');
+  }
+}
+
+const guideSidebarState = {
+  width: '',
+  minWidth: '',
+  overflow: '',
+  hasSidebarCollapse: false,
+  hasSidebarOpen: false,
+  hasSidebarClosed: false,
+};
+
+function applyGuideSidebarInlineStyles() {
+  const sidebar = document.querySelector('.main-sidebar');
+  if (!sidebar) return;
+
+  guideSidebarState.width = sidebar.style.width || '';
+  guideSidebarState.minWidth = sidebar.style.minWidth || '';
+  guideSidebarState.overflow = sidebar.style.overflow || '';
+
+  sidebar.style.width = '250px';
+  sidebar.style.minWidth = '250px';
+  sidebar.style.overflow = 'visible';
+}
+
+function resetGuideSidebarInlineStyles() {
+  const sidebar = document.querySelector('.main-sidebar');
+  if (!sidebar) return;
+
+  sidebar.style.width = guideSidebarState.width;
+  sidebar.style.minWidth = guideSidebarState.minWidth;
+  sidebar.style.overflow = guideSidebarState.overflow;
+}
+
+function activateGuideSidebarExpanded() {
+  const body = document.body;
+  guideSidebarState.hasSidebarCollapse = body.classList.contains('sidebar-collapse');
+  guideSidebarState.hasSidebarOpen = body.classList.contains('sidebar-open');
+  guideSidebarState.hasSidebarClosed = body.classList.contains('sidebar-closed');
+
+  injectGuideSidebarStyle();
+  ensureGuideSidebarOpen();
+
+  body.classList.add('guide-sidebar-expanded');
+  applyGuideSidebarInlineStyles();
+
+  if (window.jQuery && window.jQuery.fn && typeof window.jQuery.fn.PushMenu === 'function') {
+    window.jQuery('[data-widget="pushmenu"]').PushMenu('expand');
+  }
+}
+
+function deactivateGuideSidebarExpanded() {
+  const body = document.body;
+  body.classList.remove('guide-sidebar-expanded');
+
+  if (guideSidebarState.hasSidebarCollapse) {
+    body.classList.add('sidebar-collapse');
+  }
+  if (guideSidebarState.hasSidebarClosed) {
+    body.classList.add('sidebar-closed');
+  }
+  if (!guideSidebarState.hasSidebarOpen) {
+    body.classList.remove('sidebar-open');
+  }
+
+  resetGuideSidebarInlineStyles();
+}
+
+function openGuideTreeMenu(selector) {
+  const el = document.querySelector(selector);
+  if (!el) {
+    return;
+  }
+
+  const treeItem = el.closest('.has-treeview');
+  if (treeItem && !treeItem.classList.contains('menu-open')) {
+    treeItem.classList.add('menu-open');
+    const link = treeItem.querySelector('> .nav-link');
+    if (link) {
+      link.setAttribute('aria-expanded', 'true');
+    }
   }
 }
 
@@ -16,26 +152,39 @@ function getLayoutSteps() {
   addStep(steps, '[data-guide="menu-toggle"]', {
     title: 'Menu Utama',
     description: 'Klik ikon ini untuk membuka/menutup sidebar di layar kecil (HP/tablet).',
-  });
+  }, () => window.innerWidth < 992);
 
   addStep(steps, '[data-guide="sidebar-toggle"]', {
     title: 'Perkecil Sidebar',
     description: 'Klik untuk mempersempit sidebar agar area kerja lebih luas.',
-  });
+  }, () => window.innerWidth >= 992);
 
+  // ⬅️ step ini yang jadi "pintu masuk" ke section sidebar,
+  // di sinilah sidebar baru dipaksa expand
   addStep(steps, '[data-guide="menu-dashboard"]', {
     title: 'Dashboard',
     description: 'Ringkasan statistik seluruh konten website.',
+    onHighlightStarted: () => {
+      activateGuideSidebarExpanded();
+    },
   });
 
   addStep(steps, '[data-guide="menu-konten"]', {
     title: 'Kelola Konten',
     description: 'Kelola Berita, Highlight, Popup, Alumni, Keunggulan, dan Content Jurusan.',
+    onHighlightStarted: () => {
+      ensureGuideSidebarOpen();
+      openGuideTreeMenu('[data-guide="menu-konten"]');
+    },
   });
 
   addStep(steps, '[data-guide="menu-halaman"]', {
     title: 'Kelola Halaman',
     description: 'Kelola konten Podcast, Lab Komputer, dan Safety Riding.',
+    onHighlightStarted: () => {
+      ensureGuideSidebarOpen();
+      openGuideTreeMenu('[data-guide="menu-halaman"]');
+    },
   });
 
   addStep(steps, '[data-guide="menu-pesan"]', {
@@ -105,6 +254,12 @@ function getIndexSteps() {
     description: 'Edit atau hapus data pada baris yang bersangkutan.',
   });
 
+  // Resource-specific: filter for Content Jurusan
+  addStep(steps, '#form-filter-jurusan', {
+    title: 'Filter Jurusan',
+    description: 'Pilih jurusan untuk menampilkan konten khusus jurusan tersebut.',
+  });
+
 
 
   return steps;
@@ -164,28 +319,50 @@ function getDetailSteps() {
     title: 'Aksi',
     description: 'Balas pesan ini atau hapus jika sudah tidak diperlukan.',
   });
+
+  // Jika ada modal balas pesan, tambahkan langkah khusus untuk modal
+  addStep(steps, '#replyModal', {
+    title: 'Balas Pesan',
+    description: 'Pilih metode pengiriman, tulis pesan balasan, lalu kirim lewat WhatsApp atau Email.',
+  });
+  addStep(steps, '#reply-message', {
+    title: 'Isi Balasan',
+    description: 'Tulis teks balasan untuk pengirim. Gunakan template jika perlu.',
+  });
+  addStep(steps, '#btn-submit-reply', {
+    title: 'Kirim Balasan',
+    description: 'Kirim balasan via metode yang dipilih (WhatsApp atau Email).',
+  });
   return steps;
 }
 
 function buildStepsForCurrentPage() {
-  let steps = getLayoutSteps();
-
   if (document.querySelector('[data-guide="dash-stats"]')) {
-    steps = steps.concat(getDashboardSteps());
-  } else if (document.querySelector('[data-guide="detail-table"]')) {   // ⬅ baru
-    steps = steps.concat(getDetailSteps());
-  } else if (document.querySelector('[data-guide="form-input"]')) {
-    steps = steps.concat(getFormSteps());
-  } else if (document.querySelector('[data-guide="index-table"]')) {
-    steps = steps.concat(getIndexSteps());
+    return getDashboardSteps().concat(getLayoutSteps());
   }
 
-  return steps;
+  if (document.querySelector('[data-guide="detail-table"]')) {
+    return getDetailSteps();
+  }
+
+  if (document.querySelector('[data-guide="form-input"]')) {
+    return getFormSteps();
+  }
+
+  if (document.querySelector('[data-guide="index-table"]')) {
+    return getIndexSteps();
+  }
+
+  return [];
 }
 
 function startTour() {
   const steps = buildStepsForCurrentPage();
   if (steps.length === 0) return;
+
+  if (document.querySelector('[data-guide="dash-stats"]')) {
+    activateGuideSidebarExpanded();
+  }
 
   const driverObj = driver({
     showProgress: true,
@@ -197,6 +374,7 @@ function startTour() {
     doneBtnText: 'Selesai',
     progressText: '{{current}} dari {{total}}',
     steps,
+    onDestroyed: deactivateGuideSidebarExpanded,
   });
 
   driverObj.drive();

@@ -79,7 +79,7 @@
       white-space: nowrap;
     }
 
-    /* Sidebar toggle button style */
+    /* Sidebar toggle button style (desktop) */
     .sidebar-toggle-btn {
       color: rgba(255, 255, 255, 0.7) !important;
       font-size: 1.1rem;
@@ -87,6 +87,33 @@
       border: none;
       cursor: pointer;
       transition: color 0.2s ease;
+    }
+    /* Mobile: hide the sidebar internal toggle (use navbar hamburger instead) */
+    @media (max-width: 991.98px) {
+      .sidebar-toggle-btn {
+        display: none !important;
+      }
+    }
+
+    /* ── Overlay backdrop (mobile only) — klik di sini menutup sidebar ── */
+    .ega-sidebar-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .45);
+      z-index: 1030;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+    @media (max-width: 991.98px) {
+      body.sidebar-open .ega-sidebar-overlay {
+        display: block;
+        opacity: 1;
+      }
+      /* Pastikan sidebar tampil di atas overlay saat open */
+      body.sidebar-open .main-sidebar {
+        z-index: 1035;
+      }
     }
     .sidebar-toggle-btn:hover {
       color: #ffffff !important;
@@ -119,9 +146,6 @@
 
     /* ── Sidebar COLLAPSED state (desktop, not hovered) ─────── */
     @media (min-width: 992px) {
-      /* Paksa lebar sidebar benar-benar mengecil saat collapse, lalu
-         melebar lagi saat di-hover. !important dipakai karena .main-sidebar
-         di atas sudah di-override jadi flex custom. */
       .sidebar-mini.sidebar-collapse .main-sidebar {
         width: 4.6rem !important;
         transition: width 0.3s ease !important;
@@ -130,18 +154,14 @@
         width: 250px !important;
       }
 
-      /* Sembunyikan SEMUA label teks menu (induk maupun anak grup) */
       .sidebar-mini.sidebar-collapse .main-sidebar:not(:hover) .nav-sidebar .nav-link > p {
         display: none !important;
       }
 
-      /* Sembunyikan link INDUK grup (Kelola Konten / Kelola Halaman) —
-         anaknya akan langsung ditampilkan flat tanpa grup */
       .sidebar-mini.sidebar-collapse .main-sidebar:not(:hover) .nav-sidebar > .nav-item.has-treeview > .nav-link {
         display: none !important;
       }
 
-      /* Paksa submenu selalu tampil (flatten) & hilangkan indentasi/bg grup */
       .sidebar-mini.sidebar-collapse .main-sidebar:not(:hover) .nav-sidebar .nav-treeview {
         display: block !important;
         padding-left: 0 !important;
@@ -149,7 +169,6 @@
         background: transparent !important;
       }
 
-      /* Samakan tampilan semua ikon (level atas & anak grup) jadi rapi & center */
       .sidebar-mini.sidebar-collapse .main-sidebar:not(:hover) .nav-sidebar > .nav-item > .nav-link,
       .sidebar-mini.sidebar-collapse .main-sidebar:not(:hover) .nav-sidebar .nav-treeview > .nav-item > .nav-link {
         display: flex !important;
@@ -181,7 +200,6 @@
     .sidebar-mini.sidebar-collapse .main-sidebar:not(:hover) .sidebar-toggle-btn {
       display: none !important;
     }
-    /* Logout: hide text only, keep icon visible and centered */
     .sidebar-mini.sidebar-collapse .main-sidebar:not(:hover) .ega-sidebar-logout .logout-text {
       display: none !important;
     }
@@ -195,7 +213,6 @@
         display:flex !important;
         align-items:center !important;
         justify-content:center !important;
-
         width:calc(100% - 16px);
         margin:2px 8px;
         padding:.65rem 0 !important;
@@ -206,10 +223,10 @@
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
-  {{-- Terapkan state sidebar SEBELUM render agar tidak ada flash --}}
+  {{-- Terapkan state sidebar SEBELUM render agar tidak ada flash (desktop only) --}}
   <script>
     (function () {
-      if (localStorage.getItem('sidebar_collapsed') === 'true') {
+      if (window.innerWidth >= 992 && localStorage.getItem('sidebar_collapsed') === 'true') {
         document.body.classList.add('sidebar-collapse');
       }
     })();
@@ -221,6 +238,8 @@
 
     <!-- Sidebar -->
     @include('admin.components.sidebar')
+
+    <div class="ega-sidebar-overlay" id="sidebar-overlay"></div>
 
     <!-- Content Wrapper -->
     @yield('content')
@@ -243,27 +262,56 @@
   <script src="{{ asset('assets/adminlte/dist/js/adminlte.min.js') }}"></script>
   <script src="{{ asset('assets/js/image-modal.js') }}"></script>
 
-
   <script>
     $(document).ready(function () {
 
-      // ── Desktop sidebar toggle (bukan data-widget agar tidak konflik) ──────
-      $('#sidebar-toggle-desktop').on('click', function (e) {
-        e.preventDefault();
-        // Gunakan PushMenu AdminLTE untuk toggle collapse
-        $('[data-widget="pushmenu"]').first().PushMenu('toggle');
+      // ── Helper: cek apakah sedang di breakpoint desktop ─────────────────
+      function isDesktop() {
+        return window.innerWidth >= 992;
+      }
 
-        // Simpan state ke localStorage agar bertahan saat pindah halaman
-        var isCollapsed = $('body').hasClass('sidebar-collapse');
-        localStorage.setItem('sidebar_collapsed', isCollapsed ? 'true' : 'false');
+      // ── Sinkronkan class body sesuai state tersimpan (desktop only) ─────
+      function syncSidebarState() {
+        const body = $('body');
+        const shouldCollapse = isDesktop() && localStorage.getItem('sidebar_collapsed') === 'true';
+        body.toggleClass('sidebar-collapse', shouldCollapse);
+        body.toggleClass('sidebar-open', false);
+      }
+
+      // ── Satu handler untuk kedua tombol (desktop & mobile) ───────────────
+      // Desktop  -> toggle collapse/expand + simpan preferensi ke localStorage
+      // Mobile   -> toggle overlay open/close, TIDAK disimpan
+      function toggleSidebar(e) {
+        e.preventDefault();
+        const body = $('body');
+
+        if (isDesktop()) {
+          const willCollapse = !body.hasClass('sidebar-collapse');
+          body.toggleClass('sidebar-collapse', willCollapse);
+          localStorage.setItem('sidebar_collapsed', willCollapse ? 'true' : 'false');
+        } else {
+          body.toggleClass('sidebar-open');
+        }
+      }
+
+      $('#sidebar-toggle-desktop, #sidebar-toggle-mobile').on('click', toggleSidebar);
+
+      // ── Klik overlay → tutup sidebar (mobile) ────────────────────────────
+      $(document).on('click', '#sidebar-overlay', function () {
+        $('body').removeClass('sidebar-open');
       });
 
-      // ── Sync state awal AdminLTE dengan localStorage ──────────────────────
-      // Jika LocalStorage bilang collapsed, pastikan class sudah ada (sudah di-set
-      // oleh inline script di atas), tapi kita trigger event agar AdminLTE sync.
-      // Tidak perlu animasi di sini karena transition sudah dimatikan sementara.
+      // ── Klik salah satu link menu di sidebar → auto tutup (mobile only) ──
+      $(document).on('click', '.main-sidebar .nav-link', function () {
+        if (!isDesktop()) {
+          $('body').removeClass('sidebar-open');
+        }
+      });
+
+      $(window).on('resize', syncSidebarState);
+      syncSidebarState();
+
       if (localStorage.getItem('sidebar_collapsed') === 'true') {
-        // Tambahkan sementara class no-transition agar tidak ada animasi flash
         $('body').addClass('sidebar-no-transition');
         setTimeout(function () {
           $('body').removeClass('sidebar-no-transition');
@@ -317,7 +365,6 @@
               .addClass('preview-image')
               .removeAttr('data-modal-skip');
 
-            // Pastikan image-modal sudah siap, bind langsung supaya langsung bisa diklik
             $preview.off('click.previewModal').on('click.previewModal', function () {
               if (window.ImageModal && typeof window.ImageModal.open === 'function') {
                 window.ImageModal.open(this.src, this.alt || 'Preview gambar');
