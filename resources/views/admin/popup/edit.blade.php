@@ -3,7 +3,7 @@
 @section('title', 'Edit Popup')
 
 @section('content')
-<div class="content-wrapper">
+<div class="content-wrapper" data-guide-page="popup-edit">
   <section class="content-header">
     <div class="container-fluid">
       <div class="row mb-2">
@@ -76,7 +76,7 @@
               </div>
 
               <div class="card-footer d-flex justify-content-between">
-                <a href="{{ route('admin.popup.index') }}" data-guide="form-input" class="btn btn-secondary">
+                <a href="{{ route('admin.popup.index') }}" data-guide="form-back" class="btn btn-secondary">
                   <i class="fas fa-arrow-left"></i> Kembali
                 </a>
                 <button type="submit" data-guide="form-submit" class="btn btn-warning">

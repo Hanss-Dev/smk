@@ -3,7 +3,7 @@
 @section('title', 'Kelola Popup')
 
 @section('content')
-<div class="content-wrapper">
+<div class="content-wrapper" data-guide-page="popup-index">
   <section class="content-header">
     <div class="container-fluid">
       <div class="row mb-2">

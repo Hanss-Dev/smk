@@ -1,130 +1,60 @@
-﻿import { driver } from '../vendor/driver.js.mjs';
+/**
+ * modules/user-guide.js
+ *
+ * Generic per-page "user guide" (tour) runner built on driver.js.
+ *
+ * IMPORTANT — this file no longer owns any content:
+ * there is NO shared step catalogue / metaMap here anymore.
+ * Every admin view defines its OWN steps (title + description) in its
+ * own dedicated file under `modules/guides/*.guide.js` and calls
+ * `initPageGuide(pageId, steps)` directly. This module only knows how to:
+ *   1) resolve the steps that actually exist/are visible on the page,
+ *   2) wire up the floating "?" trigger button (#guide-trigger-btn),
+ *   3) auto-run the tour once per page on a visitor's first visit.
+ *
+ * Each page gets its own "seen" flag (namespaced by pageId) in
+ * localStorage, so visiting one view for the first time no longer
+ * marks the tour as "seen" for every other view (this is what caused
+ * the dashboard tour to silently never appear before).
+ */
+import { driver } from '../vendor/driver.js.mjs';
 
-const STORAGE_KEY = 'admin_guide_seen_v1';
+const STORAGE_PREFIX = 'admin_guide_seen_v1';
 
-function addStep(steps, target, popover, condition = true) {
-  const el = typeof target === 'string' ? document.querySelector(target) : target;
-  if (!el) {
-    return;
-  }
+/**
+ * @typedef {Object} GuideStep
+ * @property {string|Element} target - CSS selector (or element) to highlight
+ * @property {string} title
+ * @property {string} description
+ * @property {() => boolean} [condition] - optional extra visibility guard
+ */
 
-  if (typeof condition === 'function' ? !condition() : !condition) {
-    return;
-  }
+function resolveStep(step) {
+  const el = typeof step.target === 'string' ? document.querySelector(step.target) : step.target;
+  if (!el) return null;
+
+  if (typeof step.condition === 'function' && !step.condition()) return null;
 
   const style = window.getComputedStyle(el);
   const isVisible = style.display !== 'none' && style.visibility !== 'hidden' && el.offsetParent !== null;
-  if (!isVisible) {
-    return;
-  }
+  if (!isVisible) return null;
 
-  steps.push({ element: el, popover });
-}
-
-function getGuideMeta(key) {
-  const metaMap = {
-    'index-search': {
-      title: 'Pencarian',
-      description: 'Gunakan kolom ini untuk mencari data berdasarkan kata kunci tertentu.',
+  return {
+    element: el,
+    popover: {
+      title: step.title,
+      description: step.description,
     },
-    'index-add-btn': {
-      title: 'Tambah Data',
-      description: 'Klik tombol ini untuk membuka halaman penambahan data baru.',
-    },
-    'pagination-controls': {
-      title: 'Navigasi Halaman',
-      description: 'Atur jumlah data yang ditampilkan per halaman atau tampilkan semua data.',
-    },
-    'index-bulk-delete': {
-      title: 'Hapus Massal',
-      description: 'Pilih beberapa data, lalu klik tombol ini untuk menghapus sekaligus.',
-    },
-    'index-table': {
-      title: 'Daftar Data',
-      description: 'Semua data yang tersimpan ditampilkan pada tabel ini.',
-    },
-    'index-row-actions': {
-      title: 'Aksi Baris',
-      description: 'Gunakan tombol aksi pada baris ini untuk mengedit atau menghapus data.',
-    },
-    'form-input': {
-      title: 'Form Input',
-      description: 'Lengkapi seluruh field yang wajib diisi sebelum menyimpan.',
-    },
-    'form-dropzone': {
-      title: 'Unggah Gambar',
-      description: 'Klik atau seret gambar ke area ini untuk mengunggah file.',
-    },
-    'form-add-image': {
-      title: 'Tambah Gambar',
-      description: 'Tambahkan baris unggah gambar lagi jika dibutuhkan.',
-    },
-    'form-existing-images': {
-      title: 'Gambar yang Sudah Ada',
-      description: 'Hapus gambar yang sudah ada sebelum menyimpan perubahan.',
-    },
-    'form-submit': {
-      title: 'Simpan',
-      description: 'Klik tombol ini untuk menyimpan data setelah form lengkap.',
-    },
-    'form-back': {
-      title: 'Kembali',
-      description: 'Kembali ke halaman daftar tanpa menyimpan perubahan.',
-    },
-    'detail-table': {
-      title: 'Detail Pesan',
-      description: 'Lihat informasi lengkap pengirim dan isi pesan di bagian ini.',
-    },
-    'detail-actions': {
-      title: 'Aksi Pesan',
-      description: 'Balas atau hapus pesan ini sesuai kebutuhan.',
-    },
-  };
-
-  return metaMap[key] || {
-    title: 'Bagian ini',
-    description: 'Bagian ini dipandu agar Anda lebih mudah memahami halaman ini.',
   };
 }
 
-function buildStepsForCurrentPage() {
-  const steps = [];
-  const seenGuideKeys = new Set();
-  const ignoredGuideKeys = new Set([
-    'menu-toggle',
-    'sidebar-toggle',
-    'menu-dashboard',
-    'menu-konten',
-    'menu-halaman',
-    'menu-pesan',
-    'sidebar-logout',
-    'dash-stats',
-    'dash-quick-stats',
-    'dash-recent-news',
-    'dash-charts',
-    'pagination-controls',
-  ]);
-
-  document.querySelectorAll('[data-guide]').forEach((el) => {
-    const key = el.getAttribute('data-guide');
-    if (!key || ignoredGuideKeys.has(key) || seenGuideKeys.has(key)) {
-      return;
-    }
-
-    seenGuideKeys.add(key);
-    const meta = getGuideMeta(key);
-    const title = el.getAttribute('data-guide-title') || meta.title;
-    const description = el.getAttribute('data-guide-description') || meta.description;
-
-    addStep(steps, el, { title, description });
-  });
-
-  return steps;
+function buildDriverSteps(steps) {
+  return steps.map(resolveStep).filter(Boolean);
 }
 
-function startTour() {
-  const steps = buildStepsForCurrentPage();
-  if (steps.length === 0) return;
+function runTour(steps) {
+  const driverSteps = buildDriverSteps(steps);
+  if (driverSteps.length === 0) return;
 
   const driverObj = driver({
     showProgress: true,
@@ -135,20 +65,32 @@ function startTour() {
     prevBtnText: 'Kembali',
     doneBtnText: 'Selesai',
     progressText: '{{current}} dari {{total}}',
-    steps,
+    steps: driverSteps,
   });
 
   driverObj.drive();
 }
 
-export function initUserGuide() {
+/**
+ * Register and (on first visit) auto-run the guide for the current page.
+ *
+ * @param {string} pageId - unique id for this view, e.g. "alumni-index"
+ * @param {GuideStep[]} steps - steps for this view, in the order they
+ *   should be shown. Each view supplies its own titles/descriptions —
+ *   nothing is looked up from a shared/global map.
+ */
+export function initPageGuide(pageId, steps) {
   const triggerBtn = document.getElementById('guide-trigger-btn');
-  if (!triggerBtn) return;
+  if (!triggerBtn || !pageId || !Array.isArray(steps) || steps.length === 0) return;
+
+  const storageKey = `${STORAGE_PREFIX}:${pageId}`;
+
+  const startTour = () => runTour(steps);
 
   triggerBtn.addEventListener('click', startTour);
 
-  if (!localStorage.getItem(STORAGE_KEY)) {
+  if (!localStorage.getItem(storageKey)) {
     setTimeout(startTour, 600);
-    localStorage.setItem(STORAGE_KEY, 'true');
+    localStorage.setItem(storageKey, 'true');
   }
 }

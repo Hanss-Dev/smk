@@ -3,7 +3,7 @@
 @section('title', 'Tambah Content Jurusan')
 
 @section('content')
-<div class="content-wrapper">
+<div class="content-wrapper" data-guide-page="content-jurusan-create">
   <section class="content-header">
     <div class="container-fluid">
       <div class="row mb-2">

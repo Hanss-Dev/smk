@@ -3,7 +3,7 @@
 @section('title', 'Edit Bagian Safety Riding')
 
 @section('content')
-<div class="content-wrapper">
+<div class="content-wrapper" data-guide-page="safety-riding-edit">
   <section class="content-header">
     <div class="container-fluid">
       <div class="row mb-2">

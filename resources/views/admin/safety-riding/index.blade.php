@@ -3,7 +3,7 @@
 @section('title', 'Kelola Safety Riding')
 
 @section('content')
-<div class="content-wrapper">
+<div class="content-wrapper" data-guide-page="safety-riding-index">
   <section class="content-header">
     <div class="container-fluid">
       <div class="row mb-2">

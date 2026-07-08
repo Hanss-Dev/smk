@@ -3,7 +3,7 @@
 @section('title', 'Edit Berita')
 
 @section('content')
-<div class="content-wrapper">
+<div class="content-wrapper" data-guide-page="news-edit">
   <section class="content-header">
     <div class="container-fluid">
       <div class="row mb-2">

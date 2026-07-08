@@ -3,7 +3,7 @@
 @section('title', 'Kelola Keunggulan')
 
 @section('content')
-<div class="content-wrapper">
+<div class="content-wrapper" data-guide-page="keungulan-index">
   <section class="content-header">
     <div class="container-fluid">
       <div class="row mb-2">
@@ -54,7 +54,7 @@
                   </div>
                 </div>
               </form>
-              <a href="{{ route('admin.keungulan.create') }}" class="btn btn-primary btn-sm">
+              <a href="{{ route('admin.keungulan.create') }}" data-guide="index-add-btn" class="btn btn-primary btn-sm">
                 <i class="fas fa-plus"></i> Tambah
               </a>
             </div>
@@ -72,11 +72,11 @@
                 <input type="checkbox" class="custom-control-input bulk-select-all" id="selectAllKeunggulan">
                 <label class="custom-control-label" for="selectAllKeunggulan">Pilih semua</label>
               </div>
-              <button type="submit" class="btn btn-danger btn-sm">
+              <button type="submit" data-guide="index-bulk-delete" class="btn btn-danger btn-sm">
                 <i class="fas fa-trash"></i> Hapus Pilihan
               </button>
             </div>
-            <table class="table table-bordered table-hover">
+            <table class="table table-bordered table-hover" data-guide="index-table">
               <thead class="bg-light">
                 <tr>
                   <th width="40"></th>
@@ -116,7 +116,7 @@
                       <span class="badge badge-secondary">Nonaktif</span>
                     @endif
                   </td>
-                  <td class="text-center">
+                  <td class="text-center" @if($i === 0) data-guide="index-row-actions" @endif>
                     <a href="{{ route('admin.keungulan.edit', $item->id) }}"
                        class="btn btn-warning btn-sm" title="Edit">
                       <i class="fas fa-edit"></i>

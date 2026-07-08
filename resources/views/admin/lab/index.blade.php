@@ -3,7 +3,7 @@
 @section('title', 'Kelola Lab Komputer')
 
 @section('content')
-<div class="content-wrapper">
+<div class="content-wrapper" data-guide-page="lab-index">
   <section class="content-header">
     <div class="container-fluid">
       <div class="row mb-2">

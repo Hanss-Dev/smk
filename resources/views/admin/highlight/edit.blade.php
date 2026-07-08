@@ -3,7 +3,7 @@
 @section('title', 'Edit Highlight')
 
 @section('content')
-<div class="content-wrapper">
+<div class="content-wrapper" data-guide-page="highlight-edit">
   <section class="content-header">
     <div class="container-fluid">
       <div class="row mb-2">

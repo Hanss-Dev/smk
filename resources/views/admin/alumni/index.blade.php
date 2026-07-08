@@ -3,7 +3,7 @@
 @section('title', 'Kelola Alumni')
 
 @section('content')
-<div class="content-wrapper">
+<div class="content-wrapper" data-guide-page="alumni-index">
   <section class="content-header">
     <div class="container-fluid">
       <div class="row mb-2">
@@ -32,7 +32,7 @@
         <div class="card-header d-flex flex-wrap justify-content-between align-items-center">
           <h3 class="card-title my-1">Daftar Alumni</h3>
           <div class="d-flex align-items-center flex-wrap" style="gap: 10px;">
-            <form action="{{ route('admin.alumni.index') }}" method="GET" class="form-inline my-1">
+            <form action="{{ route('admin.alumni.index') }}" method="GET" data-guide="index-search" class="form-inline my-1">
               <div class="input-group input-group-sm" style="width: 250px;">
                 <input type="text" name="search" class="form-control float-right" placeholder="Cari alumni..." value="{{ request('search') }}">
                 <div class="input-group-append">
@@ -40,7 +40,7 @@
                     <i class="fas fa-search"></i>
                   </button>
                   @if(request('search'))
-                    <a href="{{ route('admin.alumni.index') }}" data-guide="index-add-btn" class="btn btn-default" title="Reset Pencarian">
+                    <a href="{{ route('admin.alumni.index') }}" class="btn btn-default" title="Reset Pencarian">
                       <i class="fas fa-times"></i>
                     </a>
                   @endif

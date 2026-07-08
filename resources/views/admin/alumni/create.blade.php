@@ -3,7 +3,7 @@
 @section('title', 'Tambah Data Alumni')
 
 @section('content')
-<div class="content-wrapper">
+<div class="content-wrapper" data-guide-page="alumni-create">
   <section class="content-header">
     <div class="container-fluid">
       <div class="row mb-2">
@@ -11,7 +11,7 @@
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('admin.alumni.index') }}" data-guide="form-back" class="btn btn-secondary">Data Alumni</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('admin.alumni.index') }}" class="btn btn-secondary">Data Alumni</a></li>
             <li class="breadcrumb-item active">Tambah</li>
           </ol>
         </div>
@@ -72,7 +72,7 @@
               </div>
 
               <div class="card-footer d-flex justify-content-between">
-                <a href="{{ route('admin.news.index') }}" class="btn btn-secondary">
+                <a href="{{ route('admin.alumni.index') }}" data-guide="form-back" class="btn btn-secondary">
                   <i class="fas fa-arrow-left"></i> Kembali
                 </a>
                 <button type="submit" data-guide="form-submit" class="btn btn-primary">

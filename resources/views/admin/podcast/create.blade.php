@@ -3,7 +3,7 @@
 @section('title', 'Tambah Bagian Podcast')
 
 @section('content')
-<div class="content-wrapper">
+<div class="content-wrapper" data-guide-page="podcast-create">
   <section class="content-header">
     <div class="container-fluid">
       <div class="row mb-2">

@@ -3,7 +3,7 @@
 @section('title', 'Kelola Highlight')
 
 @section('content')
-<div class="content-wrapper">
+<div class="content-wrapper" data-guide-page="highlight-index">
   <section class="content-header">
     <div class="container-fluid">
       <div class="row mb-2">

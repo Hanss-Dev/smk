@@ -3,7 +3,7 @@
 @section('title', 'Tambah Popup')
 
 @section('content')
-<div class="content-wrapper">
+<div class="content-wrapper" data-guide-page="popup-create">
   <section class="content-header">
     <div class="container-fluid">
       <div class="row mb-2">
@@ -72,7 +72,7 @@
                 <a href="{{ route('admin.popup.index') }}" data-guide="form-back" class="btn btn-secondary">
                   <i class="fas fa-arrow-left"></i> Kembali
                 </a>
-                <button type="submit" data-guide="form-back" class="btn btn-primary">
+                <button type="submit" data-guide="form-submit" class="btn btn-primary">
                   <i class="fas fa-save"></i> Simpan Popup
                 </button>
               </div>

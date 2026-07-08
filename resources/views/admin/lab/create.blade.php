@@ -3,7 +3,7 @@
 @section('title', 'Tambah Bagian Lab Komputer')
 
 @section('content')
-<div class="content-wrapper">
+<div class="content-wrapper" data-guide-page="lab-create">
   <section class="content-header">
     <div class="container-fluid">
       <div class="row mb-2">
