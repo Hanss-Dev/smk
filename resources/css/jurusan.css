@@ -1,0 +1,313 @@
+.jurusan-section {
+  padding: 80px 20px;
+  background: #fff;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.section-title {
+  font-size: clamp(32px, 5vw, 42px);
+  font-weight: 800;
+  color: #0d1b2a;
+  margin-bottom: 15px;
+  line-height: 1.2;
+}
+
+.section-divider {
+  width: 100px;
+  height: 4px;
+  background: linear-gradient(to right, #2563eb, #3b82f6);
+  margin: 0 auto 20px;
+  border-radius: 2px;
+}
+
+.section-subtitle {
+  font-size: clamp(15px, 2.5vw, 18px);
+  color: #666;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+  padding: 0 15px;
+}
+
+.jurusan-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: 30px;
+}
+
+.jurusan-card {
+  background: #fff;
+  border: 2px solid #dbeafe;
+  border-radius: 16px;
+  padding: 30px 20px;
+  text-align: center;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  transition: all 0.3s ease;
+}
+
+.jurusan-card:hover {
+  border-color: #3b82f6;
+  transform: translateY(-8px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+}
+
+/* Icon */
+.card-icon {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, #2563eb, #3b82f6);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  transition: transform 0.3s ease;
+}
+
+.icon {
+  width: 48px;
+  height: 48px;
+  font-size: 48px;
+  color: #fff;
+  display: block;
+}
+
+.jurusan-card:hover .card-icon {
+  transform: scale(1.1);
+}
+
+/* Text */
+.card-title {
+  font-size: clamp(16px, 2.5vw, 18px);
+  font-weight: 700;
+  color: #0d1b2a;
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+
+.card-text {
+  font-size: clamp(13px, 2vw, 14px);
+  color: #555;
+  line-height: 1.6;
+}
+
+/* ===== Responsive Breakpoints ===== */
+
+/* Desktop Large */
+@media (min-width: 1400px) {
+  .jurusan-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Desktop */
+@media (min-width: 1200px) {
+  .jurusan-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Tablet Large */
+@media (max-width: 1024px) {
+  .jurusan-section {
+    padding: 60px 15px;
+  }
+  
+  .jurusan-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+  }
+  
+  .section-header {
+    margin-bottom: 40px;
+  }
+}
+
+/* Tablet */
+@media (max-width: 768px) {
+  body {
+    padding: 20px 0;
+  }
+  
+  .jurusan-section {
+    padding: 50px 15px;
+  }
+  
+  .container {
+    padding: 0 10px;
+  }
+  
+  .section-header {
+    margin-bottom: 35px;
+  }
+  
+  .section-divider {
+    width: 80px;
+    margin-bottom: 15px;
+  }
+  
+  .jurusan-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  
+  .jurusan-card {
+    padding: 25px 18px;
+  }
+  
+  .card-icon {
+    width: 70px;
+    height: 70px;
+    margin-bottom: 18px;
+  }
+  
+  .icon {
+    width: 42px;
+    height: 42px;
+    font-size: 42px;
+  }
+}
+
+/* Mobile Large */
+@media (max-width: 640px) {
+  .jurusan-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+  }
+  
+  .jurusan-card {
+    padding: 22px 16px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  body {
+    padding: 15px 0;
+  }
+  
+  .jurusan-section {
+    padding: 40px 10px;
+  }
+  
+  .container {
+    padding: 0 5px;
+  }
+  
+  .section-header {
+    margin-bottom: 30px;
+  }
+  
+  .section-divider {
+    width: 70px;
+    height: 3px;
+  }
+  
+  .jurusan-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .jurusan-card {
+    padding: 25px 20px;
+    border-radius: 12px;
+  }
+  
+  .jurusan-card:hover {
+    transform: translateY(-4px);
+  }
+  
+  .card-icon {
+    width: 75px;
+    height: 75px;
+    border-radius: 14px;
+    margin-bottom: 16px;
+  }
+  
+  .icon {
+    width: 45px;
+    height: 45px;
+    font-size: 45px;
+  }
+  
+  .card-title {
+    margin-bottom: 8px;
+  }
+}
+
+/* Extra Small Mobile */
+@media (max-width: 360px) {
+  .jurusan-section {
+    padding: 35px 10px;
+  }
+  
+  .jurusan-card {
+    padding: 20px 16px;
+  }
+  
+  .card-icon {
+    width: 65px;
+    height: 65px;
+    margin-bottom: 14px;
+  }
+  
+  .icon {
+    width: 38px;
+    height: 38px;
+    font-size: 38px;
+  }
+}
+
+/* Landscape Mobile */
+@media (max-width: 896px) and (orientation: landscape) {
+  .jurusan-section {
+    padding: 40px 15px;
+  }
+  
+  .jurusan-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  
+  .section-header {
+    margin-bottom: 30px;
+  }
+  
+  .jurusan-card {
+    padding: 20px 15px;
+  }
+  
+  .card-icon {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 12px;
+  }
+  
+  .icon {
+    width: 36px;
+    height: 36px;
+    font-size: 36px;
+  }
+}
+
+/* Touch Device Optimization */
+@media (hover: none) and (pointer: coarse) {
+  .jurusan-card:active {
+    transform: translateY(-4px);
+    border-color: #3b82f6;
+  }
+  
+  .jurusan-card:active .card-icon {
+    transform: scale(1.05);
+  }
+}

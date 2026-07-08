@@ -8,7 +8,9 @@
 
   <link rel="stylesheet" href="{{ asset('assets/adminlte/plugins/fontawesome-free/css/all.min.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/adminlte/dist/css/adminlte.min.css') }}">
-  <link rel="stylesheet" href="{{ asset('assets/css/vendor/driver.css') }}">
+  @vite([
+    'resources/css/vendor/driver.css'
+  ])
   <link rel="icon" href="{{ asset('assets/img/logo-mt.png') }}" type="image/png">
 
   <style>
@@ -260,7 +262,7 @@
   <script src="{{ asset('assets/adminlte/plugins/jquery/jquery.min.js') }}"></script>
   <script src="{{ asset('assets/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
   <script src="{{ asset('assets/adminlte/dist/js/adminlte.min.js') }}"></script>
-  <script src="{{ asset('assets/js/image-modal.js') }}"></script>
+  {{-- image-modal handled by Vite (module) --}}
 
   <script>
     $(document).ready(function () {
@@ -299,13 +301,6 @@
       // ── Klik overlay → tutup sidebar (mobile) ────────────────────────────
       $(document).on('click', '#sidebar-overlay', function () {
         $('body').removeClass('sidebar-open');
-      });
-
-      // ── Klik salah satu link menu di sidebar → auto tutup (mobile only) ──
-      $(document).on('click', '.main-sidebar .nav-link', function () {
-        if (!isDesktop()) {
-          $('body').removeClass('sidebar-open');
-        }
       });
 
       $(window).on('resize', syncSidebarState);
@@ -398,9 +393,17 @@
     @include('admin.pesan.reply-modal')
   @endif
 
-  <script type="module" src="{{ asset('assets/js/admin.js') }}"></script>
+  @vite([
+    'resources/js/image-modal.js'
+  ])
+
+  @vite([
+    'resources/js/admin.js'
+  ])
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <script src="{{ asset('assets/js/admin-alerts.js') }}"></script>
+  @vite([
+    'resources/js/admin-alerts.js'
+  ])
   @stack('scripts')
   @yield('scripts')
 </body>

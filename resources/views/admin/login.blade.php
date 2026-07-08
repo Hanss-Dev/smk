@@ -5,7 +5,10 @@
   <title>Login Admin | SMK MITRA INDUSTRI</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" href="{{ asset('assets/img/logo-mt.png') }}" type="image/png">
-  <link rel="stylesheet" href="{{ asset('assets/css/login-admin-style.css') }}">
+  @vite([
+    'resources/css/login-admin-style.css',
+    'resources/css/vendor/driver.css'
+  ])
 </head>
 
 <body>

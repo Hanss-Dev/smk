@@ -1,0 +1,397 @@
+body {
+  font-family: var(--body-font);
+  font-size: clamp(var(--normal-font-size), 1rem + 0.3vw, 1.1rem);
+  background-color: var(--body-color);
+  overflow-x: hidden;
+  line-height: 1.6;
+  padding: 75px 0 0 0;
+}
+
+/* Section */
+.profil-section {
+  padding: 80px 20px;
+  background: linear-gradient(to bottom, #ffffff, #eff6ff);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Header */
+.section-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.section-title {
+  font-size: clamp(28px, 5vw, 42px);
+  font-weight: 800;
+  color: #1e3a8a;
+  margin-bottom: 15px;
+  line-height: 1.2;
+}
+
+.section-divider {
+  width: 100px;
+  height: 4px;
+  background: linear-gradient(to right, #2563eb, #3b82f6);
+  margin: 0 auto;
+  border-radius: 2px;
+}
+
+/* Grid */
+.profil-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  gap: 40px;
+  margin-bottom: 60px;
+}
+
+/* Text */
+.profil-subtitle {
+  font-size: clamp(20px, 3.5vw, 24px);
+  font-weight: 700;
+  color: #1e3a8a;
+  margin-bottom: 20px;
+  line-height: 1.3;
+}
+
+.profil-paragraph {
+  font-size: clamp(14px, 2.5vw, 16px);
+  color: #374151;
+  line-height: 1.8;
+  margin-bottom: 20px;
+  text-align: justify;
+}
+
+.profil-paragraph:last-child {
+  margin-bottom: 0;
+}
+
+/* Box */
+.profil-box {
+  background: #fff;
+  border: 1px solid #dbeafe;
+  border-radius: 24px;
+  padding: 40px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.profil-box:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+}
+
+/* Stats Grid */
+.profil-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 140px), 1fr));
+  gap: 20px;
+}
+
+.profil-stat {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: #f8fafc;
+  border-radius: 12px;
+  transition: background 0.3s ease;
+}
+
+.profil-stat:hover {
+  background: #eff6ff;
+}
+
+.profil-stat .icon {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  color: #2563eb;
+  flex-shrink: 0;
+}
+
+.profil-stat span {
+  font-size: clamp(14px, 2.5vw, 16px);
+  font-weight: 500;
+  color: #374151;
+  line-height: 1.4;
+}
+
+/* Image Container (if needed) */
+.profil-image {
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.profil-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ===== Responsive Breakpoints ===== */
+
+/* Desktop Large */
+@media (min-width: 1400px) {
+  .container {
+    max-width: 1400px;
+  }
+  
+  .profil-grid {
+    gap: 50px;
+    margin-bottom: 70px;
+  }
+  
+  .profil-box {
+    padding: 50px;
+  }
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .profil-section {
+    padding: 60px 15px;
+  }
+  
+  .section-header {
+    margin-bottom: 40px;
+  }
+  
+  .profil-grid {
+    gap: 35px;
+    margin-bottom: 50px;
+  }
+  
+  .profil-box {
+    padding: 35px;
+  }
+  
+  .profil-stats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 130px), 1fr));
+    gap: 16px;
+  }
+}
+
+/* Tablet Small */
+@media (max-width: 768px) {
+  .profil-section {
+    padding: 50px 15px;
+  }
+  
+  .container {
+    padding: 0 10px;
+  }
+  
+  .section-header {
+    margin-bottom: 35px;
+  }
+  
+  .section-divider {
+    width: 80px;
+    height: 3px;
+  }
+  
+  .profil-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    margin-bottom: 40px;
+  }
+  
+  .profil-subtitle {
+    margin-bottom: 16px;
+  }
+  
+  .profil-paragraph {
+    margin-bottom: 16px;
+  }
+  
+  .profil-box {
+    padding: 30px;
+    border-radius: 20px;
+  }
+  
+  .profil-stats-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  
+  .profil-stat {
+    padding: 14px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .profil-section {
+    padding: 40px 10px;
+  }
+  
+  .container {
+    padding: 0 5px;
+  }
+  
+  .section-header {
+    margin-bottom: 30px;
+  }
+  
+  .section-title {
+    margin-bottom: 12px;
+  }
+  
+  .section-divider {
+    width: 70px;
+  }
+  
+  .profil-grid {
+    gap: 25px;
+    margin-bottom: 35px;
+  }
+  
+  .profil-subtitle {
+    margin-bottom: 14px;
+  }
+  
+  .profil-paragraph {
+    margin-bottom: 14px;
+    text-align: left;
+  }
+  
+  .profil-box {
+    padding: 24px;
+    border-radius: 16px;
+  }
+  
+  .profil-box:hover {
+    transform: translateY(-2px);
+  }
+  
+  .profil-stats-grid {
+    gap: 12px;
+  }
+  
+  .profil-stat {
+    padding: 12px;
+    border-radius: 10px;
+  }
+  
+  .profil-stat .icon {
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+  }
+}
+
+/* Extra Small Mobile */
+@media (max-width: 360px) {
+  .profil-section {
+    padding: 35px 10px;
+  }
+  
+  .profil-box {
+    padding: 20px;
+  }
+  
+  .profil-stat {
+    padding: 10px;
+    gap: 10px;
+  }
+  
+  .profil-stat .icon {
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+  }
+}
+
+/* Landscape Mobile */
+@media (max-width: 896px) and (orientation: landscape) {
+  .profil-section {
+    padding: 40px 15px;
+  }
+  
+  .section-header {
+    margin-bottom: 30px;
+  }
+  
+  .profil-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+    margin-bottom: 35px;
+  }
+  
+  .profil-box {
+    padding: 25px;
+  }
+  
+  .profil-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .profil-section {
+    padding: 20px;
+    background: #fff;
+  }
+  
+  .profil-box {
+    box-shadow: none;
+    border: 1px solid #ddd;
+    page-break-inside: avoid;
+  }
+  
+  .profil-box:hover {
+    transform: none;
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .profil-box {
+    border: 2px solid #2563eb;
+  }
+  
+  .section-title,
+  .profil-subtitle {
+    color: #000;
+  }
+  
+  .profil-paragraph,
+  .profil-stat span {
+    color: #222;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .profil-box,
+  .profil-stat {
+    transition: none;
+  }
+  
+  .profil-box:hover {
+    transform: none;
+  }
+}
+
+/* Touch Device Optimization */
+@media (hover: none) and (pointer: coarse) {
+  .profil-box:active {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.07);
+  }
+  
+  .profil-stat:active {
+    background: #eff6ff;
+  }
+}
