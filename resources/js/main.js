@@ -211,7 +211,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function startAutoSlide() {
     stopAutoSlide();
-    autoSlideInterval = setInterval(slideNext, 5000); 
+    autoSlideInterval = setInterval(slideNext, 5000);
   }
 
   function stopAutoSlide() {
@@ -370,6 +370,8 @@ document.addEventListener('DOMContentLoaded', function () {
 document.addEventListener("DOMContentLoaded", () => {
   const figuran = document.querySelector(".vt-vr");
 
+  if (!figuran) return;
+
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach(entry => {
@@ -457,7 +459,7 @@ document.addEventListener("DOMContentLoaded", () => {
             entry.target.classList.add("is-visible");
           }, index * 180);
 
-          obs.unobserve(entry.target); 
+          obs.unobserve(entry.target);
         }
       });
     },
