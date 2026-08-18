@@ -17,6 +17,9 @@ export default defineConfig({
                 'resources/css/skill.css',
                 'resources/css/vision-mission.css',
                 'resources/css/jurusan1.css',
+                'resources/css/podcast.css',
+                'resources/css/lab.css',
+                'resources/css/safety.css',
 
                 // Admin / login CSS
                 'resources/css/login-admin-style.css',

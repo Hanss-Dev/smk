@@ -1,12 +1,14 @@
-const navToggle = document.getElementById("nav-toggle");
-const navMenu = document.getElementById("nav-menu");
+document.addEventListener("DOMContentLoaded", () => {
+  const navToggle = document.getElementById("nav-toggle");
+  const navMenu = document.getElementById("nav-menu");
 
-if (navToggle && navMenu) {
-  navToggle.addEventListener("click", () => {
-    navMenu.classList.toggle("show-menu");
-    navToggle.classList.toggle("show-icon");
-  });
-}
+  if (navToggle && navMenu) {
+    navToggle.addEventListener("click", () => {
+      navMenu.classList.toggle("show-menu");
+      navToggle.classList.toggle("show-icon");
+    });
+  }
+});
 
 document.addEventListener("DOMContentLoaded", () => {
   const dropdownItems = document.querySelectorAll(".dropdown__item");
@@ -160,22 +162,24 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-const tabs = document.querySelectorAll(".tab");
-const cards = document.querySelectorAll(".network-card");
+document.addEventListener("DOMContentLoaded", () => {
+  const tabs = document.querySelectorAll(".tab");
+  const cards = document.querySelectorAll(".network-card");
 
-tabs.forEach(tab => {
-  tab.addEventListener("click", () => {
-    tabs.forEach(t => t.classList.remove("active"));
-    tab.classList.add("active");
+  tabs.forEach(tab => {
+    tab.addEventListener("click", () => {
+      tabs.forEach(t => t.classList.remove("active"));
+      tab.classList.add("active");
 
-    const filter = tab.dataset.filter;
+      const filter = tab.dataset.filter;
 
-    cards.forEach(card => {
-      if (filter === "all" || card.dataset.type === filter) {
-        card.style.display = "";
-      } else {
-        card.style.display = "none";
-      }
+      cards.forEach(card => {
+        if (filter === "all" || card.dataset.type === filter) {
+          card.style.display = "";
+        } else {
+          card.style.display = "none";
+        }
+      });
     });
   });
 });
@@ -466,11 +470,13 @@ document.addEventListener("DOMContentLoaded", () => {
   items.forEach(item => observer.observe(item));
 });
 
-const textarea = document.getElementById("msg");
-const counter = document.getElementById("counter");
+document.addEventListener("DOMContentLoaded", () => {
+  const textarea = document.getElementById("msg");
+  const counter = document.getElementById("counter");
 
-if (textarea && counter) {
-  textarea.addEventListener("input", () => {
-    counter.textContent = textarea.value.length + " / 500";
-  });
-}
+  if (textarea && counter) {
+    textarea.addEventListener("input", () => {
+      counter.textContent = textarea.value.length + " / 500";
+    });
+  }
+});

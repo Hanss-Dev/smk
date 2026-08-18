@@ -18,6 +18,9 @@
     'resources/css/skill.css',
     'resources/css/vision-mission.css',
     'resources/css/jurusan1.css',
+    'resources/css/podcast.css',
+    'resources/css/lab.css',
+    'resources/css/safety.css',
     'resources/js/main.js'
   ])
 
@@ -35,7 +38,7 @@
 
   @include('components.footer')
 
-  <script src="{{ asset('assets/js/main.js') }}"></script>
+
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   @yield('scripts')
 </body>

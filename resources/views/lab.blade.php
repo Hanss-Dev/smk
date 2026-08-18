@@ -3,10 +3,24 @@
 @section('title', 'Laboratorium Komputer - SMK Mitra Industri MM2100')
 
 @section('content')
+<section class="breadcrumbs">
+  <div class="breadcrumbs-bg" style="background-image:url('{{ asset('assets/img/Gedung.png') }}')">
+    <div class="overlayy"></div>
+    <div class="container">
+      <h1 class="page-title">Laboratorium Komputer</h1>
+      <div class="breadcrumbs-nav">
+        <a href="{{ route('home') }}">SMK Mitra Industri MM2100</a>
+        <span>&gt;</span>
+        <span class="current">Lab Komputer</span>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="lab-section">
   <div class="container">
     <div class="lab-header text-center">
-      <h2>💻 Laboratorium Komputer</h2>
+      <h2>Laboratorium Komputer</h2>
       <p>Fasilitas modern untuk mendukung pembelajaran teknologi di SMK Mitra Industri MM2100.</p>
     </div>
 
@@ -28,7 +42,7 @@
                 @if (!empty($card['extra_texts']))
                   <ul>
                     @foreach ($card['extra_texts'] as $txt)
-                      <li>✔️ {{ $txt }}</li>
+                      <li>&#10003; {{ $txt }}</li>
                     @endforeach
                   </ul>
                 @endif
@@ -45,9 +59,9 @@
             <h3>Lab Programming</h3>
             <p>Digunakan untuk pembelajaran coding seperti HTML, CSS, JavaScript, dan bahasa pemrograman lainnya.</p>
             <ul>
-              <li>✔️ 40 Unit PC</li>
-              <li>✔️ Internet Cepat</li>
-              <li>✔️ Proyektor</li>
+              <li>&#10003; 40 Unit PC</li>
+              <li>&#10003; Internet Cepat</li>
+              <li>&#10003; Proyektor</li>
             </ul>
           </div>
         </div>
@@ -58,9 +72,9 @@
             <h3>Lab Multimedia</h3>
             <p>Fokus pada desain grafis, editing video, dan pengembangan konten digital.</p>
             <ul>
-              <li>✔️ Software Adobe</li>
-              <li>✔️ Audio & Video Editing</li>
-              <li>✔️ Rendering PC</li>
+              <li>&#10003; Software Adobe</li>
+              <li>&#10003; Audio &amp; Video Editing</li>
+              <li>&#10003; Rendering PC</li>
             </ul>
           </div>
         </div>
@@ -71,9 +85,9 @@
             <h3>Lab Jaringan</h3>
             <p>Tempat praktik konfigurasi jaringan komputer dan server.</p>
             <ul>
-              <li>✔️ Router & Switch</li>
-              <li>✔️ Simulasi Server</li>
-              <li>✔️ Cisco Lab</li>
+              <li>&#10003; Router &amp; Switch</li>
+              <li>&#10003; Simulasi Server</li>
+              <li>&#10003; Cisco Lab</li>
             </ul>
           </div>
         </div>

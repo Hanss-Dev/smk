@@ -3,10 +3,24 @@
 @section('title', 'Podcast - SMK Mitra Industri MM2100')
 
 @section('content')
+<section class="breadcrumbs">
+  <div class="breadcrumbs-bg" style="background-image:url('{{ asset('assets/img/gedung2.jpeg') }}')">
+    <div class="overlayy"></div>
+    <div class="container">
+      <h1 class="page-title">Podcast</h1>
+      <div class="breadcrumbs-nav">
+        <a href="{{ route('home') }}">SMK Mitra Industri MM2100</a>
+        <span>&gt;</span>
+        <span class="current">Podcast</span>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="podcast-section">
   <div class="container">
     <div class="podcast-header text-center">
-      <h2>🎧 Podcast SMK Mitra Industri MM2100</h2>
+      <h2>Podcast SMK Mitra Industri MM2100</h2>
       <p>Media edukasi dan informasi melalui konten audio visual.</p>
     </div>
 
@@ -70,7 +84,7 @@
         @endif
       @endforeach
     @else
-      <h3 class="section-title">🎬 Konten Podcast</h3>
+      <h3 class="section-title">Konten Podcast</h3>
       <div class="podcast-grid">
         <div class="podcast-card">
           <h4>Episode 1 - Dunia Industri</h4>
@@ -107,7 +121,7 @@
         </div>
       </div>
 
-      <h3 class="section-title mt-5">🎙️ Fasilitas Podcast</h3>
+      <h3 class="section-title mt-5">Fasilitas Podcast</h3>
       <div class="facility-grid">
         <div class="facility-card">
           <h4>Studio Podcast</h4>
