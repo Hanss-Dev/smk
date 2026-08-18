@@ -32,6 +32,34 @@
 <body>
   @include('components.header')
 
+  <script>
+    // Keeps --header-height-actual in sync with the real, rendered height of
+    // the fixed header (which varies by breakpoint/logo size/content) so the
+    // page content below it never has a gap or overlap. Runs immediately
+    // (not on DOMContentLoaded) so it's set before the page-wrapper below is
+    // painted, and stays in sync afterward via ResizeObserver.
+    (function () {
+      var header = document.querySelector('.header');
+      if (!header) return;
+      var root = document.documentElement;
+
+      function setHeaderHeightVar() {
+        root.style.setProperty('--header-height-actual', header.offsetHeight + 'px');
+      }
+
+      setHeaderHeightVar();
+
+      if (window.ResizeObserver) {
+        new ResizeObserver(setHeaderHeightVar).observe(header);
+      } else {
+        window.addEventListener('resize', setHeaderHeightVar);
+        window.addEventListener('orientationchange', setHeaderHeightVar);
+      }
+
+      window.addEventListener('load', setHeaderHeightVar);
+    })();
+  </script>
+
   <div class="{{ request()->routeIs('home') ? '' : 'page-wrapper' }}">
     @yield('content')
   </div>

@@ -1,11 +1,3 @@
-body {
-  font-family: var(--body-font);
-  font-size: clamp(var(--normal-font-size), 1rem + 0.3vw, 1.1rem);
-  background-color: var(--body-color);
-  overflow-x: hidden;
-  line-height: 1.6;
-  padding: 85px 0 0 0;
-}
 /* Section */
 #ppdb {
   position: relative;
@@ -294,10 +286,6 @@ body {
 
 /* Tablet Small */
 @media (max-width: 768px) {
-  body {
-    padding: 20px 0;
-  }
-  
   #ppdb {
     padding: 50px 15px;
   }
@@ -369,10 +357,6 @@ body {
 
 /* Mobile */
 @media (max-width: 480px) {
-  body {
-    padding: 45px 0 0 0;
-  }
-  
   #ppdb {
     padding: 40px 10px;
   }
